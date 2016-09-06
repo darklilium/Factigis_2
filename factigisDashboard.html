@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
+    <link rel="shortcut icon" href="">
+    <title>GISRED - FactiGIS Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/dijit/themes/tundra/tundra.css" />
+    <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/esri/css/esri.css" />
+    <link rel="stylesheet" href="static/js/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/js/vendor/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="dist/css/factigis.css" />
+    <script src="static/js/vendor/jspdf/jspdf.min.js"></script>
+    <script src="static/js/vendor/jspdf/jspdf.plugin.autotable.js"></script>
+    <script src="static/js/vendor/jspdf/faker.min.js"></script>
+  </head>
+  <body class="bodyfactigisdashboard">
+      <div id="myFactigis_Dashboard"></div>
+      <script type="text/javascript" src="arcgis_js_api/library/3.17/3.17/init.js"></script>
+      <script src="static/js/vendor/jquery.min.js"></script>
+      <script src="static/js/vendor/lodash.core.js"></script>
+       <script src="static/js/vendor/jQueryRotate.js"></script>
+
+       <script>
+
+          require(["factigisDashboard.js"], function (factigisDashboard) {});
+           /* require(["dist/js/vendor.js", "dist/js/login.js"], function (vendor, login) {}); */
+       </script>
+
+  </body>
+</html>

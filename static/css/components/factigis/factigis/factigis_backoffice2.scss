@@ -1,0 +1,183 @@
+#myFactigis_BackOffice_historico {
+  background-color: #282d2d;
+}
+
+.wrapper_factigis_bo2{
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  height: 100vh;
+  //align-content: space-between;
+  align-content: flex-start;;
+}
+
+.griddle th  input{
+  width: 80%;
+}
+
+div strong{
+  font-size: 12px;
+}
+
+.factigis_bo2-h2{
+  background-color: inherit;
+  margin-top: 0px;
+  padding-top: 0.7em;
+  padding-left: 0.5em;
+  font-weight: 100;
+  color: ghostwhite;
+  font-size: medium;
+}
+
+.factigis_bo2-h1{
+  background-color: #346390;
+  margin-top: 0px;
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+  font-size: larger;
+  font-weight: 100;
+  color: ghostwhite;
+  padding-bottom: 0.3em;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+.factigis_h1_edited{
+  justify-content: center;
+}
+.wrapper_top{
+  display: flex;
+  width: 100%;
+  background-color:  #282d2d;
+  justify-content:  space-between;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.bo2_table{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.wrapper_mid{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+
+}
+.wrapper_mid-left{
+  display: flex;
+  width: 50%;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background: ghostwhite;
+  align-items: stretch;
+  justify-content: space-between;
+  margin: 0em;
+}
+
+.wrapper_mid-split {
+  display: flex;
+}
+
+.wrapper_mid_splitbot{
+  margin-bottom: 2em;
+}
+
+.wrapper_mid-split-1{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+.wrapper_mid-right{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  background-color: ghostwhite;
+  padding-bottom: 0.5em;
+  padding-right: 0.5em;
+}
+
+
+.factigis_bo2_map{
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/*#factigis_bo2_map_root{
+  height: 430px !important;
+}
+*/
+.wrapper_bot{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #282d2d;
+  bottom: 0px;
+  position: relative;
+  padding-bottom: 1em;
+  padding-top: 0em;
+}
+
+.wrapper_bot_title{
+  display: flex;
+  width: 100%;
+}
+
+.wrapper_bot_content {
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  align-self: center;
+}
+
+.factigis_bo2_wrapper-zonas{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 1em;
+}
+
+.marginRight05{
+  margin-right: 0.5em;
+}
+.factigis_bo2_cbEstado{
+  width: 100%;
+}
+
+
+.bodybackoffice_factigis{
+  background-color:  #282d2d;
+}
+
+.factigis_bo2-b{
+  margin-left: 0.3em;
+}
+
+.factigis_bo2-h8{
+  color: ghostwhite;
+  display: flex;
+  align-items: center;
+  margin-right: 1em;
+  font-weight: 600;
+}
+
+.ReactModalPortal{
+  z-index: 5;
+  position: absolute;
+}
+
+[data-title='Observacion'] {
+width: 40%;
+}
+
+
+.griddle-container{
+  background-color: white;
+}

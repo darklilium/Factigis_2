@@ -1,8 +1,6 @@
 import React from 'react';
-import Map from "esri/map";
-import Search from 'esri/dijit/Search';
-import BasemapToggle from "esri/dijit/BasemapToggle";
-import utils from 'esri/arcgis/utils';
+import {notifications} from '../utils/notifications';
+import { factigisLogin } from '../services/login-service';
 
 class LoginApp extends React.Component {
   constructor(){
@@ -10,49 +8,58 @@ class LoginApp extends React.Component {
 
   }
 
-  componentDidMount(){
-    var map = new Map("map_content", { basemap: "topo",
-          center: [-122.45, 37.75],
-          zoom: 13});
+  onClick(){
+    var userValue = this.refs.username.value;
+    var passValue = this.refs.password.value;
+    //If they dont put any username or password
+    if (userValue=="" || passValue==""){
+      notifications('Login incorrecto, intente nuevamente.', 'Login_Error', '.notification-login');
+      return;
+    }
+    //For domain users
+    if (userValue.includes('vialactea\\')){
+      console.log("Trying to access REACT_FACTIGIS_DASHBOARD");
+      factigisLogin(userValue, passValue);
+      return;
 
-    var search = new Search({
-        map: map
-     }, "search");
-    search.startup();
-
-    var toggle = new BasemapToggle({
-       map: map,
-       basemap: "satellite"
-     }, "BasemapToggle");
-     toggle.startup();
+    }else {
+      console.log("Trying to access REACT_FACTIGIS_DASHBOARD");
+      userValue =  'vialactea\\'+this.refs.username.value;
+      factigisLogin(userValue, passValue);
+    }
   }
 
+  componentWillMount(){
+      localStorage.removeItem('token');
+
+      //change the loginwall dinamically
+      let randomPicNumber = Math.floor((Math.random() * 6) + 1);
+      //********Cambiar randomPicSrc para test/prod*******
+      //let randomPicSrc = "css/images/login_images/loginwall"+ randomPicNumber+ ".jpg"; //prod
+      let randomPicSrc = "static/css/images/login_images/loginwall"+ randomPicNumber+ ".jpg";//desarrollo
+      $('.login_wrapper').css("background-image", "url("+randomPicSrc+")");
+    }
+
   render(){
-    var divStyle1 = {
-      position: 'absolute',
-      right:'20px',
-      top:'10px',
-      'zIndex':'999'
-    }
-    var divStyle2 = {
-      width:'380px',
-      height:'280px',
-      overflow:'auto'
-    }
+      return (
+      <div className="login_wrapper_content">
+        <article className="login_article">
+          <input className="login__input" ref="username" type="text" placeholder="miusuario" defaultValue="ehernanr" />
+          <input className="login__input" ref="password" type="password" placeholder="password"  defaultValue="Chilquinta7"/>
+          <input className="login__submit" type="submit" onClick={this.onClick.bind(this)}  />
 
-    var divStyle3 = {
-      padding:'0'
-    }
-
-    return (
-        <div className="login_wrapper_content">
-        <h1>My map</h1>
-          <div id="search"></div>
-
-          <div id="map_content">
-            <div id="BasemapToggle"></div>
-          </div>
-        </div>
+        </article>
+        <aside className="login_aside">
+            <div className="aside_div">
+              <img className="login_aside__img" />
+              <h1 className="login_aside__h1"> Bienvenidos a Factigis </h1>
+            </div>
+            <div className="aside_div2">
+              <p className="login_aside__p">Aplicación de factibilidad para solicitudes de empalmes<br />
+              La información contenida en este sitio se obtiene del GISRED en conjunto con Smallworld y Catastro</p>
+            </div>
+        </aside>
+      </div>
     );
   }
 }
