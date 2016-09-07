@@ -35,12 +35,6 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-            minChunks: Infinity
-        })
-    ],
     externals: [
         function(context, request, callback) {
             if (/^dojo/.test(request) ||
