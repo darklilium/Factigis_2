@@ -201,6 +201,16 @@ function myLayers(){
     },
     read_historial_factibilidad(){
       return serviceURL + "FACTIBILIDAD/FACTIGIS/FeatureServer/1?f=json&token=" + token.read();
+    },
+    read_factigis_addDireccion(){
+      return serviceURL + "Mobile/Ingreso_externo_nuevo/FeatureServer/2/applyedits";
+    },
+    read_factigis_addEstadoHistoria(){
+      return serviceURL + "FACTIBILIDAD/FACTIGIS/FeatureServer/1/applyedits";
+    },
+    read_factigis_addFactibilidad(){
+      return serviceURL + "FACTIBILIDAD/FACTIGIS/FeatureServer/0/applyedits";
+
     }
 
   };

@@ -3,18 +3,19 @@
   <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
     <link rel="shortcut icon" href="">
-    <title>GISRED - FactiGIS FRONTOFFICE</title>
+    <title>GISRED - FactiGIS BACKOFFICE</title>
     <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/dijit/themes/tundra/tundra.css" />
     <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/esri/css/esri.css" />
     <link rel="stylesheet" href="static/js/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="static/js/vendor/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/factigisCarta.css" />
+    <link rel="stylesheet" type="text/css" href="dist/css/factigis.css" />
+    <link rel="stylesheet" href="dist/css/vendor/react-select.css">
+
+
   </head>
-
-  <body class="bodyfactigisCarta">
-      <div id="myFactigisCarta" class="myFactigisCarta"></div>
+  <body class="bodybackoffice_factigis" >
+      <div id="myFactigis_BackOffice"></div>
       <script type="text/javascript" src="arcgis_js_api/library/3.17/3.17/init.js"></script>
-      <script>require(["factigisCarta.js"], function (factigisCarta) {});</script>
+      <script>require(["factigisBackoffice.js"], function (factigisBackoffice) {});</script>
   </body>
-
 </html>

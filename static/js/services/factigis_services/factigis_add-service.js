@@ -6,7 +6,7 @@ import layers from '../../services/layers-service';
 import exportGraphicsToPDF from '../../services/factigis_services/factigis_exportToPdf';
 import cookieHandler from 'cookie-handler';
 import _ from 'lodash';
-
+import jQuery from 'jquery';
 
 /* Potencia disponible = kva - 0,327*N^(-0,203)*N*5
 
@@ -44,7 +44,7 @@ function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
 
     jQuery.ajax({
       method: 'POST',
-      url: "http://gisred.chilquinta.cl:5555/arcgis/rest/services/Mobile/Ingreso_externo_nuevo/FeatureServer/2/applyedits",
+      url: layers.read_factigis_addDireccion(),
       dataType:'html',
       data: data
     })
@@ -272,7 +272,7 @@ function agregarEstadoHistoria(historial,callback){
 
     jQuery.ajax({
       method: 'POST',
-      url: "http://gisred.chilquinta.cl:5555/arcgis/rest/services/FACTIBILIDAD/FACTIGIS/FeatureServer/1/applyedits",
+      url: layers.read_factigis_addEstadoHistoria(),
       dataType:'html',
       data: data
     })
@@ -383,7 +383,7 @@ function agregarFact(f, callback){
 
   jQuery.ajax({
     method: 'POST',
-    url: "http://gisred.chilquinta.cl:5555/arcgis/rest/services/FACTIBILIDAD/FACTIGIS/FeatureServer/0/applyedits",
+    url: layers.read_factigis_addFactibilidad(),
     dataType:'html',
     data: data
   })

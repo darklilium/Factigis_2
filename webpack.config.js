@@ -8,6 +8,8 @@ module.exports = {
         factigisDashboard: './static/js/bundles/factigisDashboard.js',
         factigisFrontoffice: './static/js/bundles/factigisFrontoffice.js',
         factigisCarta: './static/js/bundles/factigisCarta.js',
+        factigisBackoffice: './static/js/bundles/factigisBackoffice.js',
+        factigisBackoffice2: './static/js/bundles/factigisBackoffice2.js',
         vendor: [
         // put your third party libs here
         ]
