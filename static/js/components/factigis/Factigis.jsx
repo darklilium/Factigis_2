@@ -7,7 +7,10 @@ import LayerList from '../../components/LayerList.jsx';
 import layers from '../../services/layers-service';
 import FModal from '../factigis/Factigis_Modal.jsx';
 import cookieHandler from 'cookie-handler';
-
+import BasemapToggle from "esri/dijit/BasemapToggle";
+import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
+import Search from 'esri/dijit/Search';
+import HomeButton from 'esri/dijit/HomeButton';
 
 class Factigis extends React.Component {
   constructor(props){
@@ -27,25 +30,13 @@ class Factigis extends React.Component {
     let widgetPermissions = modulePermissions.map(wp=>{
       return wp.widget;
     });
-    console.log("my w.permis",widgetPermissions);
+    //console.log("my w.permis",widgetPermissions);
     this.setState({permissions: widgetPermissions});
   }
   componentDidMount(){
 
     var mapp = mymap.createMap("factigis_map_div","topo",-71.2905 ,-33.1009,9);
     this.setState({themap: mapp});
-
-  /*  addCertainLayer("gis_cartografia", 11, "",(gis_cartografia)=>{
-      gis_cartografia.on("click",(event)=>{console.log(event.graphic.attributes)});
-    });
-    addCertainLayer("gis_rotulos", 12, "",(gis_rotulos)=>{
-      gis_rotulos.on("click",(event)=>{console.log(event.graphic.attributes)});
-    });
-
-    addCertainLayer("mobile_direccionesNuevas", 12, "",(mobile_direccionesNuevas)=>{
-      mobile_direccionesNuevas.on("click",(event)=>{console.log(event.graphic)});
-    });
-*/
 
     //Add layer for old addresses
     var layerDirecciones = new esri.layers.ArcGISDynamicMapServiceLayer(layers.read_direccionesDyn(),{id:"factigis_direcciones"});
@@ -69,20 +60,54 @@ class Factigis extends React.Component {
     layerRotulos.setLayerDefinitions(layerDefs);
     mapp.addLayer(layerRotulos,2);
 
+    var toggle = new BasemapToggle({
+      map: mapp,
+      basemap: "hybrid"
+    }, "BasemapToggle");
+    toggle.startup();
+
+    var search = new Search({
+      map: mapp
+      }, "search");
+    search.startup();
 
   }
 
   render(){
+    let whoLogged = cookieHandler.get('usrprfl');
+    whoLogged = whoLogged.NOMBRE_COMPLETO.split(" ");
+
     const factigisRender =
           <div className="wrapper_factigis">
-            <div className="wrapper_factibilidadLeft">
-              <Factigis_Add themap={this.state.themap} permissions={this.state.permissions}/>
+            <div className="wrapper_factibilidadTop">
+              <Breadcrumb>
+                 <Breadcrumb.Item href="index.html">
+                   Inicio
+                 </Breadcrumb.Item>
+                 <Breadcrumb.Item href="factigisDashboard.html">
+                   Dashboard
+                 </Breadcrumb.Item>
+                 <Breadcrumb.Item active>
+                   Crear Factibilidad
+                 </Breadcrumb.Item>
+               </Breadcrumb>
+               <div className="factigis_navElements">
+                <div id="search"></div>
+                <h7 className="factigis_whologged">Bienvenido: {whoLogged[0]}</h7>
+               </div>
             </div>
-            <div className="wrapper_factibilidadRight">
-              <LayerList show={["check_factigis_transmision", "check_factigis_distribucion", "check_factigis_vialidad", "check_campamentos", "check_chqbasemap",
-              "check_subestaciones","check_MT","check_BT"]} />
+            <div className="wrapper_factibilidadContent">
+              <div className="wrapper_factibilidadLeft">
+                <Factigis_Add themap={this.state.themap} permissions={this.state.permissions}/>
+              </div>
+              <div className="wrapper_factibilidadRight">
+                <LayerList show={["check_factigis_transmision", "check_factigis_distribucion", "check_factigis_vialidad", "check_campamentos", "check_chqbasemap",
+                "check_subestaciones","check_MT","check_BT"]} />
 
-              <div className="factigis_map_div" id="factigis_map_div"></div>
+                <div className="factigis_map_div" id="factigis_map_div">
+                  <div id="BasemapToggle" ></div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -91,7 +116,7 @@ class Factigis extends React.Component {
       return;
     }else {
       return (
-        <div>{factigisRender}</div>
+        <div className="factigis_f">{factigisRender}</div>
       );
     }
 

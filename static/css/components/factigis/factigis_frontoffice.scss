@@ -2,14 +2,19 @@ $factigis_bgColor : ghostwhite;
 
 //Map
 .esriSimpleSliderTL {
-    /*top: 4em;
-    visibility: visible;
-    */
     top: 2em;
     visibility: visible;
     float: right !important;
     position: relative;
     margin-right: 3em;
+}
+
+.arcgisSearch .searchGroup{
+      margin-right: 5em;
+}
+
+.map .esriMapContainer{
+  height: 100%
 }
 //HTML
 .bodyfactigis{
@@ -27,14 +32,21 @@ $factigis_bgColor : ghostwhite;
 .wrapper_factigis{
   height: inherit;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+.factigis_map_div {
+  position: relative;
+  max-height: 945px;
+  width: 100%;
+  min-height: 800px;
+  height: 100%;
 }
 
-.factigis_map_div{
-  //height: inherit;
-      height: 100vh;
+.factigis_f{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
-
 .wrapper_factibilidadLeft{
   position: inherit;
   width: 40%;
@@ -51,6 +63,25 @@ $factigis_bgColor : ghostwhite;
   width: 60%;
 }
 
+.wrapper_factibilidadTop{
+  display: flex;
+  flex-direction: row;
+  background-color: #e8e8e8;
+  justify-content: space-between;
+}
+.breadcrumb {
+    padding: 8px 15px;
+    list-style: none;
+    background-color: #e8e8e8;
+    border-radius: 4px;
+    margin-bottom: 0;
+}
+.wrapper_factibilidadContent{
+  display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
 .wrapper_factibilidadCenter{
   display: flex;
     z-index: 1;
@@ -62,17 +93,42 @@ $factigis_bgColor : ghostwhite;
 
 }
 
+.BasemapToggle{
+  display: flex;
+  width: auto;
+  height: auto;
+  z-index: 2;
+  position: absolute;
+  bottom: 1.3em;
+  left: 1em;
+}
+
+
 //media screens for responsive design 'till 640px max'
-@media screen and (min-width: 0px) and (max-width: 640px) and (orientation: portrait)  {
+@media screen and (min-width: 0px) and (max-width: 640px) and (orientation: portrait) {
   .bodyfactigis {
     width: 100%;
     height: inherit;
   }
+  .wrapper_factibilidadTop {
+      display: flex;
+      flex-direction: row;
+      background-color: whitesmoke;
+      justify-content: space-between;
+  }
+  .wrapper_factibilidadContent {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.arcgisSearch .searchGroup {
+    margin-right: 1em;
+}
 
   .wrapper_factigis {
     height: inherit;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
   .wrapper_factibilidadLeft {
     width: 100%;
@@ -91,8 +147,123 @@ $factigis_bgColor : ghostwhite;
       height: 320px;
   }
 
+  .factigis_map_div {
+    position: relative;
+    max-height: 945px;
+    width: 100%;
+    min-height: 945px;
+    height: 100%;
 }
 
+}
+
+//media screens for responsive design 'till 640px max'
+@media screen and (min-width: 800px) and (max-width: 1024px) and (orientation: portrait) {
+  .bodyfactigis {
+    width: 100%;
+    height: inherit;
+  }
+  .wrapper_factibilidadTop {
+      display: flex;
+      flex-direction: row;
+      background-color: whitesmoke;
+      justify-content: space-between;
+  }
+  .wrapper_factibilidadContent {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.arcgisSearch .searchGroup {
+    margin-right: 1em;
+}
+
+  .wrapper_factigis {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+  .wrapper_factibilidadLeft {
+    width: 100%;
+    background: $factigis_bgColor;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .wrapper_factibilidadRight {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: inherit;
+      width: 100%;
+      height: 320px;
+  }
+
+  .factigis_map_div {
+    position: relative;
+    max-height: 945px;
+    width: 100%;
+    min-height: 945px;
+    height: 100%;
+}
+
+}
+
+//media screens for responsive design 'till 640px max'
+@media screen and (min-width: 800px) and (max-width: 1024px) and (orientation: landscape) {
+  .bodyfactigis {
+    width: 100%;
+    height: inherit;
+  }
+  .wrapper_factibilidadTop {
+      display: flex;
+      flex-direction: row;
+      background-color: whitesmoke;
+      justify-content: space-between;
+  }
+  .wrapper_factibilidadContent {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.arcgisSearch .searchGroup {
+    margin-right: 1em;
+}
+
+  .wrapper_factigis {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+  .wrapper_factibilidadLeft {
+    width: 40%;
+    background: $factigis_bgColor;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .wrapper_factibilidadRight {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      height: inherit;
+      width: 60%;
+      height: 320px;
+  }
+
+  .factigis_map_div {
+    position: relative;
+    max-height: 945px;
+    width: 100%;
+    min-height: 945px;
+    height: 100%;
+}
+
+}
+
+/*
 //media screens for responsive design 'till 640px max'
 @media screen and (min-width: 0px) and (max-width: 640px) and (orientation: landscape)  {
   .bodyfactigis {
@@ -108,7 +279,14 @@ $factigis_bgColor : ghostwhite;
   .wrapper_factigis {
     height: inherit;
     display: flex;
+    flex-direction: column;
+  }
+  .wrapper_factibilidadTop{
+    display: flex;
     flex-direction: row;
+  }
+  .wrapper_factibilidadContent{
+      display: flex;
   }
   .wrapper_factibilidadLeft {
     width: 100%;
@@ -128,7 +306,7 @@ $factigis_bgColor : ghostwhite;
   }
 
 }
-
+*/
 /*
 .LayerList__wrapper{
   z-index: 4;
@@ -164,6 +342,7 @@ $factigis_bgColor : ghostwhite;
   flex-direction: row;
 }
 */
+
 
 @import "components/factigis/factigis_add.scss";
 @import "components/layerlist-component";

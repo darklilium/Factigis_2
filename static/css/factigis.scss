@@ -28,7 +28,16 @@
       box-shadow: -1px 4px 35px -5px rgba(0,0,0,0.52);
 }
 
+.navbar{
+  margin-bottom: 0;
+}
+.navbar-default{
+width: 100%
+}
 
+.factigis_whologged{
+  margin-right: 1em
+}
 
 .factigisDashboard-aLink{
   text-decoration: none;
@@ -46,6 +55,11 @@ font-weight: bolder;
     width: inherit;
 }
 
+
+.factigis_navElements{
+  display: flex;
+  align-items: center;
+}
 
 @import "components/factigis/factigis_frontoffice.scss";
 @import "components/factigis/factigis_backoffice1.scss";

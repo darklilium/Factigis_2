@@ -60,7 +60,7 @@ class Factigis_Add extends React.Component {
     this.onClickDireccion = this.onClickDireccion.bind(this);
 
 
-  
+
     this.onBlur = this.onBlur.bind(this);
 
 
@@ -196,7 +196,7 @@ class Factigis_Add extends React.Component {
   componentDidMount(){
 
     //show widgets for each user permission available
-    //console.log(this.props.permissions);
+    ////console.log(this.props.permissions);
     let showA = this.props.permissions.filter(p=>{
       return p=='CREAR_FACTIBILIDAD';
     });
@@ -279,14 +279,14 @@ class Factigis_Add extends React.Component {
       case 'factigis_txtRut':
         var rut = new Rut(this.state.factigisRut);
         if (rut.isValid){
-          ////console.log("rut valido", rut.getNiceRut(false));
+          //////console.log("rut valido", rut.getNiceRut(false));
           this.setState({
             factigisRut: rut.getNiceRut(false),
             factigisRutValidator: true
           });
           //here put the color green to the field for validation ok
         }else{
-          ////console.log("rut invalido");
+          //////console.log("rut invalido");
           this.setState({factigisRutValidator: false});
           //here put the color red to the field for wrong validation.
         }
@@ -295,25 +295,25 @@ class Factigis_Add extends React.Component {
 
       case 'factigis_txtNombre':
         if(!this.state.factigisNombre==''){
-          ////console.log("si factigisNombre",this.state.factigisNombre.toUpperCase());
+          //////console.log("si factigisNombre",this.state.factigisNombre.toUpperCase());
           this.setState({
             factigisNombre:this.state.factigisNombre.toUpperCase(),
             factigisNombreValidator: true
           });
         }else{
-          ////console.log("no factigisNombre",this.state.factigisNombre);
+          //////console.log("no factigisNombre",this.state.factigisNombre);
           this.setState({factigisNombreValidator: false});
         }
       break;
 
       case 'factigis_txtApellido':
         if(!this.state.factigisApellido==''){
-          ////console.log("si factigisApellido",this.state.factigisApellido.toUpperCase());
+          //////console.log("si factigisApellido",this.state.factigisApellido.toUpperCase());
           this.setState({
             factigisApellido:this.state.factigisApellido.toUpperCase(),
             factigisApellidoValidator: true});
         }else{
-          ////console.log("no factigisApellido",this.state.factigisApellido.toUpperCase());
+          //////console.log("no factigisApellido",this.state.factigisApellido.toUpperCase());
           this.setState({factigisApellidoValidator: false});
         }
       break;
@@ -322,14 +322,14 @@ class Factigis_Add extends React.Component {
         if(!this.state.factigisTelefono==''){
           let telefono = "+56" + this.state.factigisTelefono
             if(telefono.length==12){
-                console.log("si factigisTelefono", telefono, telefono.length);
+                //console.log("si factigisTelefono", telefono, telefono.length);
                   this.setState({factigisTelefonoValidator: true});
             }else{
                 this.setState({factigisTelefonoValidator: false});
-                  console.log("no factigisTelefono", telefono, telefono.length);
+                  //console.log("no factigisTelefono", telefono, telefono.length);
             }
         }else{
-          ////console.log("no factigisTelefono",this.state.factigisTelefono);
+          //////console.log("no factigisTelefono",this.state.factigisTelefono);
           this.setState({factigisTelefonoValidator: false});
         }
       break;
@@ -337,44 +337,44 @@ class Factigis_Add extends React.Component {
       case 'factigis_txtEmail':
         if(!this.state.factigisEmail==''){
           if(validator.isEmail(this.state.factigisEmail.toUpperCase())){
-            ////console.log("email valido:",this.state.factigisEmail.toUpperCase());
+            //////console.log("email valido:",this.state.factigisEmail.toUpperCase());
             this.setState({factigisEmailValidator: true,
             factigisEmail: this.state.factigisEmail.toUpperCase()});
           }else{
-            ////console.log("email no valido, factigisEmail",this.state.factigisEmail.toUpperCase());
+            //////console.log("email no valido, factigisEmail",this.state.factigisEmail.toUpperCase());
             this.setState({factigisEmailValidator: false});
           }
         }else{
-          ////console.log("no factigisEmail",this.state.factigisEmail.toUpperCase());
+          //////console.log("no factigisEmail",this.state.factigisEmail.toUpperCase());
           this.setState({factigisEmailValidator: false});
         }
       break;
 
       case 'factigis_txtTramo':
         if(!this.state.factigisTramo==''){
-          ////console.log("si factigisTramo",this.state.factigisTramo);
+          //////console.log("si factigisTramo",this.state.factigisTramo);
           this.setState({factigisTramoValidator: true});
         }else{
-          ////console.log("no factigisTramo",this.state.factigisTramo);
+          //////console.log("no factigisTramo",this.state.factigisTramo);
           this.setState({factigisTramoValidator: false});
         }
       break;
 
       case 'factigis_txtCantEmpalmes':
         if(!this.state.factigisCantidadEmpalmes==''){
-          ////console.log("si factigis_cantidadEmpalmes",this.state.factigisCantidadEmpalmes);
+          //////console.log("si factigis_cantidadEmpalmes",this.state.factigisCantidadEmpalmes);
           this.setState({factigisCantidadEmpalmesValidator: true});
         }else{
-          ////console.log("no factigis_cantidadEmpalmes",this.state.factigisCantidadEmpalmes);
+          //////console.log("no factigis_cantidadEmpalmes",this.state.factigisCantidadEmpalmes);
           this.setState({factigisCantidadEmpalmesValidator: false});
         }
       break;
       case 'factigis_txtPotencia':
         if(!this.state.factigis_selectedValueTipoPotencia==''){
-          //console.log("si factigis_cantidadEmpalmes",this.state.factigisCantidadEmpalmes);
+          ////console.log("si factigis_cantidadEmpalmes",this.state.factigisCantidadEmpalmes);
           this.setState({factigistxtPotenciaValidator: true});
         }else{
-          //console.log("no factigis_cantidadEmpalmes",this.state.factigisCantidadEmpalmes);
+          ////console.log("no factigis_cantidadEmpalmes",this.state.factigisCantidadEmpalmes);
           this.setState({factigistxtPotenciaValidator: false});
         }
       break;
@@ -406,10 +406,10 @@ class Factigis_Add extends React.Component {
         this.setState({factigis_geoCliente: g.mapPoint, factigis_geoClienteValidator:true});
 
         factigis_findComuna(g.mapPoint, (cb)=>{
-          //console.log("comuna",cb[0].attributes.nombre);
+          ////console.log("comuna",cb[0].attributes.nombre);
           //getting zone due to user click on map.
           var zona = getZona(cb[0].attributes.nombre);
-          ////console.log("my zone",zona);
+          //////console.log("my zone",zona);
 
           //validar factibilidad.
           var zones = factigis_validator(g.mapPoint, (callbackMain)=>{
@@ -457,7 +457,7 @@ class Factigis_Add extends React.Component {
       this.setState({toggleCliente: 'OFF'});
       $('.factigis_btnSelectCliente').css('color',"black").css('border-color','initial');
       dojo.disconnect(this.state.btnCliente);
-      //////console.log("this is my saved point for cliente", this.state.factigis_geoCliente);
+      ////////console.log("this is my saved point for cliente", this.state.factigis_geoCliente);
     }
   }
 
@@ -501,10 +501,10 @@ class Factigis_Add extends React.Component {
             }
             //verificar si el rotulo es particular/otro u empresa: si es empresa, la factibilidad es normal, si es particular/otro, es asistida.
             if((featureSetFeatures[0].attributes['propiedad']=="Particular") || (featureSetFeatures[0].attributes['propiedad']=="Empresa que no presta Servicio Distribucion")){
-              //console.log("poste es ",featureSetFeatures[0].attributes['propiedad'], featureSetFeatures);
+              ////console.log("poste es ",featureSetFeatures[0].attributes['propiedad'], featureSetFeatures);
               this.setState({factiTipoFactibilidad: 'FACTIBILIDAD ASISTIDA'});
             }else{
-              //console.log("poste es empresa" ,featureSetFeatures[0].attributes['propiedad'], featureSetFeatures);
+              ////console.log("poste es empresa" ,featureSetFeatures[0].attributes['propiedad'], featureSetFeatures);
               this.setState({factiTipoFactibilidad: 'FACTIBILIDAD NORMAL'});
             }
             //dibujar linea entre poste y cliente
@@ -538,7 +538,7 @@ class Factigis_Add extends React.Component {
       this.setState({togglePoste: 'OFF'});
         $('.factigis_btnSelectPoste').css('color',"black");
         dojo.disconnect(this.state.btnPoste);
-        //////console.log("this is my saved point for poste", this.state.factigis_geoPoste);
+        ////////console.log("this is my saved point for poste", this.state.factigis_geoPoste);
     }
   }
 
@@ -576,7 +576,7 @@ class Factigis_Add extends React.Component {
 
         var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
           factigis_findTramo(g.mapPoint, (featureSetFeatures)=>{
-            //console.log("esto llega",featureSetFeatures);
+            ////console.log("esto llega",featureSetFeatures);
 
             this.setState({
               factigisTramoValidator: true,
@@ -591,7 +591,7 @@ class Factigis_Add extends React.Component {
       this.setState({togglePoste: 'OFF'});
         $('.factigis_btnSelectPoste').css('color',"black");
         dojo.disconnect(this.state.btnPoste);
-        //////console.log("this is my saved point for poste", this.state.factigis_geoPoste);
+        ////////console.log("this is my saved point for poste", this.state.factigis_geoPoste);
     }
   }
 
@@ -612,12 +612,12 @@ class Factigis_Add extends React.Component {
           factigis_findDireccion(g.mapPoint, (featureSetFeatures)=>{
             //if theres no results for old addresses, search in new ones.
             if(!featureSetFeatures.length){
-              ////console.log("searching in new addresses");
+              //////console.log("searching in new addresses");
               factigis_findNewDireccion(g.mapPoint, (featureSetFeatures)=>{
                 if(!featureSetFeatures.length){
-                  ////console.log("not detected any in old or new adresses");
+                  //////console.log("not detected any in old or new adresses");
                 }else{
-                  ////console.log("detected in new addresses");
+                  //////console.log("detected in new addresses");
                   let direccion = featureSetFeatures[0].attributes['CALLE'] + " " + featureSetFeatures[0].attributes['NUMERO'];
                   this.setState({
                     factigis_geoDireccion: featureSetFeatures[0].geometry,
@@ -639,7 +639,7 @@ class Factigis_Add extends React.Component {
               });
             //else , change the values for states and display the old address found.
             }else{
-              ////console.log("detected in old addresses");
+              //////console.log("detected in old addresses");
               let direccion = featureSetFeatures[0].attributes['nombre_calle'] + " " + featureSetFeatures[0].attributes['numero'];
               this.setState({
                 factigis_geoDireccion: featureSetFeatures[0].geometry,
@@ -670,16 +670,16 @@ class Factigis_Add extends React.Component {
       this.setState({toggleDireccion: 'OFF'});
         $('.factigis_btnSelectDireccion').css('color',"black");
         dojo.disconnect(this.state.btnDireccion);
-        //////console.log("this is my saved point for poste", this.state.factigis_geoPoste);
+        ////////console.log("this is my saved point for poste", this.state.factigis_geoPoste);
     }
   }
 
   onChangeComboBox(type, val){
     switch (type) {
       case 'tipoCliente':
-        ////console.log("haciendo click en tipo cliente", type,val);
+        //////console.log("haciendo click en tipo cliente", type,val);
         if(!val){
-          ////console.log("no hay value" , val);
+          //////console.log("no hay value" , val);
           this.setState({factigis_selectedValueCliente: 'NODEFINIDO', factigisTipoClienteValidator: false});
           return;
         }
@@ -687,9 +687,9 @@ class Factigis_Add extends React.Component {
       break;
 
       case 'tipoContribuyente':
-        ////console.log("haciendo click en tipoContribuyente", type,val);
+        //////console.log("haciendo click en tipoContribuyente", type,val);
         if(!val){
-          ////console.log("no hay value" , val);
+          //////console.log("no hay value" , val);
           this.setState({factigis_selectedValueTipoContribuyente: 'NODEFINIDO', factigisTipoContribuyenteValidator: false});
           return;
         }
@@ -697,9 +697,9 @@ class Factigis_Add extends React.Component {
       break;
 
       case 'tipoEmpalme':
-        ////console.log("haciendo click en ", type,val);
+        //////console.log("haciendo click en ", type,val);
         if(!val){
-          ////console.log("no hay value" , val);
+          //////console.log("no hay value" , val);
           this.setState({factigis_selectedValueTipoEmpalme: 'NODEFINIDO', factigisTipoEmpalmeValidator: false, factigis_tipoPotencia: []});
           return;
         }
@@ -707,9 +707,9 @@ class Factigis_Add extends React.Component {
       break;
 
       case 'tipoFase':
-        ////console.log("haciendo click en ", type,val);
+        //////console.log("haciendo click en ", type,val);
         if(!val){
-          ////console.log("no hay value" , val);
+          //////console.log("no hay value" , val);
           this.setState({factigis_selectedValueTipoFase: 'NODEFINIDO', factigisTipoFaseValidator: false, factigis_tipoPotencia: []});
           return;
         }
@@ -717,9 +717,9 @@ class Factigis_Add extends React.Component {
       break;
 
       case 'tipoPotencia':
-        //console.log("haciendo click en ",val);
+        ////console.log("haciendo click en ",val);
         if(!val){
-        //console.log("no hay value" , val);
+        ////console.log("no hay value" , val);
           this.setState({factigis_selectedValueTipoPotencia: 'NODEFINIDO', factigisPotenciaValidator: false, factigistxtPotenciaValidator: true});
           return;
         }
@@ -729,13 +729,13 @@ class Factigis_Add extends React.Component {
       case 'tipoEmpalmeBTMT':
 
         if(!val){
-          //console.log("no hay value" , val);
+          ////console.log("no hay value" , val);
           this.setState({factigis_selectedValueTipoEmpalmeBTMT: 'NODEFINIDO', factigisTipoBTMTValidator: false});
           return;
         }
         this.setState({factigis_selectedValueTipoEmpalmeBTMT: val, factigisTipoBTMTValidator:true, factigisTramoValidator: true});
         if(val=='BT'){
-          //console.log("seleccionado", val, "abriendo combo de potencia bt");
+          ////console.log("seleccionado", val, "abriendo combo de potencia bt");
           this.setState({visibilityStyle:
             {
               selectPotencia: {
@@ -757,7 +757,7 @@ class Factigis_Add extends React.Component {
           //ENABLE QTTY WHEN SELECT bt
           this.setState({factigis_cantEmpalmesEnabled: false, factigisCantidadEmpalmes: 0});
         }else{
-          //console.log("seleccionado", val, "abriendo txt para escribir potencia");
+          ////console.log("seleccionado", val, "abriendo txt para escribir potencia");
           this.setState({visibilityStyle:
             {
               selectPotencia: {
@@ -784,9 +784,9 @@ class Factigis_Add extends React.Component {
       break;
 
       case 'ddlCantidadEmpalmes':
-        //console.log("haciendo click en ",val);
+        ////console.log("haciendo click en ",val);
         if(!val){
-        //console.log("no hay value" , val);
+        ////console.log("no hay value" , val);
           this.setState({factigisCantidadEmpalmes: 'NODEFINIDO', factigisCantidadEmpalmesValidator: false});
           return;
         }
@@ -799,11 +799,11 @@ class Factigis_Add extends React.Component {
   onOpen(){
 
     if( (this.state.factigis_selectedValueTipoEmpalme=='NODEFINIDO' || this.state.factigis_selectedValueTipoEmpalme=="") || (this.state.factigis_selectedValueTipoFase=='NODEFINIDO' || this.state.factigis_selectedValueTipoFase=="")){
-      //////console.log("no hay valor de tipo Empalme para calcular potencia.", this.state.factigis_selectedValueTipoFase, this.state.factigis_selectedValueTipoEmpalme);
+      ////////console.log("no hay valor de tipo Empalme para calcular potencia.", this.state.factigis_selectedValueTipoFase, this.state.factigis_selectedValueTipoEmpalme);
       return
     }else{
       getPotenciaEmpalme(this.state.factigis_selectedValueTipoEmpalme,this.state.factigis_selectedValueTipoFase, (cb)=>{
-        ////console.log(cb);
+        //////console.log(cb);
         this.setState({factigis_tipoPotencia: cb})
       });
 
@@ -853,7 +853,7 @@ class Factigis_Add extends React.Component {
       if(callback){
         //enable add button
 
-        ////console.log("Cliente con sus datos validados, se procede a verificar información de factibilidad...", callback2);
+        //////console.log("Cliente con sus datos validados, se procede a verificar información de factibilidad...", callback2);
 
         let fact = {
           campamentos: this.state.zonaCampamentos,
@@ -865,7 +865,7 @@ class Factigis_Add extends React.Component {
         let factArr = [];
         //abrir modal aca para indicar si existen problemas con factibilidad.
         if(this.state.zonaCampamentos==false){
-          ////console.log();
+          //////console.log();
           factArr.push("campamentos");
         }
         if(this.state.zonaConcesion==false){
@@ -919,11 +919,11 @@ class Factigis_Add extends React.Component {
             factigisZona: this.state.factigisZona
             }
             factigis_addNuevaFactibilidad(myFact, (cb)=>{
-              //console.log("alo",cb);
+              ////console.log("alo",cb);
               if(cb[0]){
                 let fArr = factArr.map(f=>{return f+'\n'});
-                //console.log(cb[1],"esto llego del object para el certificado");
-                console.log(cb[2],"retorno de agregacion");
+                ////console.log(cb[1],"esto llego del object para el certificado");
+                //console.log(cb[2],"retorno de agregacion");
 
                 this.setState({
                   open: true,
@@ -951,21 +951,21 @@ class Factigis_Add extends React.Component {
 
         //FACTIBILIDAD ASISTIDA
         }else{
-          //console.log("Zonas de factbilidad con problemas.", factArr);
+          ////console.log("Zonas de factbilidad con problemas.", factArr);
           let fArr = [];
 
 
           if($.inArray("concesion",factArr)>-1){
-              //console.log("esta..conces",factArr);
+              ////console.log("esta..conces",factArr);
               fArr.push("concesion");
           }
           if ($.inArray("transmision",factArr)>-1) {
-              //console.log("esta..transmision",factArr);
+              ////console.log("esta..transmision",factArr);
               fArr.push("transmision");
           }
 
           if(!fArr.length){
-              //console.log('Factibilidad asistida por', fArr, factArr);
+              ////console.log('Factibilidad asistida por', fArr, factArr);
               this.setState({factiTipoFactibilidad: 'FACTIBILIDAD ASISTIDA'});
               var myFact = {
                 factigisRut: this.state.factigisRut,
@@ -1001,10 +1001,10 @@ class Factigis_Add extends React.Component {
                 factigisComuna: this.state.factigisComuna
                 }
               factigis_addNuevaFactibilidad(myFact, (cb)=>{
-                //console.log("alo",cb);
+                ////console.log("alo",cb);
                 if(cb[0]){
                   let fArr = factArr.map(f=>{return f+'\n'});
-                  //console.log(cb[1],"esto llego del object para el certificado");
+                  ////console.log(cb[1],"esto llego del object para el certificado");
                   this.setState({
                     open: true,
                     problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'],
@@ -1031,7 +1031,7 @@ class Factigis_Add extends React.Component {
 
               });
           }else{
-            //console.log('Factibilidad no se puede agregar por', fArr, factArr);
+            ////console.log('Factibilidad no se puede agregar por', fArr, factArr);
             this.setState({open: true, problemsforAdding: 'La factibilidad que está intentando agregar presenta problemas en las siguientes zonas: '+ '\n' + fArr});
 
           }
@@ -1039,10 +1039,10 @@ class Factigis_Add extends React.Component {
 
 
       }else{
-        ////console.log("Hay un valor que no esta definido.", callback2, callback);
+        //////console.log("Hay un valor que no esta definido.", callback2, callback);
         this.setState({open: true, problemsforAdding: 'Por favor ingrese los campos que faltan (en rojo)'});
         if(this.state.visibilityStyle.selectPotencia.visibility=='hidden'){
-          //console.log("escondido el select");
+          ////console.log("escondido el select");
           $(".factigisPotencia").css('border-style','initial').css('border-width','0px');
         }
       }
@@ -1345,17 +1345,17 @@ class Factigis_Add extends React.Component {
               </ul>
             </div>
             <hr className="factigis_hr"/>
-
+            <div className="factigis_buttons">
               <button onClick={this.onClickAgregarCliente.bind(this)}
                 className="factigis_submitButton btn btn-success" title="Agregar Factibilidad " type="button" >
                 <span><i className="fa fa-plus"></i> Agregar</span>
               </button>
-              <hr className="factigis_hr"/>
+
               <button onClick={this.onClickLimpiarDatos.bind(this)}
                 className="factigis_submitButton btn btn-info" title="Limpiar campos " type="button" >
                 <span><i className="fa fa-erase"></i> Limpiar</span>
               </button>
-
+            </div>
               <Modal isOpen={this.state.open} style={customStyles}>
                 <h2 className="factigis_h2">Factibilidad N°: {this.state.numeroFactibilidad}</h2>
                 <p>{this.state.problemsforAdding}</p>
