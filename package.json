@@ -7,7 +7,7 @@
     "build": "webpack --config ./webpack.config.js",
     "test": "karma start --single-run",
     "gulp": "gulp",
-    "start": "start npm run dev:server & start npm run build & start npm run gulp",
+    "start": "start npm run dev:server & start npm run gulp",
     "dev:server": "webpack-dev-server",
     "prod:build": "webpack --optimize-minimize --progress --colors"
   },
@@ -54,7 +54,7 @@
     "react-select": "~1.0.0-beta13",
     "react-tabs": "^0.5.3",
     "redux": "~3.5.2",
-    "rutjs": "~0.1.1",
+    "rutjs": "^0.1.1",
     "validator": "~5.5.0"
   }
 }

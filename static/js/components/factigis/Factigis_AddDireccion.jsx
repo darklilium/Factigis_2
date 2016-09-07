@@ -9,7 +9,7 @@ import makeSymbol from '../../utils/makeSymbol';
 import layers from '../../services/layers-service';
 import {layersActivated, setLayers} from '../../services/layers-service';
 import {factigis_findCalle} from '../../services/factigis_services/factigis_find-service';
-import Rut from 'rutjs';
+
 import {factigis_addNuevaDireccion} from '../../services/factigis_services/factigis_add-service';
 import LayerList from  '../../components/LayerList.jsx';
 import Modal from 'react-modal';

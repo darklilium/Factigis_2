@@ -60,9 +60,9 @@ class FactigisCarta extends React.Component {
     hoy = mm+'/'+dd+'/'+yyyy;
 
     //dev
-    //let image = "dist/css/images/factigis_images/logo_chq400.png";
+    let image = "dist/css/images/factigis_images/logo_chq400.png";
     //prod
-    let image = "css/images/factigis_images/logo_chq400.png";
+    //let image = "css/images/factigis_images/logo_chq400.png";
 
     return (
     <div className="wrapper_factigisCarta">

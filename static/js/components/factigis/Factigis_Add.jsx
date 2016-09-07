@@ -8,8 +8,8 @@ import {factigis_validator} from '../../services/factigis_services/factigis_vali
 import makeSymbol from '../../utils/makeSymbol';
 import layers from '../../services/layers-service';
 import {layersActivated, setLayers} from '../../services/layers-service';
-import {factigis_findDireccion, factigis_findComuna, factigis_findRotulo, factigis_findCalle, factigis_findNewDireccion, factigis_findTramo, factigis_findSEP} from '../../services/factigis_services/factigis_find-service';
-import Rut from 'rutjs';
+import {factigis_findDireccion, factigis_findComuna, factigis_findRotulo, factigis_findCalle,
+  factigis_findNewDireccion, factigis_findTramo, factigis_findSEP} from '../../services/factigis_services/factigis_find-service';
 import Factigis_AddDireccion from '../factigis/Factigis_AddDireccion.jsx';
 import toggleOff from '../../services/factigis_services/factigis_toggleBtnFx-service';
 import validator from 'validator';
@@ -23,6 +23,7 @@ import {getZona} from '../../services/factigis_services/factigis_zonas';
 import token from '../../services/token-service';
 import cookieHandler from 'cookie-handler';
 import _ from 'lodash';
+import Rut from 'rutjs';
 
 
 var Tab = ReactTabs.Tab;
@@ -59,7 +60,7 @@ class Factigis_Add extends React.Component {
     this.onClickDireccion = this.onClickDireccion.bind(this);
 
 
-    this.onChange = this.onChange.bind(this);
+  
     this.onBlur = this.onBlur.bind(this);
 
 
@@ -289,6 +290,7 @@ class Factigis_Add extends React.Component {
           this.setState({factigisRutValidator: false});
           //here put the color red to the field for wrong validation.
         }
+
       break;
 
       case 'factigis_txtNombre':
@@ -1191,7 +1193,7 @@ class Factigis_Add extends React.Component {
           <div className="factigis_BigGroupbox">
             <h8>Rut:</h8>
             <div className="factigis_groupbox">
-              <input id="factigis_txtRut" className="factigis-input factigisRut" onChange={this.onChange} onBlur={this.onBlur} value={this.state.factigisRut} title="Ingrese Rut e indique ubicación del cliente" type="text" placeholder="Ingrese Rut e indique ubicación del cliente"  />
+              <input id="factigis_txtRut" className="factigis-input factigisRut" onChange={this.onChange.bind(this)} onBlur={this.onBlur} value={this.state.factigisRut} title="Ingrese Rut e indique ubicación del cliente" type="text" placeholder="Ingrese Rut e indique ubicación del cliente"  />
               <button onClick={this.onClickCliente} className="factigis-selectFromMapButton factigis_btnSelectCliente btn btn-default" title="Ir " type="button" >
                 <span><i className="fa fa-map-marker"></i></span>
               </button>
@@ -1201,24 +1203,24 @@ class Factigis_Add extends React.Component {
             <div className="factigis_groupbox">
               <div className="factigis_group">
                 <h8>Nombre Cliente:</h8>
-                <input id="factigis_txtNombre" onChange={this.onChange} value={this.state.factigisNombre} onBlur={this.onBlur} className="factigis-input factigis_input-solo factigisNombre" title="Escriba el nombre del cliente" type="text" placeholder="Nombre Completo"  />
+                <input id="factigis_txtNombre" onChange={this.onChange.bind(this)} value={this.state.factigisNombre} onBlur={this.onBlur} className="factigis-input factigis_input-solo factigisNombre" title="Escriba el nombre del cliente" type="text" placeholder="Nombre Completo"  />
               </div>
 
               <div className="factigis_group">
                 <h8>Apellido:</h8>
-                <input id="factigis_txtApellido" onChange={this.onChange} value={this.state.factigisApellido} onBlur={this.onBlur} className="factigis-input factigis_input-solo factigisApellido" title="Escriba el primer apellido del cliente" type="text" placeholder="Apellido Paterno"  />
+                <input id="factigis_txtApellido" onChange={this.onChange.bind(this)} value={this.state.factigisApellido} onBlur={this.onBlur} className="factigis-input factigis_input-solo factigisApellido" title="Escriba el primer apellido del cliente" type="text" placeholder="Apellido Paterno"  />
               </div>
             </div>
 
             <div className="factigis_groupbox">
               <div className="factigis_group">
                 <h8>Telefono:</h8>
-                <input type="tel" id="factigis_txtTelefono" onKeyPress={this.onKeyTelefono.bind(this)}  maxLength="9"  className="factigis-input factigis_input-solo factigisTelefono" onChange={this.onChange}  value={this.state.factigisTelefono} onBlur={this.onBlur} title="Ingrese teléfono del cliente Ej.:(984031777) RF: (322222336)" placeholder="9 Dígitos, ej.: Cel: 984587445, RF: 322222336"  />
+                <input type="tel" id="factigis_txtTelefono" onKeyPress={this.onKeyTelefono.bind(this)}  maxLength="9"  className="factigis-input factigis_input-solo factigisTelefono" onChange={this.onChange.bind(this)}  value={this.state.factigisTelefono} onBlur={this.onBlur} title="Ingrese teléfono del cliente Ej.:(984031777) RF: (322222336)" placeholder="9 Dígitos, ej.: Cel: 984587445, RF: 322222336"  />
               </div>
 
               <div className="factigis_group">
                 <h8>Email:</h8>
-                <input id="factigis_txtEmail" className="factigis-input factigis_input-solo factigisEmail" onChange={this.onChange}  value={this.state.factigisEmail} onBlur={this.onBlur} title="Escriba el email de contacto" type="text" placeholder="ejemplo@email.com"  />
+                <input id="factigis_txtEmail" className="factigis-input factigis_input-solo factigisEmail" onChange={this.onChange.bind(this)}  value={this.state.factigisEmail} onBlur={this.onBlur} title="Escriba el email de contacto" type="text" placeholder="ejemplo@email.com"  />
               </div>
             </div>
             <div className="factigis_groupbox">
@@ -1256,7 +1258,7 @@ class Factigis_Add extends React.Component {
             <div className="factigis_group">
                 <h8>Tramo de Conexión:</h8>
               <div className="factigis_group ">
-                <input id="factigis_txtTramo" value={this.state.factigisTramo} disabled={true} onChange={this.onChange} onBlur={this.onBlur} className="factigis-input factigis_input-solo factigisTramo factigisTramo2" title="Poste o Cámara" type="text" placeholder="Poste o cámara encontrado" />
+                <input id="factigis_txtTramo" value={this.state.factigisTramo} disabled={true} onChange={this.onChange.bind(this)} onBlur={this.onBlur} className="factigis-input factigis_input-solo factigisTramo factigisTramo2" title="Poste o Cámara" type="text" placeholder="Poste o cámara encontrado" />
                 <h8 className="factigis__toggleBtnLabel">{this.state.toggleDireccion}</h8>
               </div>
             </div>
@@ -1290,14 +1292,14 @@ class Factigis_Add extends React.Component {
                 <h8>Potencia (kW):</h8>
                 <Select style={this.state.visibilityStyle.selectPotencia} onOpen={this.onOpen.bind(this)} id="ddlPotencia" disabled={false} className="factigis_selectEmpalme factigis_selectInput factigisPotencia " name="ddlPotencia" options={this.state.factigis_tipoPotencia} onChange={this.onChangeComboBox.bind(this,"tipoPotencia")}
                   value={this.state.factigis_selectedValueTipoPotencia} simpleValue clearable={true} searchable={false} placeholder="Seleccione potencia"/>
-                <input style={this.state.visibilityStyle.txtPotencia} id="factigis_txtPotencia" value={this.state.factigis_selectedValueTipoPotencia} disabled={false} onChange={this.onChange} onBlur={this.onBlur} className="factigis-input factigis_input-solo factigisPotencia2" title="Ingrese potencia" type="text" placeholder="Potencia solicitada" />
+                <input style={this.state.visibilityStyle.txtPotencia} id="factigis_txtPotencia" value={this.state.factigis_selectedValueTipoPotencia} disabled={false} onChange={this.onChange.bind(this)} onBlur={this.onBlur} className="factigis-input factigis_input-solo factigisPotencia2" title="Ingrese potencia" type="text" placeholder="Potencia solicitada" />
 
               </div>
             </div>
             <div className="factigis_groupbox">
               <div className="factigis_group factigis_radiobuttonGroup">
-                <input type="radio" id="factigis_checkEmpalmeDefinitivo" className="factigis_radiobutton" name="permanenciaEmpalme" value="DEFINITIVO" defaultChecked={this.state.radioEmpalmeDefinitivo} onChange={this.onChange} />Definitivo<br />
-                <input type="radio" id="factigis_checkEmpalmeProvisorio" className="factigis_radiobutton" name="permanenciaEmpalme" value="PROVISORIO" defaultChecked={this.state.radioEmpalmeProvisorio} onChange={this.onChange}/>Provisorio<br />
+                <input type="radio" id="factigis_checkEmpalmeDefinitivo" className="factigis_radiobutton" name="permanenciaEmpalme" value="DEFINITIVO" defaultChecked={this.state.radioEmpalmeDefinitivo} onChange={this.onChange.bind(this)} />Definitivo<br />
+                <input type="radio" id="factigis_checkEmpalmeProvisorio" className="factigis_radiobutton" name="permanenciaEmpalme" value="PROVISORIO" defaultChecked={this.state.radioEmpalmeProvisorio} onChange={this.onChange.bind(this)}/>Provisorio<br />
               </div>
 
               <div className="factigis_group">
