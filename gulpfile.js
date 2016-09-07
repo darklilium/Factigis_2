@@ -87,6 +87,13 @@ gulp.task('js', function(){
 
 });
 
+gulp.task('css2', function(){
+  return gulp.src('./static/css/vendor/*.css')
+    .on('error', reportError)
+    .pipe(gulp.dest(dist('css/vendor')))
+
+});
+
 gulp.task('watch', function(){
   gulp.watch(['css/**/*.scss'].map(realPath), ['sass']);
   gulp.watch(['*.html'], ['templates']);
@@ -95,4 +102,4 @@ gulp.task('watch', function(){
 });
 
 
-gulp.task('default', ['sass', 'templates', 'libs','fonts','images','watch', 'css','html','images2']);
+gulp.task('default', ['sass', 'templates', 'libs','fonts','images','watch', 'css','html','images2','css2']);

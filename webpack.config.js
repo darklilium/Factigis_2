@@ -6,6 +6,8 @@ module.exports = {
         //put ur bundle files here.
         login: './static/js/bundles/login.js',
         factigisDashboard: './static/js/bundles/factigisDashboard.js',
+        factigisFrontoffice: './static/js/bundles/factigisFrontoffice.js',
+        factigisCarta: './static/js/bundles/factigisCarta.js',
         vendor: [
         // put your third party libs here
         ]
