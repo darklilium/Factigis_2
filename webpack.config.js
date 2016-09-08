@@ -23,22 +23,16 @@ module.exports = {
         extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
     },
     module: {
-        loaders: [
-            // ES2015 files
-            {
-              test: /\.(js|jsx)$/,
-              loader: 'babel',
-              exclude: /node_modules/,
-              query: {
-                presets: ['react', 'es2015', 'stage-2']
-              }
-            },
-            // css
-            {
-                test: /\.css$/,
-                loader: "style-loader!css-loader"
-            }
-        ]
+      loaders: [
+       {
+         test: /\.(js|jsx)$/,
+         exclude: /node_modules/,
+         loader: 'babel',
+         query: {
+           presets: ['react', 'es2015', 'stage-2']
+         }
+       }
+     ]
     },
     externals: [
         function(context, request, callback) {

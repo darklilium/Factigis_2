@@ -7,31 +7,19 @@
         <!-- API Installed  in server -->
         <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/dijit/themes/tundra/tundra.css" />
         <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/esri/css/esri.css" />
-
         <link rel="stylesheet" href="dist/css/login.css">
     </head>
 
     <body>
-      <div class="login_wrapper">
-      <section id="myLogin" class="myLogin"></section>
+        <div id="wrapper_login"></div>
+            <!-- CDN -->
+            <!--  <script src="https://js.arcgis.com/3.16/" data-dojo-config="async: true"></script> -->
+            <!-- API Installed  in server -->
+            <script src="static/js/vendor/jquery-2.2.1.min.js"></script>
+            <script src="arcgis_js_api/library/3.17/3.17/init.js"></script>
+            <script>
+                require(["vendor.js", "login.js"], function (vendor, login) {});
+            </script>
 
-      <footer class="login_footer">
-        <h4 class="notification-login backgroundColorNotification"></h4>
-        <div class="login_footer__div">
-            <img class="login_footer__img" src="dist/css/images/chq_i.png" />
-            <p class="footer__div__p">&copy; 2016 Planificación y Gestión de la Información Operacional</p>
-        </div>
-          </footer>
-      </div>
-
-          <!-- CDN -->
-        <!--  <script src="https://js.arcgis.com/3.16/" data-dojo-config="async: true"></script> -->
-          <!-- API Installed  in server -->
-          <script src="arcgis_js_api/library/3.17/3.17/init.js"></script>
-           <script src="static/js/vendor/jquery-2.2.1.min.js"></script>
-        <script>
-            require(["vendor.js", "login.js"], function (vendor, login) {});
-            /* require(["dist/js/vendor.js", "dist/js/login.js"], function (vendor, login) {}); */
-        </script>
     </body>
 </html>
