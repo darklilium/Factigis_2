@@ -29,6 +29,16 @@ $factigis_bgColor : ghostwhite;
   height: inherit;
 }
 
+.factigis_navElements{
+  display: flex;
+    flex-direction: row;
+}
+
+.factigis_whologged{
+  display: flex;
+  align-self: center;
+  margin-right: 1em;
+}
 .wrapper_factigis{
   height: inherit;
   display: flex;

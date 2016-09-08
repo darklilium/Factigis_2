@@ -1,0 +1,151 @@
+//CSS Code for Dashboard
+//for loader icon.
+  .loader {
+		position: fixed;
+		left: 0px;
+		top: 0px;
+		width: 100%;
+		height: 100%;
+		z-index: 9999;
+		background: url('images/Preloader_3.gif') 50% 50% no-repeat rgb(249,249,249);
+	}
+
+.dashboard_whoLogged{
+  right: 1em;
+  position: absolute;
+}
+  .breadcrumb {
+      padding: 8px 15px;
+      margin-bottom: 20px;
+      list-style: none;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      height: 40px;
+
+      box-shadow: 0px 1px 5px rgba(190, 190, 190, 0.46);
+      -webkit-box-shadow: 0px 1px 5px rgba(190, 190, 190, 0.46);
+      -moz-box-shadow: 0px 1px 5px rgba(190, 190, 190, 0.46);
+      -webkit-backface-visibility: hidden;
+      /*
+      padding: 8px 15px;
+      list-style: none;
+      background-color: #e8e8e8;
+      border-radius: 4px;
+      margin-bottom: 0;
+*/
+  }
+
+  .dashboard_factibilidadTop{
+    display: flex;
+    flex-direction: row;
+    background-color: #e8e8e8;
+    justify-content: space-between;
+  }
+
+  .dashboard_navElements{
+    display: flex;
+      flex-direction: row;
+  }
+
+  .dashboard_whologged{
+    display: flex;
+    align-self: center;
+    margin-right: 1em;
+  }
+
+.bodyfactigisdashboard{
+  background-image: url("images/factigis_images/dashboardbg2.jpg");
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+.wrapper_factigisDashboard{
+  /*display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      margin-top: 6em;
+  */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin-top: 10em;
+
+  }
+
+.factigisDashboard_moduleContainer{
+  /*display: flex;
+  height: 10em;
+  align-items: center;
+  padding: 3em 3em 3em 1.5em;
+  margin: 0.5em;
+      -webkit-box-shadow: -1px 4px 35px -5px rgba(0,0,0,0.52);
+      -moz-box-shadow: -1px 4px 35px -5px rgba(0,0,0,0.52);
+      box-shadow: -1px 4px 35px -5px rgba(0,0,0,0.52);
+
+  */
+
+  display: flex;
+align-items: center;
+padding-top: 3em;
+margin: 1.5em;
+-webkit-box-shadow: -1px 4px 35px -5px rgba(0, 0, 0, 0.52);
+-moz-box-shadow: -1px 4px 35px -5px rgba(0, 0, 0, 0.52);
+box-shadow: -1px 4px 35px -5px rgba(0, 0, 0, 0.52);
+list-style: none;
+background-color: #f5f5f5;
+border-radius: 4px;
+/* background: #fff; */
+border-bottom: 1px solid #ddd;
+height: 10em;
+box-shadow: 0px 1px 5px rgba(190, 190, 190, 0.46);
+-webkit-box-shadow: 0px 1px 5px rgba(190, 190, 190, 0.46);
+-moz-box-shadow: 0px 1px 5px rgba(190, 190, 190, 0.46);
+-webkit-backface-visibility: hidden;
+width: 40%;
+padding-left: 3em;
+padding-bottom: 3em;
+}
+
+.navbar{
+  margin-bottom: 0;
+}
+.navbar-default{
+width: 100%
+}
+
+.factigis_whologged{
+  margin-right: 1em
+}
+
+.factigisDashboard-aLink{
+  text-decoration: none;
+font-family: arial;
+color: white;
+font-weight: bolder;
+}
+
+.factigisDashboard-divimg{
+  width: 6em;
+  height: 6em;
+  margin-right: 4em;
+  margin-left: 0em;
+}
+.factigisDashboard-img{
+    width: inherit;
+}
+
+
+.factigis_navElements{
+  display: flex;
+  align-items: center;
+}

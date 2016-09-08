@@ -8,10 +8,16 @@
     <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/esri/css/esri.css" />
     <link rel="stylesheet" href="static/js/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="static/js/vendor/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/factigis.css" />
-
+    <link rel="stylesheet" type="text/css" href="dist/css/factigisDashboard.css" />
+    <script src="static/js/vendor/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+      $(".loader").fadeOut("slow");
+    })
+    </script>
   </head>
   <body class="bodyfactigisdashboard">
+    <div class="loader"></div>
       <div id="myFactigis_Dashboard"></div>
       <script type="text/javascript" src="arcgis_js_api/library/3.17/3.17/init.js"></script>
        <script>

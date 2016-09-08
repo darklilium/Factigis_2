@@ -4,6 +4,8 @@ import {FactigisModuleList, excludeDataFactigis,FactigisInsertMyData} from '../.
 import cookieHandler from 'cookie-handler';
 import {saveGisredLogin} from '../../services/login-service';
 import _ from 'lodash';
+import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
+
 class FactigisDashboard extends React.Component {
 
   constructor(props){
@@ -49,8 +51,11 @@ class FactigisDashboard extends React.Component {
     this.setState({factigisNotAvList: result});
 
   }
-  
+
   render(){
+    let whoLogged = cookieHandler.get('usrprfl');
+    whoLogged = whoLogged.NOMBRE_COMPLETO.split(" ");
+
     var excludeModules = this.state.factigisNotAvList.map((m, index)=>{
         console.log(m);
         let url = m.url;
@@ -90,10 +95,27 @@ class FactigisDashboard extends React.Component {
     });
 
     return (
-    <div className="wrapper_factigisDashboard">
-        {modules}
-        {excludeModules}
+    <div>
+    <div className="wrapper_factibilidadTop">
+      <Breadcrumb className="dashboard_breadcrum">
+         <Breadcrumb.Item href="index.html">
+           Inicio
+         </Breadcrumb.Item>
+         <Breadcrumb.Item active>
+           Dashboard
+         </Breadcrumb.Item>
+         <Breadcrumb.Item active className="dashboard_whoLogged">
+           Bienvenido: {whoLogged[0]}
+         </Breadcrumb.Item>
+      </Breadcrumb>
+
     </div>
+      <div className="wrapper_factigisDashboard">
+          {modules}
+          {excludeModules}
+      </div>
+    </div>
+
   );
   }
 }

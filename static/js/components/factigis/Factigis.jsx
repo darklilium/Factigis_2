@@ -80,7 +80,7 @@ class Factigis extends React.Component {
     const factigisRender =
           <div className="wrapper_factigis">
             <div className="wrapper_factibilidadTop">
-              <Breadcrumb>
+              <Breadcrumb className="dashboard_breadcrum">
                  <Breadcrumb.Item href="index.html">
                    Inicio
                  </Breadcrumb.Item>
