@@ -55,27 +55,27 @@ class FG_GridPerZoneH2 extends React.Component {
         {
         "columnName": "Folio",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: 'blue' }
+        "customHeaderComponentProps": { color: '#008aff' }
         },
         {
         "columnName": "Estado Tramite",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: 'blue' }
+        "customHeaderComponentProps": { color: '#008aff' }
         },
         {
         "columnName": "Nombre",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: 'blue' }
+        "customHeaderComponentProps": { color: '#008aff' }
         },
         {
         "columnName": "Apellido",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: 'blue' }
+        "customHeaderComponentProps": { color: '#008aff' }
         },
         {
         "columnName": "Tipo Mejora",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: 'blue' }
+        "customHeaderComponentProps": { color: '#008aff' }
         },
         {
         "columnName": "Zona",

@@ -10,13 +10,18 @@
     <link rel="stylesheet" href="static/js/vendor/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="dist/css/factigis.css" />
     <link rel="stylesheet" href="dist/css/vendor/react-select.css">
-
+    <script src="static/js/vendor/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+      $(".loader").fadeOut("slow");
+    })
+    </script>
 
   </head>
   <body class="bodyfactigis">
+      <div class="loader"></div>
       <div id="myFactigis_FrontOffice" class="myFactigis_FrontOffice"></div>
       <script type="text/javascript" src="arcgis_js_api/library/3.17/3.17/init.js"></script>
-      <script src="static/js/vendor/jquery.min.js"></script>
-      <script>require(["factigisFrontoffice.js"], function (factigisFrontoffice) {});</script>
+      <script type="text/javascript">require(["factigisFrontoffice.js"], function (factigisFrontoffice) {});</script>
   </body>
 </html>

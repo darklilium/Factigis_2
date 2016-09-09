@@ -8,19 +8,21 @@
     <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/esri/css/esri.css" />
     <link rel="stylesheet" href="static/js/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="static/js/vendor/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/factigis.css" />
-    <script src="static/js/vendor/jspdf/jspdf.min.js"></script>
-    <script src="static/js/vendor/jspdf/jspdf.plugin.autotable.js"></script>
-    <script src="static/js/vendor/jspdf/faker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="dist/css/factigisBackoffice2.css" />
     <link rel="stylesheet" href="dist/css/vendor/react-select.css">
-    <style>
-
-</style>
+    <script src="static/js/vendor/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+      $(".loader").fadeOut("slow");
+    })
+    </script>
   </head>
+
   <body class="bodybackoffice_historico_factigis" >
+      <div class="loader"></div>
       <div id="myFactigis_BackOffice_historico"></div>
       <script type="text/javascript" src="arcgis_js_api/library/3.17/3.17/init.js"></script>
-      <script>require(["factigisBackoffice2.js"], function (factigisBackoffice2) {});</script>
-      
+      <script type="text/javascript">require(["factigisBackoffice2.js"], function (factigisBackoffice2) {});</script>
+
   </body>
 </html>

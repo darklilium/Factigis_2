@@ -10,7 +10,7 @@ import cookieHandler from 'cookie-handler';
 import BasemapToggle from "esri/dijit/BasemapToggle";
 import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
 import Search from 'esri/dijit/Search';
-import HomeButton from 'esri/dijit/HomeButton';
+
 
 class Factigis extends React.Component {
   constructor(props){
@@ -90,11 +90,15 @@ class Factigis extends React.Component {
                  <Breadcrumb.Item active>
                    Crear Factibilidad
                  </Breadcrumb.Item>
+                 <div className="factigis_top-right">
+                 <Breadcrumb.Item active className="factigis_search">
+                  <div id="search"></div>
+                 </Breadcrumb.Item>
+                 <Breadcrumb.Item active className="factigis_whologged">
+                    Bienvenido: {whoLogged[0]}
+                 </Breadcrumb.Item>
+                 </div>
                </Breadcrumb>
-               <div className="factigis_navElements">
-                <div id="search"></div>
-                <h7 className="factigis_whologged">Bienvenido: {whoLogged[0]}</h7>
-               </div>
             </div>
             <div className="wrapper_factibilidadContent">
               <div className="wrapper_factibilidadLeft">

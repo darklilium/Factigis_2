@@ -8,14 +8,20 @@
     <link rel="stylesheet" type="text/css" href="arcgis_js_api/library/3.17/3.17/esri/css/esri.css" />
     <link rel="stylesheet" href="static/js/vendor/bootstrap.min.css" />
     <link rel="stylesheet" href="static/js/vendor/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="dist/css/factigis.css" />
+    <link rel="stylesheet" type="text/css" href="dist/css/factigisBackoffice.css" />
     <link rel="stylesheet" href="dist/css/vendor/react-select.css">
-
+    <script src="static/js/vendor/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+      $(".loader").fadeOut("slow");
+    })
+    </script>
 
   </head>
-  <body class="bodybackoffice_factigis" >
+  <body class="factigisBO1_body" >
+      <div class="loader"></div>
       <div id="myFactigis_BackOffice"></div>
       <script type="text/javascript" src="arcgis_js_api/library/3.17/3.17/init.js"></script>
-      <script>require(["factigisBackoffice.js"], function (factigisBackoffice) {});</script>
+      <script type="text/javascript">require(["factigisBackoffice.js"], function (factigisBackoffice) {});</script>
   </body>
 </html>

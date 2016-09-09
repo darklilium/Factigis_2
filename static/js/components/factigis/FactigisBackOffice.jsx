@@ -13,6 +13,9 @@ import Modal from 'react-modal';
 import {agregarEstadoHistoria} from '../../services/factigis_services/factigis_add-service';
 import LayerList from '../../components/LayerList.jsx';
 import jQuery from 'jquery';
+import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
+import BasemapToggle from "esri/dijit/BasemapToggle";
+
 function getFormatedDateNow(){
   var d = new Date();
 
@@ -139,10 +142,10 @@ class FactigisBackOffice extends React.Component {
       facB_vialidad: '',
       facB_campamento: '',
       facB_transmision: ''
-
     }
-
+    this.clearFields = this.clearFields.bind(this);
   }
+
   onChildChanged(newState){
     console.log(newState);
     this.setState({
@@ -178,20 +181,20 @@ class FactigisBackOffice extends React.Component {
       facB_campamento: newState[0]['Zona Campamentos'],
       facB_transmision: newState[0]['Zona Transmision']
     });
-      this.setState({
-        cbEstadoValue: newState[0]['Estado Tramite'],
-        cbMejoraValue: newState[0]['Tipo Mejora'],
-        facb_observaciones: ''
-      })
+
+    this.setState({
+      cbEstadoValue: newState[0]['Estado Tramite'],
+      cbMejoraValue: newState[0]['Tipo Mejora'],
+      facb_observaciones: ''
+    });
   }
 
   componentWillMount(){
     this.setState({
         myData: [createDataObject()]
     });
-
-
   }
+
   componentDidMount(){
 
     //ADD LAYER TO SHOW IN THE MAP
@@ -281,11 +284,16 @@ class FactigisBackOffice extends React.Component {
           return theData;
         });
 
-          console.log("data found:",loadData)
           this.setState({myData: loadData});
           var prof = cookieHandler.get('usrprfl');
           this.setState({zonaTitle: prof.ZONA_USUARIO})
       });
+
+      var toggle = new BasemapToggle({
+        map: mapp,
+        basemap: "hybrid"
+      }, "BMToggle");
+      toggle.startup();
 
   }
 
@@ -319,7 +327,7 @@ class FactigisBackOffice extends React.Component {
     .done(d =>{
       let json = JSON.parse(d);
       if(json["updateResults"][0].objectId>0){
-        console.log("hecho update");
+
         //add to status historial
         let usrprfl = cookieHandler.get('usrprfl');
         let historial = {
@@ -331,9 +339,18 @@ class FactigisBackOffice extends React.Component {
           }
         agregarEstadoHistoria(historial, myhistorialCb =>{
           console.log("hecho o no el historial",myhistorialCb);
+          if(myhistorialCb){
+              this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' modificada.'});
+              this.clearFields();
+          }else{
+              this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' no ha podido ser modificada.'});
+          }
+      //    this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' modificada.'});
 
         });
-        this.setState({open: true, modalStatus: 'Factibilidad modificada.'});
+
+
+        //refresh the grid after update.
         loadCurrentUserData(data=>{
           let loadData = data.map(result=>{
 
@@ -383,18 +400,18 @@ class FactigisBackOffice extends React.Component {
 
             return theData;
           });
-            console.log(loadData);
+
             this.setState({myData: loadData});
             var prof = cookieHandler.get('usrprfl');
             this.setState({zonaTitle: prof.ZONA_USUARIO})
         });
 
       }else{
-        console.log("no hecho update");
+
         this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
       }
     }).fail(f=>{
-      console.log(f,"no pase");
+
         this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
       //callback(false)
     });
@@ -409,6 +426,51 @@ class FactigisBackOffice extends React.Component {
 
   closeModal () { this.setState({open: false}); }
 
+  clearFields(){
+    let mapp = mymap.getMap();
+    mapp.graphics.clear();
+    this.setState({
+    facb_observaciones: '',
+
+    zonaTitle: '',
+    opcionesEstado: tipoEstado,
+    opcionesMejora: tipoMejora,
+    cbEstadoValue: '',
+    cbMejoraValue: '',
+    loadData: [],
+    facB_rut: '',
+    facB_folio: '',
+    facB_nombre: '',
+    facB_apellido: '',
+    facB_telefono: '',
+    facB_email: '',
+    facB_tipoCliente: '',
+    facB_tipoContribuyente: '',
+    facB_tipoFactibilidad: '',
+    facB_tipoMejora: '',
+    facB_estadoTramite: '',
+    facB_origenFactibilidad: '',
+    facB_rotulo: '',
+    facB_direccion: '',
+    facB_tipoBTMT: '',
+    facB_tramo: '',
+    facB_sed: '',
+    facB_tipoEmpalme: '',
+    facB_fase: '',
+    facB_potencia: '',
+    facB_tiempoEmpalme: '',
+    facB_cantidadEmpalme: '',
+    facB_potenciaSolicitada: '',
+    facB_potenciaDisponible: '',
+    facB_potenciaCalculada: '',
+    facB_zona: '',
+    facB_concesion: '',
+    facB_restringida: '',
+    facB_vialidad: '',
+    facB_campamento: '',
+    facB_transmision: ''
+    });
+  }
   render(){
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
       window.location.href = "index.html";
@@ -418,15 +480,30 @@ class FactigisBackOffice extends React.Component {
     let prof = cookieHandler.get('usrprfl');
 
     return (
-      <div className="wrapper_factigis_bo1">
-        <div className="wrapper_top">
-          <h2 className="factigis_bo1-h2">Factigis > Revisión de Factibilidades: Zona {this.state.zonaTitle}</h2>
-          <h2 className="factigis_bo1-h2">Bienvenido: {prof.NOMBRE_COMPLETO}</h2>
-
+      <div className="wrapper_factigisBO">
+        <div className="factigisBO_top">
+          <Breadcrumb className="dashboard_breadcrum">
+            <Breadcrumb.Item href="index.html">
+              Inicio
+            </Breadcrumb.Item>
+            <Breadcrumb.Item href="factigisDashboard.html">
+              Dashboard
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>
+              Revisión Factibilidades:  Zona {this.state.zonaTitle}
+            </Breadcrumb.Item>
+            <div className="factigis_top-right">
+              <Breadcrumb.Item active className="factigis_whologged">
+                Bienvenido: {prof.NOMBRE_COMPLETO}
+              </Breadcrumb.Item>
+            </div>
+          </Breadcrumb>
         </div>
-        <div className="bo1_table">
+
+        <div className="factigisBO_table">
           <FG_GridPerZone title={"Medidores"} data={this.state.myData}  callbackParent={this.onChildChanged.bind(this)}/>
         </div>
+
         <div className="wrapper_mid">
           <div className="wrapper_mid-left">
             <div>
@@ -479,16 +556,18 @@ class FactigisBackOffice extends React.Component {
               </div>
             </div>
           </div>
-          <div className="wrapper_mid-right">
+          <div className="factigisBO_wrapper_mid-right">
             <div>
               <h1 className="factigis_bo1-h1">Mapa - Ubicación</h1>
             </div>
             <LayerList show={["check_factigis_transmision", "check_factigis_distribucion", "check_factigis_vialidad", "check_campamentos", "check_chqbasemap",
             "check_subestaciones","check_MT","check_BT"]} />
-            <div id="factigis_bo1_map" className="factigis_bo1_map"></div>
+            <div id="factigis_bo1_map" className="factigis_bo1_map">
+              <div id="BMToggle"></div>
+            </div>
           </div>
         </div>
-        <div className="wrapper_bot">
+        <div className="factigisBO_wrapper_bot">
           <div className="wrapper_bot_title">
             <h1 className="factigis_bo1-h1 factigis_h1_edited">Cambiar Estado</h1>
           </div>

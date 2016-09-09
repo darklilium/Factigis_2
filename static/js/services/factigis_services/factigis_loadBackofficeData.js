@@ -5,7 +5,7 @@ import layers from '../../services/layers-service';
 
 function loadCurrentUserData(callback){
   let usrprfl = cookieHandler.get('usrprfl');
-  console.log(usrprfl);
+  //console.log(usrprfl);
   var qTaskFact = new esri.tasks.QueryTask(layers.read_agregarFactibilidad());
   var qFact = new esri.tasks.Query();
   qFact.where = "Zona= '" + usrprfl.ZONA_USUARIO + "' AND tipo_mejora <>'FACTIBILIDAD DIRECTA' AND Estado_tramite <> 'CERRADA'";
@@ -37,7 +37,7 @@ function find_folioData(folio, callback){
   qFact.outFields = ["*"];
   qTaskFact.execute(qFact, (featureSet)=>{
     if(featureSet.features.length){
-    
+
       return callback(featureSet.features)
     }else{
       //console.log("no hay", featureSet.features.length, comuna);

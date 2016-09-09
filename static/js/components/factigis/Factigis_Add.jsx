@@ -8,8 +8,7 @@ import {factigis_validator} from '../../services/factigis_services/factigis_vali
 import makeSymbol from '../../utils/makeSymbol';
 import layers from '../../services/layers-service';
 import {layersActivated, setLayers} from '../../services/layers-service';
-import {factigis_findDireccion, factigis_findComuna, factigis_findRotulo, factigis_findCalle,
-  factigis_findNewDireccion, factigis_findTramo, factigis_findSEP} from '../../services/factigis_services/factigis_find-service';
+import {factigis_findDireccion, factigis_findComuna, factigis_findRotulo, factigis_findCalle, factigis_findNewDireccion, factigis_findTramo, factigis_findSEP} from '../../services/factigis_services/factigis_find-service';
 import Factigis_AddDireccion from '../factigis/Factigis_AddDireccion.jsx';
 import toggleOff from '../../services/factigis_services/factigis_toggleBtnFx-service';
 import validator from 'validator';

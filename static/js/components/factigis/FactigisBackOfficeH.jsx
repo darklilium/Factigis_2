@@ -9,12 +9,13 @@ import FG_GridPerZoneH2 from '../factigis/Factigis_GridPerZoneH2.jsx';
 import FG_GridPerZoneH from '../factigis/Factigis_GridPerZoneH.jsx';
 import mymap from '../../services/map-service';
 import layers from '../../services/layers-service';
-
+import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
 import Modal from 'react-modal';
 import {agregarEstadoHistoria} from '../../services/factigis_services/factigis_add-service';
 import LayerList from '../../components/LayerList.jsx';
 import {loadCurrentHistoryData, loadFactStates} from '../../services/factigis_services/factigis_loadBackOfficeStates.js';
 import _ from 'lodash';
+import BasemapToggle from "esri/dijit/BasemapToggle";
 
 function getFormatedDateNow(){
   var d = new Date();
@@ -119,7 +120,7 @@ class FactigisBackOfficeH extends React.Component {
       opcionesMejora: tipoMejora,
       cbEstadoValue: '',
       cbMejoraValue: '',
-      loadData: [],
+      loadData: [{}],
       facB_rut: '',
       facB_folio: '',
       facB_nombre: '',
@@ -150,7 +151,8 @@ class FactigisBackOfficeH extends React.Component {
       facB_restringida: '',
       facB_vialidad: '',
       facB_campamento: '',
-      facB_transmision: ''
+      facB_transmision: '',
+      myDataEstados: [{}]
 
 
     }
@@ -327,6 +329,13 @@ class FactigisBackOfficeH extends React.Component {
 
       });
 
+      var toggle = new BasemapToggle({
+        map: mapp,
+        basemap: "hybrid"
+      }, "BMToggle2");
+      toggle.startup();
+
+
   }
 
   onChange(e){this.setState({cbEstadoValue: e});}
@@ -467,15 +476,28 @@ class FactigisBackOfficeH extends React.Component {
 
     return (
       <div className="wrapper_factigis_bo2">
-        <div className="wrapper_top">
-          <h2 className="factigis_bo2-h2">Factigis > Revisión de Historial de Factibilidades</h2>
-          <h2 className="factigis_bo2-h2">Bienvenido: {prof.NOMBRE_COMPLETO}</h2>
-
+        <div className="factigisBO2_wrapper_top">
+          <Breadcrumb className="dashboard_breadcrum">
+            <Breadcrumb.Item href="index.html">
+              Inicio
+            </Breadcrumb.Item>
+            <Breadcrumb.Item href="factigisDashboard.html">
+              Dashboard
+            </Breadcrumb.Item>
+            <Breadcrumb.Item active>
+              Revisión Historial Factibilidades
+            </Breadcrumb.Item>
+            <div className="factigis_top-right">
+              <Breadcrumb.Item active className="factigis_whologged">
+                Bienvenido: {prof.NOMBRE_COMPLETO}
+              </Breadcrumb.Item>
+            </div>
+          </Breadcrumb>
         </div>
         <div className="bo2_table">
           <FG_GridPerZoneH2 title={"Factibildades"} data={this.state.myData}  callbackParent={this.onChildChanged.bind(this)}/>
           <div>
-            <h1 className="factigis_bo2-h1">Historial de Estados: <b className="factigis_bo2-b"></b></h1>
+            <h1 className="factigisBO2_h1">Historial de Estados: <b className="factigis_bo2-b"></b></h1>
           </div>
           <FG_GridPerZoneH title={"Factibildades Estados"} data={this.state.myDataEstados} />
         </div>
@@ -484,7 +506,7 @@ class FactigisBackOfficeH extends React.Component {
 
 
             <div>
-              <h1 className="factigis_bo2-h1">Datos Factibilidad > Folio: <b className="factigis_bo2-b">{this.state.facB_folio}</b></h1>
+              <h1 className="factigisBO2_h1">Datos Factibilidad > Folio: <b className="factigis_bo2-b">{this.state.facB_folio}</b></h1>
             </div>
             <div className="wrapper_mid-split">
               <div className="wrapper_mid-split-1">
@@ -522,7 +544,7 @@ class FactigisBackOfficeH extends React.Component {
             </div>
             <div className="wrapper_mid_splitbot">
               <div>
-                <h1 className="factigis_bo2-h1">Zonas Factibilidad</h1>
+                <h1 className="factigisBO2_h1">Zonas Factibilidad</h1>
               </div>
               <div className="factigis_bo2_wrapper-zonas">
                 <div><h8 className="factigis_bo2_zonas">Concesión: <b>{this.state.facB_concesion}</b></h8></div>
@@ -533,20 +555,22 @@ class FactigisBackOfficeH extends React.Component {
               </div>
             </div>
           </div>
-          <div className="wrapper_mid-right">
+          <div className="factigisBO2_wrapper_mid-right">
             <div>
-              <h1 className="factigis_bo2-h1">Mapa - Ubicación</h1>
+              <h1 className="factigisBO2_h1">Mapa - Ubicación</h1>
             </div>
 
             <LayerList show={["check_factigis_transmision", "check_factigis_distribucion", "check_factigis_vialidad", "check_campamentos", "check_chqbasemap",
             "check_subestaciones","check_MT","check_BT"]} />
-            <div id="factigis_bo2_map" className="factigis_bo2_map"></div>
+            <div id="factigis_bo2_map" className="factigis_bo2_map">
+              <div id="BMToggle2"></div>
+              </div>
 
           </div>
         </div>
         <div className="wrapper_bot">
           <div className="wrapper_bot_title">
-            {/*<h1 className="factigis_bo2-h1 factigis_h1_edited">Historial de Estados</h1>*/}
+            {/*<h1 className="factigisBO2_h1 factigis_h1_edited">Historial de Estados</h1>*/}
           </div>
           <div className="wrapper_bot_content">
           {/*  <h8 className="factigis_bo2-h8">Observaciones:</h8>
