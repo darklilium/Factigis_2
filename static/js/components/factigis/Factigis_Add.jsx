@@ -191,7 +191,11 @@ class Factigis_Add extends React.Component {
 
     var d = cookieHandler.get('wllExp');
       if(d > getFormatedDate()){
-        console.log("dentro del rango")
+        console.log("dentro del rango");
+        if(!localStorage.getItem('token')){
+          console.log("no hay, redirect...");
+          window.location.href = "index.html";
+        }
       }else{
         console.log("expiro");
         window.location.href = "index.html";

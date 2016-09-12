@@ -16,20 +16,7 @@ import LayerList from '../../components/LayerList.jsx';
 import {loadCurrentHistoryData, loadFactStates} from '../../services/factigis_services/factigis_loadBackOfficeStates.js';
 import _ from 'lodash';
 import BasemapToggle from "esri/dijit/BasemapToggle";
-
-function getFormatedDateNow(){
-  var d = new Date();
-
-  var str = "day/month/year, hour:minute:second"
-    .replace('day', d.getDate() <10? '0'+ d.getDate() : d.getDate())
-    .replace('month', (d.getMonth() + 1) <10? '0' + (d.getMonth()+1) : (d.getMonth()+1))
-    .replace('year', d.getFullYear())
-    .replace('hour', d.getHours() <10? '0'+ d.getHours() : d.getHours() )
-    .replace('minute', d.getMinutes() <10? '0'+ d.getMinutes() : d.getMinutes())
-    .replace('second', d.getSeconds() <10? '0'+ d.getSeconds() : d.getSeconds());
-    //console.log(str);
-  return str;
-}
+import {getFormatedDate} from '../../services/login-service';
 
 function createDataObject(){
   return {
@@ -234,6 +221,17 @@ class FactigisBackOfficeH extends React.Component {
 
   }
   componentDidMount(){
+    var d = cookieHandler.get('wllExp');
+      if(d > getFormatedDate()){
+        console.log("dentro del rango");
+        if(!localStorage.getItem('token')){
+          console.log("no hay, redirect...");
+          window.location.href = "index.html";
+        }
+      }else{
+        console.log("expiro");
+        window.location.href = "index.html";
+      }
 
     //ADD LAYER TO SHOW IN THE MAP
 
@@ -374,7 +372,7 @@ class FactigisBackOfficeH extends React.Component {
         let historial = {
           Estado_tramite: myDataUpdate["Estado_tramite"],
           ID_Factibilidad: myDataUpdate["OBJECTID"],
-          Fecha_cambio: getFormatedDateNow(),
+          Fecha_cambio: getFormatedDate(),
           Observacion: this.state.facb_observaciones,
           Usuario:  usrprfl.USUARIO
           }
