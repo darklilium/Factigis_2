@@ -27,7 +27,7 @@ function getFormatedDateNow(){
     .replace('hour', d.getHours() <10? '0'+ d.getHours() : d.getHours() )
     .replace('minute', d.getMinutes() <10? '0'+ d.getMinutes() : d.getMinutes())
     .replace('second', d.getSeconds() <10? '0'+ d.getSeconds() : d.getSeconds());
-    console.log(str);
+    //console.log(str);
   return str;
 }
 
@@ -208,7 +208,7 @@ class FactigisBackOfficeH extends React.Component {
         }else{
 
           let loadDataEstados = callback.map(estado=>{
-            console.log(estado.attributes);
+            //console.log(estado.attributes);
             let thestatus = {
               'ID Factibilidad' : estado.attributes["ID_Factibilidad"],
               'Estado Tramite':  estado.attributes["Estado_tramite"],
@@ -368,7 +368,7 @@ class FactigisBackOfficeH extends React.Component {
     .done(d =>{
       let json = JSON.parse(d);
       if(json["updateResults"][0].objectId>0){
-        console.log("hecho update");
+        //console.log("hecho update");
         //add to status historial
         let usrprfl = cookieHandler.get('usrprfl');
         let historial = {
@@ -379,7 +379,7 @@ class FactigisBackOfficeH extends React.Component {
           Usuario:  usrprfl.USUARIO
           }
         agregarEstadoHistoria(historial, myhistorialCb =>{
-          console.log("hecho o no el historial",myhistorialCb);
+          //console.log("hecho o no el historial",myhistorialCb);
 
         });
         this.setState({open: true, modalStatus: 'Factibilidad modificada.'});
@@ -432,17 +432,17 @@ class FactigisBackOfficeH extends React.Component {
 
             return theData;
           });
-            console.log(loadData);
+            //console.log(loadData);
             this.setState({myData: loadData});
 
         });
 
       }else{
-        console.log("no hecho update");
+        //console.log("no hecho update");
         this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
       }
     }).fail(f=>{
-      console.log(f,"no pase");
+      //console.log(f,"no pase");
         this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
       //callback(false)
     });

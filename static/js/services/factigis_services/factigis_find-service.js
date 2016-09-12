@@ -101,45 +101,49 @@ function factigis_findTramoMT(geometry,callback){
   });
 }
 
-function factigis_findTramo(geometry, callback){
+function factigis_findTramo(geometry, tramo, callback){
   console.log(geometry,"esto es lo que tengo.");
 
   //BUSCAR EN BT PRIMERO
+  if(tramo=='BT'){
     console.log("buscando en bt...");
     var btFound = factigis_findTramoBT(geometry, bt=>{
-
-      // si no hay en bt :
       if(!bt.length){
-        //buscar en mt
-        var mtFound = factigis_findTramoMT(geometry, mt=>{
-
-          if(!mt.length){
-            console.log("no hay nada en mt ni bt");
-          }else{
-            console.log("esto encontre en mt", mt);
-            let redMT = [];
-            redMT.descripcion = mt[0].attributes['ARCGIS.DBO.Tramos_MT_006.descripcion'];
-            redMT.tension = mt[0].attributes['ARCGIS.DBO.Cabeceras_006.tension'];
-
-            return callback(redMT);
-          }
-        });
-
-      // si hay en bt
+        console.log("no hay nada en bt");
+        let redBT = [];
+        redBT.descripcion = 'N/A';
+        redBT.tension = 'N/A';
+        redBT.tipoFactibilidad = 'FACTIBILIDAD ASISTIDA';
+        return callback(redBT);
       }else{
-        console.log("encontre en bt esto: ", bt);
         let redBT = [];
         redBT.descripcion = bt[0].attributes['descripcion'];
         redBT.tension = 'N/A';
+        redBT.tipoFactibilidad = 'FACTIBILIDAD NORMAL';
         return callback(redBT);
       }
-
     });
 
-
-
-
-
+  //BUSCAR EN MT
+  }else {
+    var mtFound = factigis_findTramoMT(geometry, mt=>{
+      if(!mt.length){
+        console.log("no hay nada en mt");
+        let redMT = [];
+        redMT.descripcion = 'N/A';
+        redMT.tension = 'N/A';
+        redMT.tipoFactibilidad = 'FACTIBILIDAD ASISTIDA';
+        return callback(redMT);
+      }else{
+        console.log("esto encontre en mt", mt);
+        let redMT = [];
+        redMT.descripcion = mt[0].attributes['ARCGIS.DBO.Tramos_MT_006.descripcion'];
+        redMT.tension = mt[0].attributes['ARCGIS.DBO.Cabeceras_006.tension'];
+        redMT.tipoFactibilidad = 'FACTIBILIDAD NORMAL';
+        return callback(redMT);
+      }
+    });
+  }
 }
 
 function factigis_findCalle(geometry,callback){

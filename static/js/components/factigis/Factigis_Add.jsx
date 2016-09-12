@@ -574,16 +574,34 @@ class Factigis_Add extends React.Component {
         $('.factigis_btnSelectTramo').css('color',"crimson").css('border-color','red');
 
         var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
-          factigis_findTramo(g.mapPoint, (featureSetFeatures)=>{
-            ////console.log("esto llega",featureSetFeatures);
 
+          if(this.state.factigis_selectedValueTipoEmpalmeBTMT==""){
             this.setState({
-              factigisTramoValidator: true,
-              factigisTramo: featureSetFeatures.descripcion,
-              btnDireccionDisabled: false
+              open: true,
+              problemsforAdding: 'Seleccione un tipo de tramo',
+              numeroFactibilidad: ''
             });
-          });
 
+          }else{
+            factigis_findTramo(g.mapPoint, this.state.factigis_selectedValueTipoEmpalmeBTMT, (featureSetFeatures)=>{
+              console.log("esto llega",featureSetFeatures);
+              if(featureSetFeatures.tipoFactibilidad=='FACTIBILIDAD ASISTIDA'){
+                this.setState({
+                  factigisTramoValidator: true,
+                  factigisTramo: featureSetFeatures.descripcion,
+                  btnDireccionDisabled: false,
+                  factiTipoFactibilidad: featureSetFeatures.tipoFactibilidad
+                });
+              }else{
+                this.setState({
+                  factigisTramoValidator: true,
+                  factigisTramo: featureSetFeatures.descripcion,
+                  btnDireccionDisabled: false,
+                  factiTipoFactibilidad: featureSetFeatures.tipoFactibilidad
+                });
+              }
+            });
+          }
         });
         this.setState({btnPoste: map_click_handle});
     }else{
@@ -926,8 +944,8 @@ class Factigis_Add extends React.Component {
 
                 this.setState({
                   open: true,
-                  problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'],
-                  numeroFactibilidad: cb[1]
+                  problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'] ,
+                  numeroFactibilidad: 'N°' + cb[1]
                 });
                 //GENERAR CARTA
                 let usrprfl = cookieHandler.get('usrprfl');
@@ -939,8 +957,9 @@ class Factigis_Add extends React.Component {
                       usrprfl.LUGAR_DE_TRABAJO,
                       usrprfl.DEPARTAMENTO,
                       usrprfl.COMUNA]);
-
+                    this.render();
                     window.open("factigisCarta.html");
+
               }else{
                 let fArr = factArr.map(f=>{return f+'\n'});
                 this.setState({open: true, problemsforAdding: 'Hubo un problema al agregar la factibilidad',  numeroFactibilidad: ''});
@@ -1004,9 +1023,11 @@ class Factigis_Add extends React.Component {
                 if(cb[0]){
                   let fArr = factArr.map(f=>{return f+'\n'});
                   ////console.log(cb[1],"esto llego del object para el certificado");
+
+
                   this.setState({
                     open: true,
-                    problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'],
+                    problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'] ,
                     numeroFactibilidad: cb[1]
                   });
 
@@ -1021,7 +1042,8 @@ class Factigis_Add extends React.Component {
                     usrprfl.DEPARTAMENTO,
                     usrprfl.COMUNA]);
 
-                  window.open("factigisCarta.html");
+                    this.render();
+                    window.open("factigisCarta.html");
 
                 }else{
                   let fArr = factArr.map(f=>{return f+'\n'});
@@ -1029,6 +1051,7 @@ class Factigis_Add extends React.Component {
                 }
 
               });
+
           }else{
             ////console.log('Factibilidad no se puede agregar por', fArr, factArr);
             this.setState({open: true, problemsforAdding: 'La factibilidad que está intentando agregar presenta problemas en las siguientes zonas: '+ '\n' + fArr});
@@ -1168,8 +1191,6 @@ class Factigis_Add extends React.Component {
 
 
   }
-
-
 
   render(){
     //if theres no cookie, the user cannot be in dashboard.
@@ -1356,7 +1377,7 @@ class Factigis_Add extends React.Component {
               </button>
             </div>
               <Modal isOpen={this.state.open} style={customStyles}>
-                <h2 className="factigis_h2">Factibilidad N°: {this.state.numeroFactibilidad}</h2>
+                <h2 className="factigis_h2">Factibilidad {this.state.numeroFactibilidad}</h2>
                 <p>{this.state.problemsforAdding}</p>
                 <br />
                 <button className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>

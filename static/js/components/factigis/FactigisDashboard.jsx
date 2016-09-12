@@ -29,7 +29,7 @@ class FactigisDashboard extends React.Component {
     let unicos = list.map(l=>{
       return l.module;
     });
-    //console.log("unicos",_.uniq(unicos), "lista", list, "asd", _.uniqWith(list, _.isEqual));
+    ////console.log("unicos",_.uniq(unicos), "lista", list, "asd", _.uniqWith(list, _.isEqual));
 
 
     this.setState({factigisModuleList: _.uniqWith(list, _.isEqual)});
@@ -44,10 +44,10 @@ class FactigisDashboard extends React.Component {
 
     var myLi = _.uniqWith(myDashboardModules, _.isEqual);
     var mAll = FactigisModuleList();
-    console.log(myLi,mAll,"listas")
+    //console.log(myLi,mAll,"listas")
     var myPropList = ['module', 'alias',"widgets",'Available','Permission','Insert','Update','Delete','url','color','img'];
     var result = excludeDataFactigis(mAll,myLi,myPropList);
-    console.log("exclude",result)
+    //console.log("exclude",result)
     this.setState({factigisNotAvList: result});
 
   }
@@ -57,7 +57,7 @@ class FactigisDashboard extends React.Component {
     whoLogged = whoLogged.NOMBRE_COMPLETO.split(" ");
 
     var excludeModules = this.state.factigisNotAvList.map((m, index)=>{
-        console.log(m);
+        //console.log(m);
         let url = m.url;
         let urlName = m.alias;
         let imgSrc = m.img;

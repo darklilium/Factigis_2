@@ -2,13 +2,13 @@ import token from '../services/token-service';
 import myinfotemplate from '../utils/infoTemplates';
 import mymap from '../services/map-service';
 import {ap_infoWindow} from '../utils/makeInfowindow';
-
+import GraphicsLayer from 'esri/layers/GraphicsLayer';
 function myLayers(){
   const serviceMain = 'http://gisred.chilquinta/arcgis/';
   //change this for external connection:
   //const serviceMain = 'http://gisred.chilquinta.cl:5555/arcgis/';
   const serviceURL = serviceMain + 'rest/services/';
-  var graphicLayer = new esri.layers.GraphicsLayer();
+  var graphicLayer = new GraphicsLayer;
 
   //check 8 and last one
   return {

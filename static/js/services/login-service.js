@@ -202,7 +202,7 @@ function factigisLogin(user,pass){
                   return;
                 }
                 cookieHandler.set('usrprfl',userProfile[0].attributes);
-                window.location.href = "FactigisDashboard.html";
+                window.location.href = "factigisDashboard.html";
               });
 
 

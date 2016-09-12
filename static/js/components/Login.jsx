@@ -50,8 +50,8 @@ class LoginApp extends React.Component {
             <section id="myLogin" className="myLogin">
             <div className="login_wrapper_content">
               <article className="login_article">
-                <input className="login__input" ref="username" type="text" placeholder="miusuario" defaultValue="ehernanr" />
-                <input className="login__input" ref="password" type="password" placeholder="password"  defaultValue="Chilquinta7"/>
+                <input className="login__input" ref="username" type="text" placeholder="miusuario"  />
+                <input className="login__input" ref="password" type="password" placeholder="password" />
 
                 <button onClick={this.onClick.bind(this)}
                   className="login__submit" title="Entrar " type="button" >
