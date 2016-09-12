@@ -8,7 +8,7 @@ function loadCurrentUserData(callback){
   //console.log(usrprfl);
   var qTaskFact = new esri.tasks.QueryTask(layers.read_agregarFactibilidad());
   var qFact = new esri.tasks.Query();
-  qFact.where = "Zona= '" + usrprfl.ZONA_USUARIO + "' AND tipo_mejora <>'FACTIBILIDAD DIRECTA' AND Estado_tramite <> 'CERRADA'";
+  qFact.where = "Zona= '" + usrprfl.ZONA_USUARIO + "' AND Tipo_factibilidad = 'FACTIBILIDAD ASISTIDA' AND Estado_tramite <> 'CERRADA'";
   qFact.returnGeometry = true;
   qFact.outFields = ["*"];
   qTaskFact.execute(qFact, (featureSet)=>{

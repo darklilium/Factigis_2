@@ -23,7 +23,7 @@ import token from '../../services/token-service';
 import cookieHandler from 'cookie-handler';
 import _ from 'lodash';
 import Rut from 'rutjs';
-
+import {getFormatedDate} from '../../services/login-service';
 
 var Tab = ReactTabs.Tab;
 var Tabs = ReactTabs.Tabs;
@@ -55,13 +55,8 @@ class Factigis_Add extends React.Component {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
     this.onClickCliente = this.onClickCliente.bind(this);
-
     this.onClickDireccion = this.onClickDireccion.bind(this);
-
-
-
     this.onBlur = this.onBlur.bind(this);
-
 
     this.state = {
       numeroFactibilidad: '',
@@ -193,6 +188,14 @@ class Factigis_Add extends React.Component {
   }
 
   componentDidMount(){
+
+    var d = cookieHandler.get('wllExp');
+      if(d > getFormatedDate()){
+        console.log("dentro del rango")
+      }else{
+        console.log("expiro");
+        window.location.href = "index.html";
+      }
 
     //show widgets for each user permission available
     ////console.log(this.props.permissions);
@@ -1193,6 +1196,7 @@ class Factigis_Add extends React.Component {
   }
 
   render(){
+
     //if theres no cookie, the user cannot be in dashboard.
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
       window.location.href = "index.html";

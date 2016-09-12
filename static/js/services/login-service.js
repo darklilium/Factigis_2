@@ -4,6 +4,34 @@ import token from '../services/token-service';
 import createQueryTask from '../services/createquerytask-service';
 import cookieHandler from 'cookie-handler';
 
+function getFormatedDate(){
+  var d = new Date();
+
+  var str = "day/month/year, hour:minute:second"
+    .replace('day', d.getDate() <10? '0'+ d.getDate() : d.getDate())
+    .replace('month', (d.getMonth() + 1) <10? '0' + (d.getMonth()+1) : (d.getMonth()+1))
+    .replace('year', d.getFullYear())
+    .replace('hour', d.getHours() <10? '0'+ d.getHours() : d.getHours() )
+    .replace('minute', d.getMinutes() <10? '0'+ d.getMinutes() : d.getMinutes())
+    .replace('second', d.getSeconds() <10? '0'+ d.getSeconds() : d.getSeconds());
+    console.log(str);
+  return str;
+}
+
+function getFormatedDateExp(){
+  var d = new Date();
+
+  var str = "day/month/year, hour:minute:second"
+    .replace('day', d.getDate() <10? '0'+ d.getDate()+1 : d.getDate()+1)
+    .replace('month', (d.getMonth() + 1) <10? '0' + (d.getMonth()+1) : (d.getMonth()+1))
+    .replace('year', d.getFullYear())
+    .replace('hour', d.getHours() <10? '0'+ d.getHours() : d.getHours() )
+    .replace('minute', d.getMinutes() <10? '0'+ d.getMinutes() : d.getMinutes())
+    .replace('second', d.getSeconds() <10? '0'+ d.getSeconds() : d.getSeconds());
+    console.log(str);
+  return str;
+}
+
 function saveLogin(user,page,mod, tkn){
 
   const data = {
@@ -25,37 +53,6 @@ function saveLogin(user,page,mod, tkn){
     console.log(f,"no pase")
   });
 }
-
-
-//for ap
-function saveSettings(user){
-
-  var getUserAccountSettings = createQueryTask({
-    url: myLayers.read_logAccess(),
-    whereClause: "usuario = '"+ user+ "'",
-    returnGeometry: false
-  });
-
-  getUserAccountSettings((map,featureSet) =>{
-      let myRegion = regionsExtent().filter(region =>{
-      return region[0] ==  featureSet.features[0].attributes.widget;
-    });
-    //logo,comuna,latx,laty,zoom
-    my_AP_Settings.write(
-      featureSet.features[0].attributes.usuario, //logo
-      featureSet.features[0].attributes.widget, //region
-      myRegion[0][1], //latx
-      myRegion[0][2], //laty
-      myRegion[0][3]); //zoom
-
-
-    window.location.href = "apchq.html";
-  },(error)=>{
-    console.log("Error getting the user settings");
-  });
-}
-
-
 
 function saveGisredLogin(user,page,mod, tkn){
 
@@ -81,7 +78,6 @@ function saveGisredLogin(user,page,mod, tkn){
 
 function getUserPermission(user, token, callback){
 
-
     var getPermission = createQueryTask({
       url: myLayers.read_logAccess(),
       whereClause: "usuario='"+ user + "' AND plataforma='WEB' AND aplicacion='FACTIGIS'"
@@ -104,12 +100,11 @@ function getUserPermission(user, token, callback){
           };
           return per;
         });
-
-        callback(permissions);
+        return callback(permissions);
 
     },(errorQuery)=>{
         console.log("Error performing query for ap_getDataMedidores", errorQuery);
-        callback("NOPERMISSIONS")
+        return callback("NOPERMISSIONS")
     });
 }
 
@@ -131,8 +126,6 @@ function factigisLogin(user,pass){
     dataType: 'html'
   })
   .done(myToken => {
-
-
     if(myToken.indexOf('Exception') >= 0) {
       notifications('Login incorrecto, intente nuevamente.', 'Login_Error', '.notification-login');
       return;
@@ -144,6 +137,7 @@ function factigisLogin(user,pass){
     //IF EVERYTHING IS OK , GOING TO:
     console.log('writing token into system', myToken);
     token.write(myToken);
+    cookieHandler.set('wllExp',getFormatedDateExp());
     //if the login is correct. Get user permission:
     getUserPermission(user, myToken, (UserPermissions)=>{
 
@@ -236,4 +230,4 @@ function getProfile (user, userProfile){
   });
 
 }
-export { saveGisredLogin,saveSettings, factigisLogin };
+export { saveGisredLogin, factigisLogin,getFormatedDate };

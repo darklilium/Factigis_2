@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {FactigisModuleList, excludeDataFactigis,FactigisInsertMyData} from '../../../js/services/factigis_services/factigisModuleList';
 import cookieHandler from 'cookie-handler';
-import {saveGisredLogin} from '../../services/login-service';
+import {saveGisredLogin, getFormatedDate} from '../../services/login-service';
 import _ from 'lodash';
 import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
+
 
 class FactigisDashboard extends React.Component {
 
@@ -50,6 +51,17 @@ class FactigisDashboard extends React.Component {
     //console.log("exclude",result)
     this.setState({factigisNotAvList: result});
 
+  }
+
+  componentDidMount(){
+
+    var d = cookieHandler.get('wllExp');
+    if(d > getFormatedDate()){
+      console.log("dentro del rango")
+    }else{
+      console.log("expiro");
+      window.location.href = "index.html";
+    }
   }
 
   render(){
