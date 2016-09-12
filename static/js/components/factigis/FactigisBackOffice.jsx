@@ -87,6 +87,7 @@ var tipoMejora = [
 ];
 
 class FactigisBackOffice extends React.Component {
+
   constructor(props){
     super(props);
     this.state = {
@@ -417,8 +418,6 @@ class FactigisBackOffice extends React.Component {
       //callback(false)
     });
 
-
-
   }
 
   onChangeObs(e){ this.setState({facb_observaciones: e.currentTarget.value });}
@@ -472,6 +471,7 @@ class FactigisBackOffice extends React.Component {
     facB_transmision: ''
     });
   }
+
   render(){
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
       window.location.href = "index.html";
@@ -594,6 +594,7 @@ class FactigisBackOffice extends React.Component {
       </div>
     );
   }
+
 }
 
 export default FactigisBackOffice;

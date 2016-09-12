@@ -71,6 +71,7 @@ function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
 }
 
 function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
+  console.log("aa", factibilidad);
   var fact = {};
   //cuando es BT
   if(factibilidad.factigisTipoEmpalme=='BT'){
@@ -191,74 +192,51 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
           factibilidad.factigisDistRotMed = Math.round(res);
           factibilidad.factigisDistMedDir = Math.round(res2);
 
-      //calcular potencias: solicitada x cantidad
+        //calcular potencias: solicitada x cantidad
           factibilidad.factigisPotenciaCalculada = factibilidad.factigisPotencia * factibilidad.factigisCantidadEmpalmes;
           factibilidad.factigisEstadoTramite = 'NUEVA';
 
-          //agregar potencia disponible para SED
+        //agregar potencia disponible para SED
+            let potenciaDisponible = 0.0;
+            console.log("La potencia disp es:",potenciaDisponible);
+            factibilidad.factigisPotenciaDisponibleSED = potenciaDisponible;
+            console.log("tengo fact:",factibilidad.factigisTipoFactibilidad);
 
-            buscarCantClienteSED(factibilidad.factigisSed, (cantidadClientes)=>{
-              console.log("cant clientes ", cantidadClientes);
-              var kva = buscarKVASED(factibilidad.factigisSed, (kva)=>{
-                console.log("kvas:", kva);
-                //cantidadClientes = 108;
-                //kva = 150;
-                let potenciaDisponible = kva - (0.327 * (Math.pow(cantidadClientes,-0.203))*cantidadClientes*5);
-                console.log("La potencia disp es:",potenciaDisponible);
+            if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD NORMAL"){
+              factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
+            }else{
+              factibilidad.factigisTipoMejora = "POR DEFINIR";
+            }
+            //agregar origen de factibilidad:
+            factibilidad.factigisOrigen = 'OFICINA COMERCIAL';
+            factibilidad.factigisSed='0';
 
-                console.log("tengo la siguiente factibilidad",factibilidad.factigisTipoFactibilidad);
-                if(potenciaDisponible < 0){
-                  factibilidad.factigisTipoFactibilidad = 'FACTIBILIDAD ASISTIDA';
-                }
-                factibilidad.factigisPotenciaDisponibleSED = potenciaDisponible;
-                console.log("quede con la siguiente factibilidad",factibilidad.factigisTipoFactibilidad);
+            console.log("agregar lo siguiente a arcgis srv", factibilidad);
+            agregarFact(factibilidad,(isDone)=>{
+              console.log(isDone[0],"valor en agregarFact");
+              if(isDone[0]){
+                let pasar = [];
+                pasar.push(true);
+                pasar.push(isDone[1]);
+                pasar.push(isDone[2]);
+                let usrprfl = cookieHandler.get('usrprfl');
 
-                if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD NORMAL"){
-                  factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
-                }else{
-                  factibilidad.factigisTipoMejora = "POR DEFINIR";
-                }
-
-                //agregar origen de factibilidad:
-                factibilidad.factigisOrigen = 'OFICINA COMERCIAL';
-
-                //agregar a rest srv
-                //console.log("agregar lo siguiente a arcgis srv", factibilidad);
-                agregarFact(factibilidad,(isDone)=>{
-                  console.log(isDone[0],"valor en agregarFact");
-                  if(isDone[0]){
-                    let pasar = [];
-                    pasar.push(true);
-                    pasar.push(isDone[1]);
-                    pasar.push(isDone[2]);
-                    let usrprfl = cookieHandler.get('usrprfl');
-
-                    let historial = {
-                      Estado_tramite:  factibilidad.factigisEstadoTramite,
-                      ID_Factibilidad: isDone[1],
-                      Fecha_cambio: getFormatedDateNow(),
-                      Observacion: "ESTADO INICIAL",
-                      Usuario:  usrprfl.USUARIO
-                      }
-                    agregarEstadoHistoria(historial, myhistorialCb =>{
-                      console.log("hecho o no el historial",myhistorialCb);
-                      return callbackadd(pasar);
-                    });
-
-
-
-                  }else{
-                    console.log("hubo un problema agregando");
-
+                let historial = {
+                  Estado_tramite:  factibilidad.factigisEstadoTramite,
+                  ID_Factibilidad: isDone[1],
+                  Fecha_cambio: getFormatedDateNow(),
+                  Observacion: "ESTADO INICIAL",
+                  Usuario:  usrprfl.USUARIO
                   }
-
+                agregarEstadoHistoria(historial, myhistorialCb =>{
+                  console.log("hecho o no el historial",myhistorialCb);
+                  return callbackadd(pasar);
                 });
-
-              });
-              //factibilidad.factigisPotenciaDisponibleSED =
-
+              }else{
+                console.log("hubo un problema agregando");
+              }
             });
-
+          
   }
 }
 
@@ -414,6 +392,7 @@ function agregarFact(f, callback){
 }
 
 function buscarCantClienteSED(sed, callback){
+  console.log("hola", sed)
   var qTaskCC = new esri.tasks.QueryTask(layers.read_layer_nisInfo());
   var qCC = new esri.tasks.Query();
 

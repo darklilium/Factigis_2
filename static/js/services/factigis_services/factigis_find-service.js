@@ -46,10 +46,10 @@ function factigis_findRotulo(geometry,callback){
     if(!featureSet.features.length){
       return callback([]);
     }
-    callback(featureSet.features);
+    return callback(featureSet.features);
   }, (Errorq)=>{
     console.log("Error doing query for rotulos");
-    callback([]);
+    return callback([]);
   });
 }
 
