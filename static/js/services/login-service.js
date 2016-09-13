@@ -214,7 +214,7 @@ function factigisLogin(user,pass){
 }
 
 function getProfile (user, userProfile){
-
+  
   var getProf = createQueryTask({
     url: myLayers.read_factigisUserProfile(),
     whereClause: "USUARIO='"+ user +"'"

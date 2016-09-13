@@ -7,6 +7,7 @@ import layers from '../../services/layers-service';
 import Modal from 'react-modal';
 import {factigis_findFolio} from '../../services/factigis_services/factigis_find-service';
 import makeSymbol from '../../../js/utils/makeSymbol';
+import $ from 'jquery';
 
 const customStyles = {
   content : {
@@ -57,12 +58,14 @@ class Factigis_BusquedaFolio extends React.Component {
   }
 
   onClick(){
+    $("#iframeloading").show();
     console.log(this.state.bf_folio, "valor del txt para factibildad");
     var c = factigis_findFolio(this.state.bf_folio, cb=>{
 
       if(!cb.length){
         console.log("no hay registros para ese id");
         this.setState({problemsforAdding: 'No hay registros para este n° de folio', open:true});
+         $("#iframeloading").hide();
         return;
       }
 
@@ -102,6 +105,7 @@ class Factigis_BusquedaFolio extends React.Component {
       var myPointSymbol = makeSymbol.makePoint();
       map.graphics.add(new esri.Graphic(ubi,myPointSymbol));
       map.centerAndZoom(ubi,20);
+       $("#iframeloading").hide();
     });
   }
 
@@ -116,7 +120,10 @@ class Factigis_BusquedaFolio extends React.Component {
   render(){
     return (
       <div className="factigis_addDireccion-wrapper">
-        <h7><b>Búsqueda de Factibilidad</b></h7>
+        <div className="factigisBF_searchTitle">
+          <h7><b>Búsqueda de Factibilidad</b></h7>
+          <img className="factigisBF_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloading"/>
+        </div>
         <hr className="factigis_hr-subtitle factigis_hr"/>
         <div className="factigis_BigGroupbox">
 

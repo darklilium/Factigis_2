@@ -111,8 +111,6 @@ $factigis_bgColor : ghostwhite;
   margin: 0;
 }
 
-
-
 .factigis_search{
       display: flex !important;
 }
@@ -159,10 +157,11 @@ $factigis_bgColor : ghostwhite;
     display: flex;
     flex-direction: row;
     height: 100%;
-}
-.arcgisSearch .searchGroup {
+  }
+
+  .arcgisSearch .searchGroup {
     margin-right: 1em;
-}
+  }
 
   .wrapper_factigis {
     height: inherit;
@@ -192,7 +191,7 @@ $factigis_bgColor : ghostwhite;
     width: 100%;
     min-height: 945px;
     height: 100%;
-}
+  }
 
 }
 
@@ -212,10 +211,11 @@ $factigis_bgColor : ghostwhite;
     display: flex;
     flex-direction: row;
     height: 100%;
-}
-.arcgisSearch .searchGroup {
+  }
+
+  .arcgisSearch .searchGroup {
     margin-right: 1em;
-}
+  }
 
   .wrapper_factigis {
     height: inherit;
@@ -245,8 +245,7 @@ $factigis_bgColor : ghostwhite;
     width: 100%;
     min-height: 945px;
     height: 100%;
-}
-
+  }
 }
 
 //media screens for responsive design 'till 640px max'
@@ -265,10 +264,10 @@ $factigis_bgColor : ghostwhite;
     display: flex;
     flex-direction: row;
     height: 100%;
-}
-.arcgisSearch .searchGroup {
+  }
+  .arcgisSearch .searchGroup {
     margin-right: 1em;
-}
+  }
 
   .wrapper_factigis {
     height: inherit;
@@ -298,10 +297,25 @@ $factigis_bgColor : ghostwhite;
     width: 100%;
     min-height: 945px;
     height: 100%;
+  }
 }
 
+.factigisDir_searchTitle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
+.factigisDir_imgLoader{
+  height: 0.8em;
+  width: 1em;
+  display: none;
+	margin-right: 1em;
+}
+
+.ReactModal__Overlay{
+  z-index: 50;
+}
 @import "components/factigis/factigis_add.scss";
 @import "components/layerlist-component";
 @import "components/factigis/factigis_busqueda.scss";

@@ -20,7 +20,8 @@ const customStyles = {
     right                 : 'auto',
     bottom                : 'auto',
     marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+    transform             : 'translate(-50%, -50%)',
+    zIndex                : 50
   }
 };
 
@@ -64,8 +65,8 @@ class Factigis_AddDireccion extends React.Component {
   }
 
   onClickUbicacionCasa(){
+    $("#iframeloadingDir").show();
     var mapp = this.props.themap;
-
     var addDistribucionLayer = setLayers().gis_chqbasemap();
     document.getElementById('check_chqbasemap').checked=true;
     mapp.addLayer(addDistribucionLayer,1);
@@ -80,16 +81,14 @@ class Factigis_AddDireccion extends React.Component {
       $('.factigis_btnSelectUbicacionCasa').css('color',"crimson");
 
       var map_click_handle = dojo.connect(mapp, 'onClick', (g)=>{
-
         //saves geometry point for customer.
         this.setState({factigis_geoUbicacionCasa: g.mapPoint});
 
         //draw customer location on the map.
         mapp.graphics.clear();
         let pointSymbol = makeSymbol.makePointCustomer();
-
         mapp.graphics.add(new esri.Graphic(g.mapPoint,pointSymbol));
-
+        $("#iframeloadingDir").hide();
       });
       this.setState({btnUbicacionCasa: map_click_handle});
 
@@ -98,12 +97,12 @@ class Factigis_AddDireccion extends React.Component {
       $('.factigis_btnSelectUbicacionCasa').css('color',"black");
       dojo.disconnect(this.state.btnUbicacionCasa);
       console.log("this is my saved point for ubicacion casa", this.state.factigis_geoUbicacionCasa);
+       $("#iframeloadingDir").hide();
     }
   }
 
   onClickCalle(){
-    //document.getElementById('check_chqbasemap').checked=true;
-
+    $("#iframeloadingDir").show();
     var mapp = this.props.themap;
     //clean graphics on layer
     //  LayerList.onClick('check_chqbasemap');
@@ -115,33 +114,31 @@ class Factigis_AddDireccion extends React.Component {
     document.getElementById('check_chqbasemap').checked=true;
     mapp.addLayer(addDistribucionLayer,1);
 
-    if(this.state.toggleUbicacionCasa=='ON'){
+      if(this.state.toggleUbicacionCasa=='ON'){
         this.setState({toggleUbicacionCasa: 'OFF'});
         $('.factigis_btnSelectUbicacionCasa').css('color',"black");
-          dojo.disconnect(this.state.btnUbicacionCasa);
-    }
+        dojo.disconnect(this.state.btnUbicacionCasa);
+      }
 
       if (this.state.toggleCalle =='OFF'){
         this.setState({toggleCalle: 'ON'});
         $('.factigis_btnSelectCalle').css('color',"crimson");
 
         var map_click_handle = dojo.connect(mapp, 'onClick', (g)=>{
-
           //saves geometry point for customer.
-
           factigis_findCalle(g.mapPoint, (featureSetFeatures)=>{
             this.setState({factigis_geoCalle: g.mapPoint});
             if(!featureSetFeatures.length){
               console.log("No se ha podido encontrar la calle, seleccione de nuevo");
               return;
             }
-
             this.setState({
               factigisCalle: featureSetFeatures[0].attributes['nombre'],
               factigis_objectidCalle: featureSetFeatures[0].attributes['OBJECTID']
             });
+            $("#iframeloadingDir").hide();
           });
-      });
+        });
         this.setState({btnCalle: map_click_handle});
 
       }else{
@@ -149,6 +146,7 @@ class Factigis_AddDireccion extends React.Component {
         $('.factigis_btnSelectCalle').css('color',"black");
         dojo.disconnect(this.state.btnCalle);
         console.log("this is my saved point for CALLE", this.state.factigis_geoCalle);
+        $("#iframeloadingDir").hide();
       }
   }
 
@@ -171,7 +169,6 @@ class Factigis_AddDireccion extends React.Component {
           console.log('numero calle', event.currentTarget.value);
       break;
       default:
-
     }
   }
 
@@ -181,8 +178,7 @@ class Factigis_AddDireccion extends React.Component {
   }
 
   onClickAgregarNuevaDireccion(){
-
-
+    $("#iframeloadingDir").show();
     let objNewAddress = {
       CALLE: this.state.factigisCalle,
       NUMERO : this.state.factigisNumeroCalle ,
@@ -196,9 +192,6 @@ class Factigis_AddDireccion extends React.Component {
     let objGeometry = {
       geoUbicacionCasa: this.state.factigis_geoUbicacionCasa
     }
-    //here to validate fields.
-    console.log("validating fields");
-
     factigis_addNuevaDireccion(objNewAddress, objGeometry, (callback)=>{
       if(callback){
 
@@ -226,15 +219,14 @@ class Factigis_AddDireccion extends React.Component {
         dojo.disconnect(this.state.btnUbicacionCasa);
         $('.factigis_btnSelectCalle').css('color',"black");
         $('.factigis_btnSelectUbicacionCasa').css('color',"black");
-
+        $("#iframeloadingDir").hide();
         this.setState({open: true, problemsforAdding: 'Nueva Dirección agregada'});
         console.log("Address Added.");
         return;
-
       }
         this.setState({open: true, problemsforAdding: 'Error al agregar dirección, intente nuevamente y revise los campos.'});
         console.log("Address not added.");
-
+        $("#iframeloadingDir").hide();
     });
   }
   openModal () { this.setState({open: true}); }
@@ -244,59 +236,60 @@ class Factigis_AddDireccion extends React.Component {
   render(){
     return (
       <div className="factigis_addDireccion-wrapper">
+      <div className="factigisDir_searchTitle">
         <h7><b>Datos de Dirección</b></h7>
+        <img className="factigisDir_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloadingDir"/>
+      </div>
         <hr className="factigis_hr-subtitle factigis_hr"/>
         <div className="factigis_BigGroupbox">
+          <h8>*Calle:</h8>
+          <div className="factigis_groupbox">
+            <input id="factigis_txtCalle" className="factigis-input" onChange={this.onChange} value={this.state.factigisCalle} title="Indique el nombre de la calle" type="text" placeholder="Seleccione el nombre de la calle"  />
 
-        <h8>*Calle:</h8>
-        <div className="factigis_groupbox">
-          <input id="factigis_txtCalle" className="factigis-input" onChange={this.onChange} value={this.state.factigisCalle} title="Indique el nombre de la calle" type="text" placeholder="Seleccione el nombre de la calle"  />
+            <button onClick={this.onClickCalle} className="factigis-selectFromMapButton factigis_btnSelectCalle btn btn-default" title="Ir " type="button" >
+              <span><i className="fa fa-road"></i></span>
+            </button>
+            <button onClick={this.onClickUbicacionCasa.bind(this)} className="factigis-selectFromMapButton factigis_btnSelectUbicacionCasa  btn btn-default" title="Ir " type="button" >
+              <span><i className="fa fa-map-marker"></i></span>
+            </button>
+            <h8 className="factigis__toggleBtnLabel">{this.state.toggleCalle}</h8>
+          </div>
 
-          <button onClick={this.onClickCalle} className="factigis-selectFromMapButton factigis_btnSelectCalle btn btn-default" title="Ir " type="button" >
-            <span><i className="fa fa-road"></i></span>
+          <div className="factigis_groupbox">
+            <div className="factigis_group factigis_addressGroup">
+              <h8>*Número:</h8>
+              <input id="factigis_txtNumeroCalle" onChange={this.onChange} value={this.state.factigisNumeroCalle}   className="factigis-input factigis_input-solo" title="Escriba el número de la calle" type="text" placeholder="Número de la calle"  />
+
+              <h8>Anexo 1:</h8>
+              <input id="factigis_txtAnexo1" onChange={this.onChange} value={this.state.factigisAnexo1} className="factigis-input factigis_input-solo" title="Escriba alguna descripción del lugar" type="text" placeholder="Escriba alguna descripción del lugar"  />
+            </div>
+          </div>
+
+          <div className="factigis_groupbox">
+            <div className="factigis_group factigis_addressGroup">
+              <h8>Anexo 2:</h8>
+              <input id="factigis_txtAnexo2" onChange={this.onChange} value={this.state.factigisAnexo2}  className="factigis-input factigis_input-solo" title="Escriba alguna descripción del lugar" type="text" placeholder="Escriba alguna descripción del lugar"  />
+            </div>
+          </div>
+          <div className="factigis_groupbox">
+            <div className="factigis_group factigis_addressGroup">
+              <h8>*Tipo Edificación:</h8>
+              <Select options={this.state.factigisTipoEdificacion} className="factigis_selectInput" name="form-field-name"  onChange={this.onChangeTipoEdificacion.bind(this)}
+                value={this.state.factigis_selectedValueEdificacion} simpleValue clearable={true} searchable={false} placeholder="Seleccione el tipo de cliente"/>
+            </div>
+          </div>
+
+          <hr className="factigis_hr"/>
+            <p className="factigis_p obligatorio">* Campos obligatorios</p>
+          <button className="factigis_submitButton btn btn-success" title="Ir " type="button" onClick={this.onClickAgregarNuevaDireccion} >
+                <span><i className="fa fa-plus"></i> Agregar Dirección</span>
           </button>
-          <button onClick={this.onClickUbicacionCasa.bind(this)} className="factigis-selectFromMapButton factigis_btnSelectUbicacionCasa  btn btn-default" title="Ir " type="button" >
-            <span><i className="fa fa-map-marker"></i></span>
-          </button>
-          <h8 className="factigis__toggleBtnLabel">{this.state.toggleCalle}</h8>
-        </div>
-
-        <div className="factigis_groupbox">
-          <div className="factigis_group factigis_addressGroup">
-            <h8>*Número:</h8>
-            <input id="factigis_txtNumeroCalle" onChange={this.onChange} value={this.state.factigisNumeroCalle}   className="factigis-input factigis_input-solo" title="Escriba el número de la calle" type="text" placeholder="Número de la calle"  />
-
-            <h8>Anexo 1:</h8>
-            <input id="factigis_txtAnexo1" onChange={this.onChange} value={this.state.factigisAnexo1} className="factigis-input factigis_input-solo" title="Escriba alguna descripción del lugar" type="text" placeholder="Escriba alguna descripción del lugar"  />
-          </div>
-        </div>
-
-        <div className="factigis_groupbox">
-          <div className="factigis_group factigis_addressGroup">
-            <h8>Anexo 2:</h8>
-            <input id="factigis_txtAnexo2" onChange={this.onChange} value={this.state.factigisAnexo2}  className="factigis-input factigis_input-solo" title="Escriba alguna descripción del lugar" type="text" placeholder="Escriba alguna descripción del lugar"  />
-          </div>
-
-        </div>
-        <div className="factigis_groupbox">
-          <div className="factigis_group factigis_addressGroup">
-            <h8>*Tipo Edificación:</h8>
-            <Select options={this.state.factigisTipoEdificacion} className="factigis_selectInput" name="form-field-name"  onChange={this.onChangeTipoEdificacion.bind(this)}
-              value={this.state.factigis_selectedValueEdificacion} simpleValue clearable={true} searchable={false} placeholder="Seleccione el tipo de cliente"/>
-          </div>
-        </div>
-
-        <hr className="factigis_hr"/>
-          <p className="factigis_p obligatorio">* Campos obligatorios</p>
-        <button className="factigis_submitButton btn btn-success" title="Ir " type="button" onClick={this.onClickAgregarNuevaDireccion} >
-              <span><i className="fa fa-plus"></i> Agregar Dirección</span>
-        </button>
-        <Modal isOpen={this.state.open} style={customStyles}>
-          <h2 className="factigis_h2">Agregar nueva dirección</h2>
-          <p>{this.state.problemsforAdding}</p>
-          <br />
-          <button className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>
-        </Modal>
+          <Modal isOpen={this.state.open} style={customStyles}>
+            <h2 className="factigis_h2">Agregar nueva dirección</h2>
+            <p>{this.state.problemsforAdding}</p>
+            <br />
+            <button className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>
+          </Modal>
         </div>
       </div>
     );

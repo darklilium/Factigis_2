@@ -57,7 +57,7 @@ class FactigisDashboard extends React.Component {
 
     var d = cookieHandler.get('wllExp');
     if(d > getFormatedDate()){
-      console.log("dentro del rango")
+      
     }else{
       console.log("expiro");
       window.location.href = "index.html";

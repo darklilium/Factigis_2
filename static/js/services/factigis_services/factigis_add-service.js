@@ -36,11 +36,17 @@ function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
 
   let geox = newGeometry.geoUbicacionCasa.x;
   let geoy=  newGeometry.geoUbicacionCasa.y;
+
+
     const data = {
       f: 'json',
       adds: JSON.stringify([{ attributes: newAddress, geometry: {"x":geox , "y": geoy}}]),
       token: token.read()
     };
+
+    if ( (newAddress['ANEXO1']=="") || (newAddress['ANEXO2']=="") || (newAddress['CALLE']=="") || (newAddress['NUMERO']=="") || (newAddress['TIPO_EDIFICACION']=="")  ){
+      return callback(false);
+    }
 
     jQuery.ajax({
       method: 'POST',
@@ -50,16 +56,17 @@ function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
     })
     .done(d =>{
       let json = JSON.parse(d);
-      console.log(json["addResults"][0].objectId);
-      let arrObject = [];
-      if(json["addResults"][0].objectId>0){
-        return callback(true);
-
-      }else{
+      if( (_.has(json,'error')) ){
         return callback(false);
+      }else{
+        let arrObject = [];
+        if(json["addResults"][0].objectId>0){
+          return callback(true);
 
+        }else{
+          return callback(false);
+        }
       }
-
     })
     .fail(f=>{
       console.log(f,"no pase")
@@ -236,7 +243,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
                 console.log("hubo un problema agregando");
               }
             });
-          
+
   }
 }
 
@@ -367,7 +374,7 @@ function agregarFact(f, callback){
   })
   .done(d =>{
     let json = JSON.parse(d);
-    console.log(json["addResults"][0].objectId);
+
     let arrObject = [];
 
     if(json["addResults"][0].objectId>0){

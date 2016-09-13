@@ -10,6 +10,19 @@
 	background: url('images/Preloader_3.gif') 50% 50% no-repeat rgb(249,249,249);
 }
 
+.factigisAdd_searchTitle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.factigisAdd_imgLoader{
+  height: 0.8em;
+  width: 1em;
+  display: none;
+	margin-right: 1em;
+}
+
 .factigis_groupEspecial{
   padding-top: 1.4em;
      display: flex;
@@ -20,7 +33,7 @@
 .wrapper_factigisAdd{
   display: flex;
   flex-direction: column;
-  
+
   padding: 1em;
 }
 

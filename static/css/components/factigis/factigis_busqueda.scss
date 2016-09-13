@@ -15,3 +15,15 @@ font-size: 11px;
   width: 100%;
   display: flex;
 }
+
+.factigisBF_searchTitle{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.factigisBF_imgLoader{
+  height: 0.8em;
+  width: 1em;
+  display: none;
+}

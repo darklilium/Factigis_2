@@ -233,13 +233,13 @@ class Factigis_Add extends React.Component {
 
   }
 
-
   onKeyTelefono(e){
     const re = /[0-9]+/g;
     if (!re.test(e.key)) {
       e.preventDefault();
     }
   }
+
   onChange(e){
 
     switch (e.currentTarget.id) {
@@ -393,6 +393,7 @@ class Factigis_Add extends React.Component {
 
   //Functions for each button that get the map coordinates and validate the Factibility info.
   onClickCliente(e){
+
     var map = this.props.themap;
 
     //turn off the other toggle buttons from the same window.
@@ -408,6 +409,7 @@ class Factigis_Add extends React.Component {
       $('.factigis_btnSelectCliente').css('color',"crimson").css('border-color','red');
 
       var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
+        $("#iframeloadingAdd").show();
         //saves geometry point for customer.
         this.setState({factigis_geoCliente: g.mapPoint, factigis_geoClienteValidator:true});
 
@@ -452,6 +454,7 @@ class Factigis_Add extends React.Component {
           map.graphics.clear();
           let pointSymbol = makeSymbol.makePointCustomer();
           map.graphics.add(new esri.Graphic(g.mapPoint,pointSymbol));
+          $("#iframeloadingAdd").hide();
         });
 
       });
@@ -463,6 +466,7 @@ class Factigis_Add extends React.Component {
       this.setState({toggleCliente: 'OFF'});
       $('.factigis_btnSelectCliente').css('color',"black").css('border-color','initial');
       dojo.disconnect(this.state.btnCliente);
+      $("#iframeloadingAdd").hide();
       ////////console.log("this is my saved point for cliente", this.state.factigis_geoCliente);
     }
   }
@@ -490,12 +494,13 @@ class Factigis_Add extends React.Component {
     });
 
     this.setState({toggleCliente: 'OFF',  toggleTramo: 'OFF', toggleDireccion: 'OFF'});
-
+    console.log(e,this.state.togglePoste)
     if (this.state.togglePoste =='OFF'){
       this.setState({togglePoste: 'ON'});
         $('.factigis_btnSelectPoste').css('color',"crimson").css('border-color','red');
 
         var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
+          $("#iframeloadingAdd").show();
           factigis_findRotulo(g.mapPoint, (featureSetFeatures)=>{
             // verificar si es camara o poste
             if(featureSetFeatures[0].attributes['tipo_nodo']=="ele!camara"){
@@ -520,6 +525,7 @@ class Factigis_Add extends React.Component {
             line.addPath([this.state.factigis_geoCliente, featureSetFeatures[0].geometry]);
             let lineSymbol = makeSymbol.makeTrackLine();
             map.graphics.add(new esri.Graphic(line,lineSymbol));
+
             //extrae datos de rotulo
             let rotulo = featureSetFeatures[0].attributes['rotulo'];
             var sed = featureSetFeatures[0].attributes['sed'];
@@ -536,6 +542,7 @@ class Factigis_Add extends React.Component {
               btnDireccionDisabled: true,
               factigisIDNodo: featureSetFeatures[0].attributes['id_nodo']
             });
+            $("#iframeloadingAdd").hide();
           });
 
         });
@@ -581,7 +588,7 @@ class Factigis_Add extends React.Component {
         $('.factigis_btnSelectTramo').css('color',"crimson").css('border-color','red');
 
         var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
-
+          $("#iframeloadingAdd").show();
           if(this.state.factigis_selectedValueTipoEmpalmeBTMT==""){
             this.setState({
               open: true,
@@ -591,7 +598,7 @@ class Factigis_Add extends React.Component {
 
           }else{
             factigis_findTramo(g.mapPoint, this.state.factigis_selectedValueTipoEmpalmeBTMT, (featureSetFeatures)=>{
-              console.log("esto llega",featureSetFeatures);
+
               if(featureSetFeatures.tipoFactibilidad=='FACTIBILIDAD ASISTIDA'){
                 this.setState({
                   factigisTramoValidator: true,
@@ -607,7 +614,9 @@ class Factigis_Add extends React.Component {
                   factiTipoFactibilidad: featureSetFeatures.tipoFactibilidad
                 });
               }
+              $("#iframeloadingAdd").hide();
             });
+
           }
         });
         this.setState({btnPoste: map_click_handle});
@@ -633,6 +642,7 @@ class Factigis_Add extends React.Component {
         $('.factigis_btnSelectDireccion').css('color',"crimson");
 
         var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
+          $("#iframeloadingAdd").show();
           factigis_findDireccion(g.mapPoint, (featureSetFeatures)=>{
             //if theres no results for old addresses, search in new ones.
             if(!featureSetFeatures.length){
@@ -659,6 +669,7 @@ class Factigis_Add extends React.Component {
                   map.graphics.add(new esri.Graphic(line,lineSymbol));
                   line2.addPath([this.state.factigis_geoCliente, this.state.factigis_geoDireccion]);
                   map.graphics.add(new esri.Graphic(line2,lineSymbol));
+                  $("#iframeloadingAdd").hide();
                 }
               });
             //else , change the values for states and display the old address found.
@@ -681,6 +692,7 @@ class Factigis_Add extends React.Component {
               map.graphics.add(new esri.Graphic(line,lineSymbol));
               line2.addPath([this.state.factigis_geoCliente, this.state.factigis_geoDireccion]);
               map.graphics.add(new esri.Graphic(line2,lineSymbol));
+              $("#iframeloadingAdd").hide();
             }
           });
 
@@ -754,7 +766,12 @@ class Factigis_Add extends React.Component {
 
         if(!val){
           ////console.log("no hay value" , val);
-          this.setState({factigis_selectedValueTipoEmpalmeBTMT: 'NODEFINIDO', factigisTipoBTMTValidator: false});
+          this.setState({
+            factigis_selectedValueTipoEmpalmeBTMT: '',
+            factigisTipoBTMTValidator: false,
+            factigisTramo: '',
+            factigisTramoValidator: false
+          });
           return;
         }
         this.setState({factigis_selectedValueTipoEmpalmeBTMT: val, factigisTipoBTMTValidator:true, factigisTramoValidator: true});
@@ -822,7 +839,7 @@ class Factigis_Add extends React.Component {
 
   onOpen(){
 
-    if( (this.state.factigis_selectedValueTipoEmpalme=='NODEFINIDO' || this.state.factigis_selectedValueTipoEmpalme=="") || (this.state.factigis_selectedValueTipoFase=='NODEFINIDO' || this.state.factigis_selectedValueTipoFase=="")){
+    if( (this.state.factigis_selectedValueTipoEmpalme=='' || this.state.factigis_selectedValueTipoEmpalme=="") || (this.state.factigis_selectedValueTipoFase=='NODEFINIDO' || this.state.factigis_selectedValueTipoFase=="")){
       ////////console.log("no hay valor de tipo Empalme para calcular potencia.", this.state.factigis_selectedValueTipoFase, this.state.factigis_selectedValueTipoEmpalme);
       return
     }else{
@@ -836,7 +853,7 @@ class Factigis_Add extends React.Component {
 
   //Function that adds a new customer but has to validate the other fields yet.
   onClickAgregarCliente(){
-
+    $("#iframeloadingAdd").show();
     let tipoProvisorioDefinitivo = 'DEFINITIVO';
     if(this.state.radioEmpalmeProvisorio){
       tipoProvisorioDefinitivo="PROVISORIO";
@@ -943,10 +960,8 @@ class Factigis_Add extends React.Component {
             factigisZona: this.state.factigisZona
             }
             factigis_addNuevaFactibilidad(myFact, (cb)=>{
-              ////console.log("alo",cb);
               if(cb[0]){
                 let fArr = factArr.map(f=>{return f+'\n'});
-                ////console.log(cb[1],"esto llego del object para el certificado");
                 //console.log(cb[2],"retorno de agregacion");
 
                 this.setState({
@@ -954,6 +969,7 @@ class Factigis_Add extends React.Component {
                   problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'] ,
                   numeroFactibilidad: 'N°' + cb[1]
                 });
+                $("#iframeloadingAdd").hide();
                 //GENERAR CARTA
                 let usrprfl = cookieHandler.get('usrprfl');
                 cookieHandler.set('myLetter',[this.state.factigisDireccion,
@@ -970,27 +986,27 @@ class Factigis_Add extends React.Component {
               }else{
                 let fArr = factArr.map(f=>{return f+'\n'});
                 this.setState({open: true, problemsforAdding: 'Hubo un problema al agregar la factibilidad',  numeroFactibilidad: ''});
+                $("#iframeloadingAdd").hide();
               }
 
             });
 
         //FACTIBILIDAD ASISTIDA
         }else{
-          ////console.log("Zonas de factbilidad con problemas.", factArr);
+
           let fArr = [];
 
-
           if($.inArray("concesion",factArr)>-1){
-              ////console.log("esta..conces",factArr);
+
               fArr.push("concesion");
           }
           if ($.inArray("transmision",factArr)>-1) {
-              ////console.log("esta..transmision",factArr);
+
               fArr.push("transmision");
           }
 
           if(!fArr.length){
-              ////console.log('Factibilidad asistida por', fArr, factArr);
+              //console.log('Factibilidad asistida por', fArr, factArr);
               this.setState({factiTipoFactibilidad: 'FACTIBILIDAD ASISTIDA'});
               var myFact = {
                 factigisRut: this.state.factigisRut,
@@ -1026,18 +1042,16 @@ class Factigis_Add extends React.Component {
                 factigisComuna: this.state.factigisComuna
                 }
               factigis_addNuevaFactibilidad(myFact, (cb)=>{
-                ////console.log("alo",cb);
+
                 if(cb[0]){
                   let fArr = factArr.map(f=>{return f+'\n'});
-                  ////console.log(cb[1],"esto llego del object para el certificado");
-
 
                   this.setState({
                     open: true,
                     problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'] ,
                     numeroFactibilidad: cb[1]
                   });
-
+                  $("#iframeloadingAdd").hide();
                   //GENERAR CARTA
                   let usrprfl = cookieHandler.get('usrprfl');
                   cookieHandler.set('myLetter',[this.state.factigisDireccion,
@@ -1055,14 +1069,13 @@ class Factigis_Add extends React.Component {
                 }else{
                   let fArr = factArr.map(f=>{return f+'\n'});
                   this.setState({open: true, problemsforAdding: 'Hubo un problema al agregar la factibilidad', numeroFactibilidad: ''});
+                  $("#iframeloadingAdd").hide();
                 }
-
               });
 
           }else{
             ////console.log('Factibilidad no se puede agregar por', fArr, factArr);
             this.setState({open: true, problemsforAdding: 'La factibilidad que está intentando agregar presenta problemas en las siguientes zonas: '+ '\n' + fArr});
-
           }
         }
 
@@ -1074,6 +1087,7 @@ class Factigis_Add extends React.Component {
           ////console.log("escondido el select");
           $(".factigisPotencia").css('border-style','initial').css('border-width','0px');
         }
+        $("#iframeloadingAdd").hide();
       }
     });
 
@@ -1098,11 +1112,13 @@ class Factigis_Add extends React.Component {
       factigis_geoPoste: '',
       factigis_geoDireccion: '',
       toggleCliente: 'OFF',
-      togglePoste: 'OFF',
-      toggleDireccion: 'OFF',
+      togglePoste: 'ON',
+      toggleDireccion: 'ON',
+      toggleTramo: 'ON',
       btnCliente: '',
       btnPoste: '',
       btnDireccion: '',
+      btnTramo: '',
       factigisRut: '',
       factigisNombre: '',
       factigisApellido: '',
@@ -1134,69 +1150,50 @@ class Factigis_Add extends React.Component {
       factigisDireccionValidator: false,  //per full name
       factigisIDDireccionValidator: false, //per id dir
       factigisCantidadEmpalmesValidator: false,
-
       //validators for ddls
       factigisTipoClienteValidator: false,
       factigisTipoContribuyenteValidator: false,
       factigisTipoEmpalmeValidator:false,
       factigisTipoFaseValidator: false,
       factigisTipoBTMTValidator: false,
-
       //validators for geometries
       factigis_geoClienteValidator: false,
       factigis_geoPosteValidator: false,
       factigis_geoDireccionValidator: false,
       btnPosteDisabled: true,
       btnDireccionDisabled: true,
+      btnTramoDisabled: true,
       factigis_sed: '',
       factiTipoFactibilidad: 'FACTIBILIDAD NORMAL',
       factigis_alimentador: '',
       factigisIDNodo: '',
       factigisZona: ''
-
     });
+
     $('.factigisRut').css('border-color','initial').css('border-style', 'groove');
-
     $('.factigisNombre').css('border-color','initial').css('border-style', 'groove');
-
-
     $('.factigisApellido').css('border-color','initial').css('border-style', 'groove');
-
-
     $('.factigisTelefono').css('border-color','initial').css('border-style', 'groove');
-
-
     $('.factigisEmail').css('border-color','initial').css('border-style', 'groove');
-
     $('.factigisTramo').css('border-color','initial').css('border-style', 'groove');
-
     $('.factigisCantidadEmpalmes').css('border-color','initial').css('border-style', 'groove');
-
     $('.factigisDireccion').css('border-color','initial').css('border-style', 'groove');
-
     $('.factigisRotulo').css('border-color','initial').css('border-style', 'groove');
-
     $('.factigis_tipoCliente').css('border-color','initial').css('border-style', 'hidden');
-
     $('.factigis_tipoContribuyente').css('border-color','initial').css('border-style', 'hidden');
-
     $('.factigisTipoEmpalme').css('border-color','initial').css('border-style', 'hidden');
-
     $('.factigis_tipoFase').css('border-color','initial').css('border-style', 'hidden');
-
     $('.factigis_tipoPotencia').css('border-color','initial').css('border-style', 'hidden');
     $('.factigisPotencia').css('border-color','initial').css('border-style', 'hidden');
     $('.factigisPotencia2').css('border-color','initial').css('border-style', 'groove');
-
     $('.factigisTipo').css('border-color','initial').css('border-style', 'hidden');
-
     $('.factigis_btnSelectCliente').css('border-color','initial').css('border-style', 'solid');
-
     $('.factigis_btnSelectPoste').css('border-color','initial').css('border-style', 'solid');
-
     $('.factigis_btnSelectDireccion').css('border-color','initial').css('border-style', 'solid');
 
-
+    toggleOff('poste', this.state.btnPoste, this.state.togglePoste);
+    toggleOff('direccion', this.state.btnDireccion, this.state.toggleDireccion);
+    toggleOff('tramo', this.state.btnTramo, this.state.toggleTramo);
   }
 
   render(){
@@ -1216,7 +1213,10 @@ class Factigis_Add extends React.Component {
         </TabList>
         {/* Tab cliente */}
         {this.state.showA && <TabPanel>
-          <h7><b>Datos de Cliente</b></h7>
+          <div className="factigisAdd_searchTitle">
+            <h7><b>Datos de Cliente</b></h7>
+            <img className="factigisAdd_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloadingAdd"/>
+          </div>
           <hr className="factigis_hr-subtitle factigis_hr"/>
           <div className="factigis_BigGroupbox">
             <h8>Rut:</h8>
