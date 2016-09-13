@@ -26,7 +26,17 @@
   right: 1em;
 }
 
+.btnLogoff{
+  color: #4faeff;
+  background-color: #ffffff;
+  border-color: #e0f1ff;
+}
 
+.factigis_whologged{
+  display: flex;
+  align-items: center;
+  margin-right: 1em;
+}
 
 @import "components/factigis/factigis_backoffice2.scss";
 @import "components/factigis/factigis_griddle.scss";

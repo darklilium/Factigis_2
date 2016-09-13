@@ -10,6 +10,8 @@
   background-color: #ffffff;
 }
 
+
+
 #BMToggle2{
   display: flex;
   position: absolute;
@@ -27,6 +29,11 @@
   height: 100%;
   z-index: 9999;
   background: url('images/Preloader_3.gif') 50% 50% no-repeat rgb(249,249,249);
+}
+
+.factigisBO1_imgLoader{
+  margin-left: 1em;
+  flex-direction: row;
 }
 
 .wrapper_factigis_bo2{

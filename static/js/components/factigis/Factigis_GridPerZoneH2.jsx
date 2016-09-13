@@ -34,6 +34,7 @@ class FG_GridPerZoneH2 extends React.Component {
 
   }
   onRowClick(gridRow, event){
+    $("#iframeloadingBO1").show();
     var map = mymap.getMap();
     map.graphics.clear();
     let pointSymbol = makeSymbol.makePoint();

@@ -97,6 +97,7 @@ var tipoMejora = [
 ];
 
 class FactigisBackOfficeH extends React.Component {
+
   constructor(props){
     super(props);
     this.state = {
@@ -140,10 +141,7 @@ class FactigisBackOfficeH extends React.Component {
       facB_campamento: '',
       facB_transmision: '',
       myDataEstados: [{}]
-
-
     }
-
   }
 
   onChildChanged(newState){
@@ -207,8 +205,7 @@ class FactigisBackOfficeH extends React.Component {
           });
           this.setState({myDataEstados: loadDataEstados});
         }
-
-
+        $("#iframeloadingBO1").hide();
       });
   }
 
@@ -234,7 +231,7 @@ class FactigisBackOfficeH extends React.Component {
       }
 
     //ADD LAYER TO SHOW IN THE MAP
-
+    $("#iframeloadingBO1").show();
       var mapp = mymap.createMap("factigis_bo2_map","topo",-71.2905 ,-33.1009,9);
       var layerFactibilidad = new esri.layers.ArcGISDynamicMapServiceLayer(layers.read_factibilidad(),{id:"factigis_factibildades"});
       layerFactibilidad.setImageFormat("png32");
@@ -320,11 +317,9 @@ class FactigisBackOfficeH extends React.Component {
 
           return theData;
         });
-
-
           this.setState({myData: loadData});
           var prof = cookieHandler.get('usrprfl');
-
+          $("#iframeloadingBO1").hide();
       });
 
       var toggle = new BasemapToggle({
@@ -340,120 +335,20 @@ class FactigisBackOfficeH extends React.Component {
 
   onChange2(e){this.setState({cbMejoraValue: e});}
 
-  onClick(e){
-    if( (this.state.facB_folio=='') || (this.state.cbEstadoValue=='') || (this.state.cbMejoraValue=='') ){
-      this.setState({open: true, modalStatus: 'Por favor seleccione Estado de Trámite y/o Tipo Mejora antes de modificar.'});
-      return;
-    }
-    let myDataUpdate = {
-      "OBJECTID": this.state.facB_folio,
-      "Estado_tramite": this.state.cbEstadoValue,
-      "Tipo_mejora": this.state.cbMejoraValue
-    }
-
-    const data = {
-      f: 'json',
-      updates: JSON.stringify([{ attributes: myDataUpdate}]),
-      token: token.read()
-    };
-
-    jQuery.ajax({
-      method: 'POST',
-      url: layers.read_updateFactibilidad(),
-      dataType:'html',
-      data: data
-    })
-    .done(d =>{
-      let json = JSON.parse(d);
-      if(json["updateResults"][0].objectId>0){
-        //console.log("hecho update");
-        //add to status historial
-        let usrprfl = cookieHandler.get('usrprfl');
-        let historial = {
-          Estado_tramite: myDataUpdate["Estado_tramite"],
-          ID_Factibilidad: myDataUpdate["OBJECTID"],
-          Fecha_cambio: getFormatedDate(),
-          Observacion: this.state.facb_observaciones,
-          Usuario:  usrprfl.USUARIO
-          }
-        agregarEstadoHistoria(historial, myhistorialCb =>{
-          //console.log("hecho o no el historial",myhistorialCb);
-
-        });
-        this.setState({open: true, modalStatus: 'Factibilidad modificada.'});
-        loadCurrentHistoryData(data=>{
-          let loadData = data.map(result=>{
-
-            let theData = {
-              'Folio' : result.attributes['OBJECTID'],
-              'Estado Tramite': result.attributes['Estado_tramite'],
-              'Nombre': result.attributes['Nombre'],
-              'Apellido':result.attributes['Apellido'],
-              'Tipo Mejora': result.attributes['Tipo_mejora'] ,
-              'Zona': result.attributes['Zona'],
-              'Origen Factibilidad': result.attributes['Origen_factibilidad'],
-              'Geometry': result.geometry,
-              'Alimentador' : result.attributes['Alimentador'],
-              'Rut' : result.attributes['Rut'],
-              'Telefono': result.attributes['Telefono'],
-              'Email': result.attributes['Email'],
-              'Tipo Cliente': result.attributes['Tipo_cliente'],
-              'Tipo Contribuyente': result.attributes['Tipo_contribuyente'],
-              'Rotulo': result.attributes['Rotulo'],
-              'Tramo': result.attributes['Tramo'],
-              'Empalme': result.attributes['Empalme'],
-              'Fase': result.attributes['Fase'],
-              'Potencia': result.attributes['Potencia'],
-              'Capacidad Empalme': result.attributes['Capacidad_empalme'],
-              'Capacidad Interruptor': result.attributes['Capacidad_interruptor'],
-              'Tiempo Empalme': result.attributes['Tiempo_empalme'],
-              'Tipo Empalme': result.attributes['Tipo_empalme'],
-              'Cantidad Empalme': result.attributes['Cantidad_empalme'],
-              'IDDireccion': result.attributes['ID_Direccion'],
-              'Direccion': result.attributes['Direccion'],
-              'Zona Campamentos': result.attributes['Zona_campamentos'],
-              'Zona Concesion': result.attributes['Zona_concesion'],
-              'Zona Restringida': result.attributes['Zona_restringida'],
-              'Zona Transmision': result.attributes['Zona_transmision'],
-              'Zona Vialidad': result.attributes['Zona_vialidad'],
-              'Potencia Calculada': result.attributes['Potencia_calculada'],
-              'DistRotuloMedidor': result.attributes['DistRotuloMedidor'],
-              'DistDireccionMedidor': result.attributes['DistDireccionMedidor'],
-              'Comuna': result.attributes['Comuna'],
-              'Idnodo': result.attributes['Idnodo'],
-              'Estado Tramite': result.attributes['Estado_tramite'],
-              'Tipo Factibilidad': result.attributes['Tipo_factibilidad'],
-              'Sed': result.attributes['Sed'],
-              'PotenciaDispSed': result.attributes['PotenciaDispSed'],
-              'Zona':  result.attributes['Zona']
-            }
-
-            return theData;
-          });
-            //console.log(loadData);
-            this.setState({myData: loadData});
-
-        });
-
-      }else{
-        //console.log("no hecho update");
-        this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
-      }
-    }).fail(f=>{
-      //console.log(f,"no pase");
-        this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
-      //callback(false)
-    });
-
-
-
-  }
-
   onChangeObs(e){ this.setState({facb_observaciones: e.currentTarget.value });}
 
   openModal () { this.setState({open: true}); }
 
   closeModal () { this.setState({open: false}); }
+
+  onLoggOff(){
+      cookieHandler.remove('myLetter');
+      cookieHandler.remove('usrprfl');
+      cookieHandler.remove('usrprmssns');
+      cookieHandler.remove('wllExp');
+      localStorage.removeItem('token');
+      window.location.href = "index.html";
+  }
 
   render(){
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
@@ -462,7 +357,10 @@ class FactigisBackOfficeH extends React.Component {
     }
 
     let prof = cookieHandler.get('usrprfl');
+    prof = prof.NOMBRE_COMPLETO.split(" ");
+
     let permissions = cookieHandler.get('usrprmssns');
+
     var p = _.filter(permissions, function(o) {
       return o.module=='REVISAR_HISTORIAL_FACTIBILIDAD';
     });
@@ -484,12 +382,20 @@ class FactigisBackOfficeH extends React.Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item active>
               Revisión Historial Factibilidades
+              <img className="factigisBO1_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloadingBO1"/>
+
             </Breadcrumb.Item>
             <div className="factigis_top-right">
-              <Breadcrumb.Item active className="factigis_whologged">
-                Bienvenido: {prof.NOMBRE_COMPLETO}
-              </Breadcrumb.Item>
-            </div>
+               <Breadcrumb.Item active className="factigis_whologged">
+                  Bienvenido: {prof[0]}
+               </Breadcrumb.Item>
+               <Breadcrumb.Item active >
+                 <button onClick={this.onLoggOff.bind(this)}  className="btnLogoff btn btn-info" title="Cerrar Sesión " type="button" >
+                   <span><i className="fa fa-sign-out" aria-hidden="true"></i> Log Off</span>
+                 </button>
+               </Breadcrumb.Item>
+             </div>
+
           </Breadcrumb>
         </div>
         <div className="bo2_table">
@@ -570,21 +476,7 @@ class FactigisBackOfficeH extends React.Component {
           <div className="wrapper_bot_title">
             {/*<h1 className="factigisBO2_h1 factigis_h1_edited">Historial de Estados</h1>*/}
           </div>
-          <div className="wrapper_bot_content">
-          {/*  <h8 className="factigis_bo2-h8">Observaciones:</h8>
-            <input id="factigis_txtObservaciones" maxLength="50" className="marginRight05" value={this.state.facb_observaciones} onChange={this.onChangeObs.bind(this)} title="Observaciones" type="text" placeholder="Escriba su observación" />
-            <Select id="ddlEstadoFactibilidad" className="factigis_bo2_cbEstado marginRight05" onChange={this.onChange.bind(this)} options={this.state.opcionesEstado}
-            simpleValue clearable={true} searchable={false} value={this.state.cbEstadoValue} placeholder="Seleccione Estado Trámite"/>
-            <Select id="ddlTipoMejoraFactibilidad" className="factigis_bo2_cbEstado marginRight05" onChange={this.onChange2.bind(this)} options={this.state.opcionesMejora}
-            simpleValue clearable={true} searchable={false} value={this.state.cbMejoraValue} placeholder="Seleccione Tipo Mejora"/>
-            <button className="factigis_submitButton btn btn-success" onClick={this.onClick.bind(this)} title="Modificar Estado Factibilidad " type="button" >
-              <span><i className="fa fa-plus"></i> Modificar Factibilidad</span>
-            </button>
-            */}
-
-
-          </div>
-
+          <div className="wrapper_bot_content"></div>
         </div>
         <Modal isOpen={this.state.open} style={customStyles}>
           <h2 className="factigis_h2">Revisión Factibilidades</h2>

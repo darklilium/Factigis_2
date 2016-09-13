@@ -73,6 +73,15 @@ class Factigis extends React.Component {
 
   }
 
+  onLoggOff(){
+      cookieHandler.remove('myLetter');
+      cookieHandler.remove('usrprfl');
+      cookieHandler.remove('usrprmssns');
+      cookieHandler.remove('wllExp');
+      localStorage.removeItem('token');
+      window.location.href = "index.html";
+  }
+
   render(){
     let whoLogged = cookieHandler.get('usrprfl');
     whoLogged = whoLogged.NOMBRE_COMPLETO.split(" ");
@@ -81,24 +90,29 @@ class Factigis extends React.Component {
           <div className="wrapper_factigis">
             <div className="wrapper_factibilidadTop">
               <Breadcrumb className="dashboard_breadcrum">
-                 <Breadcrumb.Item href="index.html">
-                   Inicio
-                 </Breadcrumb.Item>
-                 <Breadcrumb.Item href="factigisDashboard.html">
-                   Dashboard
-                 </Breadcrumb.Item>
-                 <Breadcrumb.Item active>
-                   Crear Factibilidad
-                 </Breadcrumb.Item>
-                 <div className="factigis_top-right">
-                 <Breadcrumb.Item active className="factigis_search">
-                  <div id="search"></div>
-                 </Breadcrumb.Item>
-                 <Breadcrumb.Item active className="factigis_whologged">
+                <Breadcrumb.Item href="index.html">
+                  Inicio
+                </Breadcrumb.Item>
+                <Breadcrumb.Item href="factigisDashboard.html">
+                  Dashboard
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                  Crear Factibilidad
+                </Breadcrumb.Item>
+                <div className="factigis_top-right">
+                  <Breadcrumb.Item active className="factigis_search">
+                    <div id="search"></div>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item active className="factigis_whologged">
                     Bienvenido: {whoLogged[0]}
-                 </Breadcrumb.Item>
-                 </div>
-               </Breadcrumb>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item active >
+                    <button onClick={this.onLoggOff.bind(this)} className="btnLogoff btn btn-info" title="Cerrar Sesión " type="button" >
+                      <span><i className="fa fa-sign-out" aria-hidden="true"></i> Log Off</span>
+                    </button>
+                  </Breadcrumb.Item>
+                </div>
+              </Breadcrumb>
             </div>
             <div className="wrapper_factibilidadContent">
               <div className="wrapper_factibilidadLeft">
@@ -107,7 +121,6 @@ class Factigis extends React.Component {
               <div className="wrapper_factibilidadRight">
                 <LayerList show={["check_factigis_transmision", "check_factigis_distribucion", "check_factigis_vialidad", "check_campamentos", "check_chqbasemap",
                 "check_subestaciones","check_MT","check_BT"]} />
-
                 <div className="factigis_map_div" id="factigis_map_div">
                   <div id="BasemapToggle" ></div>
                 </div>

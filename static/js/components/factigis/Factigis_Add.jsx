@@ -29,6 +29,7 @@ var Tab = ReactTabs.Tab;
 var Tabs = ReactTabs.Tabs;
 var TabList = ReactTabs.TabList;
 var TabPanel = ReactTabs.TabPanel;
+
 var visibilityStyle = {
   selectPotencia: {
     visibility: 'hidden',
@@ -38,7 +39,8 @@ var visibilityStyle = {
       visibility: 'hidden',
       display: 'none'
   }
-}
+};
+
 const customStyles = {
   content : {
     top                   : '50%',
@@ -221,16 +223,12 @@ class Factigis_Add extends React.Component {
     if(showC.length){
         this.setState({showC: true});
     }
-
-
-
   }
 
   handleSelect(index, last){
     this.setState({
       selectedTab: index,
     });
-
   }
 
   onKeyTelefono(e){
@@ -1381,7 +1379,7 @@ class Factigis_Add extends React.Component {
 
               <button onClick={this.onClickLimpiarDatos.bind(this)}
                 className="factigis_submitButton btn btn-info" title="Limpiar campos " type="button" >
-                <span><i className="fa fa-erase"></i> Limpiar</span>
+                <span><i className="fa fa-eraser" aria-hidden="true"></i> Limpiar</span>
               </button>
             </div>
               <Modal isOpen={this.state.open} style={customStyles}>

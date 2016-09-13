@@ -30,11 +30,7 @@ var HeaderComponent = React.createClass({
 class FG_GridPerZoneH extends React.Component {
   constructor(props){
     super(props);
-
-
   }
-
-
   render(){
     var columnMeta = [
         {

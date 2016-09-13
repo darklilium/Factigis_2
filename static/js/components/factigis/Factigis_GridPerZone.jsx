@@ -30,10 +30,10 @@ var HeaderComponent = React.createClass({
 class FG_GridPerZone extends React.Component {
   constructor(props){
     super(props);
-
-
   }
+
   onRowClick(gridRow, event){
+    $("#iframeloadingBO").show();
     var map = mymap.getMap();
     map.graphics.clear();
     let pointSymbol = makeSymbol.makePoint();
@@ -42,11 +42,11 @@ class FG_GridPerZone extends React.Component {
     map.centerAndZoom(gridRow.props.data['Geometry'],20);
 
     var y = _.filter(this.props.data, (data)=>{
-
       return data['Folio'] == gridRow.props.data['Folio'];
     })
 
     this.props.callbackParent(y);
+  
 
   }
 

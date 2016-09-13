@@ -16,7 +16,7 @@ import jQuery from 'jquery';
 import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
 import BasemapToggle from "esri/dijit/BasemapToggle";
 import {getFormatedDate} from '../../services/login-service';
-
+import _ from 'lodash';
 
 function createDataObject(){
   return {
@@ -136,7 +136,7 @@ class FactigisBackOffice extends React.Component {
   }
 
   onChildChanged(newState){
-    console.log(newState);
+
     this.setState({
       facB_rut: newState[0]['Rut'],
       facB_folio: newState[0]['Folio'],
@@ -176,6 +176,7 @@ class FactigisBackOffice extends React.Component {
       cbMejoraValue: newState[0]['Tipo Mejora'],
       facb_observaciones: ''
     });
+    $("#iframeloadingBO").hide();
   }
 
   componentWillMount(){
@@ -199,6 +200,7 @@ class FactigisBackOffice extends React.Component {
         return;
       }
 
+      $("#iframeloadingBO").show();
     //ADD LAYER TO SHOW IN THE MAP
       let prfl = cookieHandler.get('usrprfl');
       var mapp = mymap.createMap("factigis_bo1_map","topo",-71.2905 ,-33.1009,9);
@@ -282,13 +284,12 @@ class FactigisBackOffice extends React.Component {
             'Sed': result.attributes['Sed'],
             'PotenciaDispSed': result.attributes['PotenciaDispSed'],
           }
-
           return theData;
         });
-
           this.setState({myData: loadData});
           var prof = cookieHandler.get('usrprfl');
           this.setState({zonaTitle: prof.ZONA_USUARIO})
+          $("#iframeloadingBO").hide();
       });
 
       var toggle = new BasemapToggle({
@@ -304,6 +305,7 @@ class FactigisBackOffice extends React.Component {
   onChange2(e){this.setState({cbMejoraValue: e});}
 
   onClick(e){
+    $("#iframeloadingBO").show();
     if( (this.state.facB_folio=='') || (this.state.cbEstadoValue=='') || (this.state.cbMejoraValue=='') ){
       this.setState({open: true, modalStatus: 'Por favor seleccione Estado de Trámite y/o Tipo Mejora antes de modificar.'});
       return;
@@ -326,98 +328,103 @@ class FactigisBackOffice extends React.Component {
       dataType:'html',
       data: data
     })
-    .done(d =>{
-      let json = JSON.parse(d);
-      if(json["updateResults"][0].objectId>0){
+      .done(d =>{
+        let json = JSON.parse(d);
+        if( (_.has(json,'error')) ){
+          this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' NO ha sido modificada. Intente de nuevo.'});
 
-        //add to status historial
-        let usrprfl = cookieHandler.get('usrprfl');
-        let historial = {
-          Estado_tramite: myDataUpdate["Estado_tramite"],
-          ID_Factibilidad: myDataUpdate["OBJECTID"],
-          Fecha_cambio: getFormatedDate(),
-          Observacion: this.state.facb_observaciones,
-          Usuario:  usrprfl.USUARIO
-          }
-        agregarEstadoHistoria(historial, myhistorialCb =>{
-          console.log("hecho o no el historial",myhistorialCb);
-          if(myhistorialCb){
-              this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' modificada.'});
-              this.clearFields();
+        }else{
+          if(json["updateResults"][0].objectId>0){
+            //add to status historial
+            let usrprfl = cookieHandler.get('usrprfl');
+            let historial = {
+              Estado_tramite: myDataUpdate["Estado_tramite"],
+              ID_Factibilidad: myDataUpdate["OBJECTID"],
+              Fecha_cambio: getFormatedDate(),
+              Observacion: this.state.facb_observaciones,
+              Usuario:  usrprfl.USUARIO
+              }
+            agregarEstadoHistoria(historial, myhistorialCb =>{
+              if(myhistorialCb){
+                  this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' modificada.'});
+                  $("#iframeloadingBO").hide();
+                  this.clearFields();
+              }else{
+                  this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' no ha podido ser modificada.'});
+                  $("#iframeloadingBO").hide();
+              }
+              //this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' modificada.'});
+
+            });
+
+            $("#iframeloadingBO").show();
+            //refresh the grid after update.
+            loadCurrentUserData(data=>{
+              let loadData = data.map(result=>{
+
+                let theData = {
+                  'Folio' : result.attributes['OBJECTID'],
+                  'Estado Tramite': result.attributes['Estado_tramite'],
+                  'Nombre': result.attributes['Nombre'],
+                  'Apellido':result.attributes['Apellido'],
+                  'Tipo Mejora': result.attributes['Tipo_mejora'] ,
+                  'Zona': result.attributes['Zona'],
+                  'Origen Factibilidad': result.attributes['Origen_factibilidad'],
+                  'Geometry': result.geometry,
+                  'Alimentador' : result.attributes['Alimentador'],
+                  'Rut' : result.attributes['Rut'],
+                  'Telefono': result.attributes['Telefono'],
+                  'Email': result.attributes['Email'],
+                  'Tipo Cliente': result.attributes['Tipo_cliente'],
+                  'Tipo Contribuyente': result.attributes['Tipo_contribuyente'],
+                  'Rotulo': result.attributes['Rotulo'],
+                  'Tramo': result.attributes['Tramo'],
+                  'Empalme': result.attributes['Empalme'],
+                  'Fase': result.attributes['Fase'],
+                  'Potencia': result.attributes['Potencia'],
+                  'Capacidad Empalme': result.attributes['Capacidad_empalme'],
+                  'Capacidad Interruptor': result.attributes['Capacidad_interruptor'],
+                  'Tiempo Empalme': result.attributes['Tiempo_empalme'],
+                  'Tipo Empalme': result.attributes['Tipo_empalme'],
+                  'Cantidad Empalme': result.attributes['Cantidad_empalme'],
+                  'IDDireccion': result.attributes['ID_Direccion'],
+                  'Direccion': result.attributes['Direccion'],
+                  'Zona Campamentos': result.attributes['Zona_campamentos'],
+                  'Zona Concesion': result.attributes['Zona_concesion'],
+                  'Zona Restringida': result.attributes['Zona_restringida'],
+                  'Zona Transmision': result.attributes['Zona_transmision'],
+                  'Zona Vialidad': result.attributes['Zona_vialidad'],
+                  'Potencia Calculada': result.attributes['Potencia_calculada'],
+                  'DistRotuloMedidor': result.attributes['DistRotuloMedidor'],
+                  'DistDireccionMedidor': result.attributes['DistDireccionMedidor'],
+                  'Comuna': result.attributes['Comuna'],
+                  'Idnodo': result.attributes['Idnodo'],
+                  'Estado Tramite': result.attributes['Estado_tramite'],
+                  'Tipo Factibilidad': result.attributes['Tipo_factibilidad'],
+                  'Sed': result.attributes['Sed'],
+                  'PotenciaDispSed': result.attributes['PotenciaDispSed'],
+                  'Zona': result.attributes['Zona']
+                }
+
+                return theData;
+              });
+
+                this.setState({myData: loadData});
+                var prof = cookieHandler.get('usrprfl');
+                this.setState({zonaTitle: prof.ZONA_USUARIO})
+                $("#iframeloadingBO").hide();
+            });
+
           }else{
-              this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' no ha podido ser modificada.'});
+            this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
+            $("#iframeloadingBO").hide();
           }
-      //    this.setState({open: true, modalStatus: 'Factibilidad '+ this.state.facB_folio+ ' modificada.'});
+        }
 
-        });
-
-
-        //refresh the grid after update.
-        loadCurrentUserData(data=>{
-          let loadData = data.map(result=>{
-
-            let theData = {
-              'Folio' : result.attributes['OBJECTID'],
-              'Estado Tramite': result.attributes['Estado_tramite'],
-              'Nombre': result.attributes['Nombre'],
-              'Apellido':result.attributes['Apellido'],
-              'Tipo Mejora': result.attributes['Tipo_mejora'] ,
-              'Zona': result.attributes['Zona'],
-              'Origen Factibilidad': result.attributes['Origen_factibilidad'],
-              'Geometry': result.geometry,
-              'Alimentador' : result.attributes['Alimentador'],
-              'Rut' : result.attributes['Rut'],
-              'Telefono': result.attributes['Telefono'],
-              'Email': result.attributes['Email'],
-              'Tipo Cliente': result.attributes['Tipo_cliente'],
-              'Tipo Contribuyente': result.attributes['Tipo_contribuyente'],
-              'Rotulo': result.attributes['Rotulo'],
-              'Tramo': result.attributes['Tramo'],
-              'Empalme': result.attributes['Empalme'],
-              'Fase': result.attributes['Fase'],
-              'Potencia': result.attributes['Potencia'],
-              'Capacidad Empalme': result.attributes['Capacidad_empalme'],
-              'Capacidad Interruptor': result.attributes['Capacidad_interruptor'],
-              'Tiempo Empalme': result.attributes['Tiempo_empalme'],
-              'Tipo Empalme': result.attributes['Tipo_empalme'],
-              'Cantidad Empalme': result.attributes['Cantidad_empalme'],
-              'IDDireccion': result.attributes['ID_Direccion'],
-              'Direccion': result.attributes['Direccion'],
-              'Zona Campamentos': result.attributes['Zona_campamentos'],
-              'Zona Concesion': result.attributes['Zona_concesion'],
-              'Zona Restringida': result.attributes['Zona_restringida'],
-              'Zona Transmision': result.attributes['Zona_transmision'],
-              'Zona Vialidad': result.attributes['Zona_vialidad'],
-              'Potencia Calculada': result.attributes['Potencia_calculada'],
-              'DistRotuloMedidor': result.attributes['DistRotuloMedidor'],
-              'DistDireccionMedidor': result.attributes['DistDireccionMedidor'],
-              'Comuna': result.attributes['Comuna'],
-              'Idnodo': result.attributes['Idnodo'],
-              'Estado Tramite': result.attributes['Estado_tramite'],
-              'Tipo Factibilidad': result.attributes['Tipo_factibilidad'],
-              'Sed': result.attributes['Sed'],
-              'PotenciaDispSed': result.attributes['PotenciaDispSed'],
-              'Zona': result.attributes['Zona']
-            }
-
-            return theData;
-          });
-
-            this.setState({myData: loadData});
-            var prof = cookieHandler.get('usrprfl');
-            this.setState({zonaTitle: prof.ZONA_USUARIO})
-        });
-
-      }else{
-
-        this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
-      }
-    }).fail(f=>{
-
-        this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
-      //callback(false)
+      }).fail(f=>{
+          this.setState({open: true, modalStatus: 'No se ha podido modificar la factibilidad. Trate de nuevo.'});
+            $("#iframeloadingBO").hide();
     });
-
   }
 
   onChangeObs(e){ this.setState({facb_observaciones: e.currentTarget.value });}
@@ -472,13 +479,24 @@ class FactigisBackOffice extends React.Component {
     });
   }
 
+  onLoggOff(){
+      cookieHandler.remove('myLetter');
+      cookieHandler.remove('usrprfl');
+      cookieHandler.remove('usrprmssns');
+      cookieHandler.remove('wllExp');
+      localStorage.removeItem('token');
+      window.location.href = "index.html";
+  }
+
   render(){
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
       window.location.href = "index.html";
       return;
     }
 
+
     let prof = cookieHandler.get('usrprfl');
+    prof = prof.NOMBRE_COMPLETO.split(" ");
 
     return (
       <div className="wrapper_factigisBO">
@@ -492,13 +510,21 @@ class FactigisBackOffice extends React.Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item active>
               Revisión Factibilidades:  Zona {this.state.zonaTitle}
+              <img className="factigisBO_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloadingBO"/>
             </Breadcrumb.Item>
             <div className="factigis_top-right">
-              <Breadcrumb.Item active className="factigis_whologged">
-                Bienvenido: {prof.NOMBRE_COMPLETO}
-              </Breadcrumb.Item>
-            </div>
+               <Breadcrumb.Item active className="factigis_whologged">
+                  Bienvenido: {prof[0]}
+               </Breadcrumb.Item>
+               <Breadcrumb.Item active >
+                 <button onClick={this.onLoggOff.bind(this)} className="btnLogoff btn btn-info" title="Cerrar Sesión " type="button" >
+                   <span><i className="fa fa-sign-out" aria-hidden="true"></i> Log Off</span>
+                 </button>
+               </Breadcrumb.Item>
+             </div>
+
           </Breadcrumb>
+
         </div>
 
         <div className="factigisBO_table">

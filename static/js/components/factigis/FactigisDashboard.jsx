@@ -57,11 +57,20 @@ class FactigisDashboard extends React.Component {
 
     var d = cookieHandler.get('wllExp');
     if(d > getFormatedDate()){
-      
+
     }else{
       console.log("expiro");
       window.location.href = "index.html";
     }
+  }
+
+  onLoggOff(){
+      cookieHandler.remove('myLetter');
+      cookieHandler.remove('usrprfl');
+      cookieHandler.remove('usrprmssns');
+      cookieHandler.remove('wllExp');
+      localStorage.removeItem('token');
+      window.location.href = "index.html";
   }
 
   render(){
@@ -108,20 +117,26 @@ class FactigisDashboard extends React.Component {
 
     return (
     <div>
-    <div className="wrapper_factibilidadTop">
-      <Breadcrumb className="dashboard_breadcrum">
-         <Breadcrumb.Item href="index.html">
-           Inicio
-         </Breadcrumb.Item>
-         <Breadcrumb.Item active>
-           Dashboard
-         </Breadcrumb.Item>
-         <Breadcrumb.Item active className="dashboard_whoLogged">
-           Bienvenido: {whoLogged[0]}
-         </Breadcrumb.Item>
-      </Breadcrumb>
-
-    </div>
+      <div className="wrapper_factibilidadTop">
+        <Breadcrumb className="dashboard_breadcrum">
+           <Breadcrumb.Item href="index.html">
+             Inicio
+           </Breadcrumb.Item>
+           <Breadcrumb.Item active>
+             Dashboard
+           </Breadcrumb.Item>
+           <div className="dashboard_top_right">
+              <Breadcrumb.Item active className="dashboard_whoLogged">
+               Bienvenido: {whoLogged[0]}
+              </Breadcrumb.Item>
+              <Breadcrumb.Item active className="dashboard_whoLogged">
+                <button onClick={this.onLoggOff.bind(this)} className="btnLogoff btn btn-info" title="Cerrar Sesión " type="button" >
+                  <span><i className="fa fa-sign-out" aria-hidden="true"></i> Log Off</span>
+                </button>
+              </Breadcrumb.Item>
+            </div>
+         </Breadcrumb>
+      </div>
       <div className="wrapper_factigisDashboard">
           {modules}
           {excludeModules}

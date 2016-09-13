@@ -31,10 +31,15 @@
   position: absolute;
 }
 
+.factigisBO_imgLoader{
+  margin-left: 1em;
+  flex-direction: row;
+}
+
 .factigisBO_table{
   display: flex;
   width: 100%;
-  margin-top: 45px;
+  margin-top: 40px;
 }
 
 .wrapper_factigisBO{

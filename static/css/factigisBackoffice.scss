@@ -33,6 +33,20 @@
     z-index: 5 !important;
 }
 
+
+.factigis_whologged{
+  display: flex;
+  align-items: center;
+  margin-right: 1em;
+}
+
+.btnLogoff{
+  color: #4faeff;
+  background-color: #ffffff;
+  border-color: #e0f1ff;
+}
+
+
 @import "components/factigis/factigis_backoffice1.scss";
 @import "components/factigis/factigis_backoffice2.scss";
 @import "components/factigis/factigis_griddle.scss";
