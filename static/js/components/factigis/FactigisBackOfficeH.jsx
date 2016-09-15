@@ -382,7 +382,7 @@ class FactigisBackOfficeH extends React.Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item active>
               Revisión Historial Factibilidades
-              <img className="factigisBO1_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloadingBO1"/>
+              <img className="factigisBO1_imgLoader" src="dist/css/images/ajax-loader.gif" alt="loading" id="iframeloadingBO1"/>
 
             </Breadcrumb.Item>
             <div className="factigis_top-right">

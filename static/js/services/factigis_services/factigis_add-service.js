@@ -78,8 +78,14 @@ function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
 }
 
 function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
-  console.log("aa", factibilidad);
+  //Trae los datos preliminares de la factibilidad.
+
   var fact = {};
+  //Si el empalme es BT, se calcula la distancia entre cliente poste y cliente dirección.
+    /* Además se calcula la potencia solicitada.
+    *  Se calcula la potencia disponible de la sed.
+    */
+
   //cuando es BT
   if(factibilidad.factigisTipoEmpalme=='BT'){
     getDetailsForPotencia(factibilidad.factigisPotencia, factibilidad.factigisEmpalme, factibilidad.factigisFase,
@@ -123,6 +129,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
                 factibilidad.factigisPotenciaDisponibleSED = potenciaDisponible;
 
                 console.log("tengo la siguiente factibilidad",factibilidad.factigisTipoFactibilidad);
+
                 if(potenciaDisponible < 0){
                   factibilidad.factigisTipoFactibilidad = 'FACTIBILIDAD ASISTIDA';
                 }

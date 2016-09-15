@@ -238,7 +238,7 @@ class Factigis_AddDireccion extends React.Component {
       <div className="factigis_addDireccion-wrapper">
       <div className="factigisDir_searchTitle">
         <h7><b>Datos de Dirección</b></h7>
-        <img className="factigisDir_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloadingDir"/>
+        <img className="factigisDir_imgLoader" src="dist/css/images/ajax-loader.gif" alt="loading" id="iframeloadingDir"/>
       </div>
         <hr className="factigis_hr-subtitle factigis_hr"/>
         <div className="factigis_BigGroupbox">

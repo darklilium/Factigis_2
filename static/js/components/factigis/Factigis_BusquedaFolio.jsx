@@ -122,7 +122,7 @@ class Factigis_BusquedaFolio extends React.Component {
       <div className="factigis_addDireccion-wrapper">
         <div className="factigisBF_searchTitle">
           <h7><b>Búsqueda de Factibilidad</b></h7>
-          <img className="factigisBF_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloading"/>
+          <img className="factigisBF_imgLoader" src="dist/css/images/ajax-loader.gif" alt="loading" id="iframeloading"/>
         </div>
         <hr className="factigis_hr-subtitle factigis_hr"/>
         <div className="factigis_BigGroupbox">

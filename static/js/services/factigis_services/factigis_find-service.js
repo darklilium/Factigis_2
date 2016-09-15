@@ -119,7 +119,7 @@ function factigis_findTramo(geometry, tramo, callback){
         let redBT = [];
         redBT.descripcion = bt[0].attributes['descripcion'];
         redBT.tension = 'N/A';
-        redBT.tipoFactibilidad = 'FACTIBILIDAD NORMAL';
+        redBT.tipoFactibilidad = 'FACTIBILIDAD DIRECTA';
         return callback(redBT);
       }
     });
@@ -139,7 +139,7 @@ function factigis_findTramo(geometry, tramo, callback){
         let redMT = [];
         redMT.descripcion = mt[0].attributes['ARCGIS.DBO.Tramos_MT_006.descripcion'];
         redMT.tension = mt[0].attributes['ARCGIS.DBO.Cabeceras_006.tension'];
-        redMT.tipoFactibilidad = 'FACTIBILIDAD NORMAL';
+        redMT.tipoFactibilidad = 'FACTIBILIDAD DIRECTA';
         return callback(redMT);
       }
     });

@@ -83,7 +83,8 @@ var tipoEstado = [
 var tipoMejora = [
   { value: 'POR DEFINIR', label: 'POR DEFINIR' },
 	{ value: 'MEJORA PREVIA', label: 'MEJORA PREVIA' },
-	{ value: 'MEJORA POST', label: 'MEJORA POST' }
+	{ value: 'MEJORA POST', label: 'MEJORA POST' },
+  { value: 'CONEXION DIRECTA', label: 'CONEXION DIRECTA' }
 ];
 
 class FactigisBackOffice extends React.Component {
@@ -510,7 +511,7 @@ class FactigisBackOffice extends React.Component {
             </Breadcrumb.Item>
             <Breadcrumb.Item active>
               Revisión Factibilidades:  Zona {this.state.zonaTitle}
-              <img className="factigisBO_imgLoader" src="static/css/images/ajax-loader.gif" alt="loading" id="iframeloadingBO"/>
+              <img className="factigisBO_imgLoader" src="dist/css/images/ajax-loader.gif" alt="loading" id="iframeloadingBO"/>
             </Breadcrumb.Item>
             <div className="factigis_top-right">
                <Breadcrumb.Item active className="factigis_whologged">
