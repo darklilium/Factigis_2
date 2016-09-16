@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import {factigis_findFolio} from '../../services/factigis_services/factigis_find-service';
 import makeSymbol from '../../../js/utils/makeSymbol';
 import $ from 'jquery';
+import cookieHandler from 'cookie-handler';
 
 const customStyles = {
   content : {
@@ -52,12 +53,14 @@ class Factigis_BusquedaFolio extends React.Component {
       bf_tipoMejora: '',
       bf_estadoTramite: '',
       bf_origenFactibilidad: '',
-      problemsforAdding: ''
+      problemsforAdding: '',
+      printDisabled: true
     }
 
   }
 
   onClick(){
+
     $("#iframeloading").show();
     console.log(this.state.bf_folio, "valor del txt para factibildad");
     var c = factigis_findFolio(this.state.bf_folio, cb=>{
@@ -66,10 +69,11 @@ class Factigis_BusquedaFolio extends React.Component {
         console.log("no hay registros para ese id");
         this.setState({problemsforAdding: 'No hay registros para este n° de folio', open:true});
          $("#iframeloading").hide();
+         this.setState({printDisabled: true});
         return;
       }
 
-      console.log("mis registros:", cb[0].attributes);
+
       let reg = cb[0].attributes;
       let ubi = cb[0].geometry;
       this.setState({
@@ -97,7 +101,8 @@ class Factigis_BusquedaFolio extends React.Component {
         bf_tipoFactibilidad: reg.Tipo_factibilidad,
         bf_tipoMejora: reg.Tipo_mejora,
         bf_estadoTramite: reg.Estado_tramite,
-        bf_origenFactibilidad: reg.Origen_factibilidad
+        bf_origenFactibilidad: reg.Origen_factibilidad,
+        printDisabled: false
       });
 
       let map = this.state.themap;
@@ -110,12 +115,31 @@ class Factigis_BusquedaFolio extends React.Component {
   }
 
   onChange(e){
-    this.setState({bf_folio: e.currentTarget.value})
+    this.setState({bf_folio: e.currentTarget.value});
+    this.setState({printDisabled: true});
   }
 
   openModal () { this.setState({open: true}); }
 
   closeModal () { this.setState({open: false}); }
+
+  onPrint(){
+    let usrprfl = cookieHandler.get('usrprfl');
+    cookieHandler.set('myLetter',
+      [
+        this.state.bf_direccion,
+        this.state.bf_nombre + " " +this.state.bf_apellido,
+        usrprfl.NOMBRE_COMPLETO,
+        this.state.bf_folio,
+        usrprfl.CARGO,
+        usrprfl.LUGAR_DE_TRABAJO,
+        usrprfl.DEPARTAMENTO,
+        usrprfl.COMUNA
+      ]
+    );
+
+      window.open("factigisCarta.html");
+  }
 
   render(){
     return (
@@ -132,6 +156,8 @@ class Factigis_BusquedaFolio extends React.Component {
             <input id="factigis_txtFolio" onChange={this.onChange.bind(this)} value={this.state.bf_folio} className="factigis-input"  title="Indique el n° de folio de la factibilidad" type="text" placeholder="Indique el n° de folio de la factibilidad"  />
             <button onClick={this.onClick.bind(this)} className="factigis-selectFromMapButton factigis_btnSelectCalle btn btn-default" title="Buscar Factibilidad " type="button" >
             <span><i className="fa fa-search"></i></span></button>
+            <button disabled={this.state.printDisabled} onClick={this.onPrint.bind(this)} className="factigis-selectFromMapButton factigis_btnSelectCalle btn btn-default" title="Buscar Factibilidad " type="button" >
+            <span><i className="fa fa-print"></i></span></button>
           </div>
         </div>
         <h7><b>Datos de Factibilidad</b></h7>
