@@ -106,41 +106,45 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
             let res = Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2));
           //medidor (ubicación) y direccion
             let res2 = Math.sqrt(Math.pow((x3-x1),2) + Math.pow((y3-y1),2));
-
-            console.log("distancia_rotulo_medidor", Math.round(res));
-            console.log("distancia_medidor_direccion", Math.round(res2));
+          //asignando valores para ambas distancias
             factibilidad.factigisDistRotMed = Math.round(res);
             factibilidad.factigisDistMedDir = Math.round(res2);
 
-          //calcular potencias: solicitada x cantidad
+        //calcular potencias: solicitada x cantidad
             factibilidad.factigisPotenciaCalculada = factibilidad.factigisPotencia * factibilidad.factigisCantidadEmpalmes;
+        //definir estado de trámite como nuevo
             factibilidad.factigisEstadoTramite = 'NUEVA';
-
-          //agregar potencia disponible para SED
-
+        //agregar potencia disponible para SED
             buscarCantClienteSED(factibilidad.factigisSed, (cantidadClientes)=>{
-              console.log("cant clientes ", cantidadClientes);
               var kva = buscarKVASED(factibilidad.factigisSed, (kva)=>{
-                console.log("kvas:", kva);
-                //cantidadClientes = 108;
-                //kva = 150;
                 let potenciaDisponible = kva - (0.327 * (Math.pow(cantidadClientes,-0.203))*cantidadClientes*5);
-                console.log("La potencia disp es:",potenciaDisponible);
+                //asignar potencia disponible para SED
                 factibilidad.factigisPotenciaDisponibleSED = potenciaDisponible;
 
                 console.log("tengo la siguiente factibilidad",factibilidad.factigisTipoFactibilidad);
-
+                //Si la potencia disponible es menor a 0 , pasa a ser FACTIBILIDAD ASISTIDA
                 if(potenciaDisponible < 0){
                   factibilidad.factigisTipoFactibilidad = 'FACTIBILIDAD ASISTIDA';
                 }
-
-                //agregar origen de factibilidad:
+        //agregar origen de factibilidad:
                 factibilidad.factigisOrigen = 'OFICINA COMERCIAL';
 
+        //si el empalme es subterraneo -> factibilidad ASISTIDA
+          //2.- empalme subterráneo -> Asistida.
+                if(factibilidad.factigisEmpalme=="SUBTERRANEO"){
+                  factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
+                }
 
-                //agregar a rest srv
-                console.log("quede con la siguiente factibilidad",factibilidad.factigisTipoFactibilidad);
-                if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD NORMAL"){
+        //si la fase es trifásica - > factibilidad ASISTIDA
+          //  1.-   trifásicos (no importa si es bt o mt) y > a 18KW  -> Asistida.
+                if( (factibilidad.factigisPotencia > 18 ) && (factibilidad.factigisFase)){
+                  factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
+                }
+
+        //agregar a rest srv
+                console.log("Estoy con la siguiente factibilidad",factibilidad.factigisTipoFactibilidad);
+
+                if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD DIRECTA"){
                   factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
                 }else{
                   factibilidad.factigisTipoMejora = "POR DEFINIR";
@@ -177,12 +181,17 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
 
                 });
 
+
               });
 
             });
 
     });
   }
+  //Si el empalme es MT, se calcula la distancia entre cliente poste y cliente dirección.
+    /* Además NO se calcula la potencia solicitada.
+    *  NO se calcula la potencia disponible de la sed.
+    */
   else{
     //cuando es MT
       factibilidad.capacidadInterruptor = 0;
@@ -210,22 +219,39 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
           factibilidad.factigisPotenciaCalculada = factibilidad.factigisPotencia * factibilidad.factigisCantidadEmpalmes;
           factibilidad.factigisEstadoTramite = 'NUEVA';
 
-        //agregar potencia disponible para SED
-            let potenciaDisponible = 0.0;
-            console.log("La potencia disp es:",potenciaDisponible);
-            factibilidad.factigisPotenciaDisponibleSED = potenciaDisponible;
-            console.log("tengo fact:",factibilidad.factigisTipoFactibilidad);
+        //Debido a que es MT , la potencia disponible es 0
+          let potenciaDisponible = 0.0;
+        //Debido a que es MT, no hay SED, por lo cual es 0
+          factibilidad.factigisSed='0';
+          factibilidad.factigisPotenciaDisponibleSED = potenciaDisponible;
+          console.log("tengo fact:",factibilidad.factigisTipoFactibilidad);
 
-            if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD NORMAL"){
-              factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
-            }else{
-              factibilidad.factigisTipoMejora = "POR DEFINIR";
-            }
-            //agregar origen de factibilidad:
-            factibilidad.factigisOrigen = 'OFICINA COMERCIAL';
-            factibilidad.factigisSed='0';
+        //si el empalme es subterraneo -> factibilidad ASISTIDA
+         //2.- empalme subterráneo -> Asistida.
+         if(factibilidad.factigisEmpalme=="SUBTERRANEO"){
+           factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
+         }
 
-            console.log("agregar lo siguiente a arcgis srv", factibilidad);
+        //si la fase es trifásica - > factibilidad ASISTIDA
+        //  1.-   trifásicos (no importa si es bt o mt) y > a 18KW  -> Asistida.
+         if( (factibilidad.factigisPotencia > 18 ) && (factibilidad.factigisFase)){
+           factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
+         }
+
+        //Si luego de todos los cambios, la factibilidad sigue siendo DIRECTA, el tipo de mejora también es directa.
+          if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD DIRECTA"){
+            factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
+        //si es factibilidad asistida, la mejora se debe definir
+          }else{
+            factibilidad.factigisTipoMejora = "POR DEFINIR";
+          }
+
+        //Se agrega el origen de factibilidad:
+          factibilidad.factigisOrigen = 'OFICINA COMERCIAL';
+
+          console.log("Estoy con la siguiente factibilidad",factibilidad.factigisTipoFactibilidad);
+          console.log("agregar lo siguiente a arcgis srv", factibilidad);
+
             agregarFact(factibilidad,(isDone)=>{
               console.log(isDone[0],"valor en agregarFact");
               if(isDone[0]){
@@ -250,6 +276,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
                 console.log("hubo un problema agregando");
               }
             });
+
 
   }
 }
