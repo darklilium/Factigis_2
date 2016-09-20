@@ -1,10 +1,24 @@
-function token(){
+/*function token(){
   return {
     read(){
       return localStorage.getItem('token');
     },
     write(tokenValue){
       localStorage.setItem('token', tokenValue);
+    }
+  };
+}
+*/
+import cookiehandler from 'cookie-handler';
+function token(){
+  return {
+    read(){
+      //return localStorage.getItem('token');
+      return cookiehandler.get('tkn');
+    },
+    write(tokenValue){
+      //localStorage.setItem('token', tokenValue);
+      cookiehandler.set('tkn',tokenValue);
     }
   };
 }

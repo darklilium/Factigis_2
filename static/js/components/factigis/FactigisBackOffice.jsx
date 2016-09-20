@@ -190,7 +190,7 @@ class FactigisBackOffice extends React.Component {
     var d = cookieHandler.get('wllExp');
       if(d > getFormatedDate()){
         console.log("dentro del rango");
-        if(!localStorage.getItem('token')){
+        if(!cookieHandler.get('tkn')){
           console.log("no hay, redirect...");
           window.location.href = "index.html";
           return;

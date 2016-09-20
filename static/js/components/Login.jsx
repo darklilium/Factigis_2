@@ -1,6 +1,7 @@
 import React from 'react';
 import {notifications} from '../utils/notifications';
 import { factigisLogin } from '../services/login-service';
+import cookieHandler from 'cookie-handler';
 
 class LoginApp extends React.Component {
   constructor(){
@@ -31,6 +32,11 @@ class LoginApp extends React.Component {
 
   componentWillMount(){
     localStorage.removeItem('token');
+    cookieHandler.remove('myLetter');
+    cookieHandler.remove('usrprfl');
+    cookieHandler.remove('usrprmssns');
+    cookieHandler.remove('wllExp');
+    cookieHandler.remove('tkn');
   }
 
   componentDidMount(){
