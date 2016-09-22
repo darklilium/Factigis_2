@@ -10,7 +10,7 @@ import cookieHandler from 'cookie-handler';
 import BasemapToggle from "esri/dijit/BasemapToggle";
 import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
 import Search from 'esri/dijit/Search';
-
+import {saveGisredLogin, getFormatedDate} from '../../services/login-service';
 
 class Factigis extends React.Component {
   constructor(props){
@@ -70,6 +70,15 @@ class Factigis extends React.Component {
       map: mapp
       }, "search");
     search.startup();
+
+    const page = "REACT_FACTIGIS";
+    const module = "FACTIGIS_CREAR_FACTIBILIDAD";
+    const date = getFormatedDate();
+    const user = cookieHandler.get('usrprfl')
+    const myToken = cookieHandler.get('tkn');
+
+    //console.log(user['USUARIO']);
+    saveGisredLogin(user['USUARIO'],date,page,module,myToken);
 
   }
 

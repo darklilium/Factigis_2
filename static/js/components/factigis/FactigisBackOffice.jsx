@@ -15,8 +15,8 @@ import LayerList from '../../components/LayerList.jsx';
 import jQuery from 'jquery';
 import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
 import BasemapToggle from "esri/dijit/BasemapToggle";
-import {getFormatedDate} from '../../services/login-service';
 import _ from 'lodash';
+import {saveGisredLogin, getFormatedDate} from '../../services/login-service';
 
 function createDataObject(){
   return {
@@ -299,6 +299,14 @@ class FactigisBackOffice extends React.Component {
       }, "BMToggle");
       toggle.startup();
 
+      const page = "REACT_FACTIGIS";
+      const module = "FACTIGIS_REVISAR_FACTIBILIDAD";
+      const date = getFormatedDate();
+      const user = cookieHandler.get('usrprfl')
+      const myToken = cookieHandler.get('tkn');
+
+      //console.log(user['USUARIO']);
+      saveGisredLogin(user['USUARIO'],date,page,module,myToken);
   }
 
   onChange(e){this.setState({cbEstadoValue: e});}

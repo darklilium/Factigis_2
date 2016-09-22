@@ -215,7 +215,11 @@ function myLayers(){
     read_factigis_addFactibilidad(){
       return serviceURL + "FACTIBILIDAD/FACTIGIS/FeatureServer/0/applyedits";
 
+    },
+    read_logAccessFactigis(){
+      return serviceURL + "Admin/LogAccesos/FeatureServer/1/applyedits";
     }
+  
 
   };
 }

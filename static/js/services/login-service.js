@@ -7,7 +7,7 @@ import cookieHandler from 'cookie-handler';
 function getFormatedDate(){
   var d = new Date();
 
-  var str = "day/month/year, hour:minute:second"
+  var str = "day/month/year hour:minute:second"
     .replace('day', d.getDate() <10? '0'+ d.getDate() : d.getDate())
     .replace('month', (d.getMonth() + 1) <10? '0' + (d.getMonth()+1) : (d.getMonth()+1))
     .replace('year', d.getFullYear())
@@ -32,39 +32,18 @@ function getFormatedDateExp(){
   return str;
 }
 
-function saveLogin(user,page,mod, tkn){
+
+function saveGisredLogin(user, fech, page, mod, tkn){
 
   const data = {
     f: 'json',
-    adds: JSON.stringify([{ attributes: { "usuario": user, "pagina": page, "module": mod  }, geometry: {} }]),
+    adds: JSON.stringify([{ attributes: { "usuario": user, fecha: fech , "pagina": page, "modulo": mod  }, geometry: {} }]),
     token: tkn
   };
 
   jQuery.ajax({
     method: 'POST',
-    url: "http://gisred.chilquinta.cl:5555/arcgis/rest/services/Admin/LogAccesos/FeatureServer/1/applyedits",
-    dataType:'html',
-    data: data
-  })
-  .done(d =>{
-    console.log(d,"pase");
-  })
-  .fail(f=>{
-    console.log(f,"no pase")
-  });
-}
-
-function saveGisredLogin(user,page,mod, tkn){
-
-  const data = {
-    f: 'json',
-    adds: JSON.stringify([{ attributes: { "usuario": user, "pagina": page, "module": mod  }, geometry: {} }]),
-    token: tkn
-  };
-
-  jQuery.ajax({
-    method: 'POST',
-    url: "http://gisred.chilquinta.cl:5555/arcgis/rest/services/Admin/LogAccesos/FeatureServer/1/applyedits",
+    url: myLayers.read_logAccessFactigis(),
     dataType:'html',
     data: data
   })
@@ -145,10 +124,7 @@ function factigisLogin(user,pass){
         if(UserPermissions=='NOPERMISSIONS'){
           console.log('User doesnt have permissions for any application, dashboard empty...');
           notifications("Usuario sin permisos","Login_Error", ".notification-login");
-          //Save that the user is in dashboard
-          let page = "REACT_GISRED";
-          let module = "GISRED_DASHBOARD";
-          // saveGisredLogin(user,page,module,myToken);
+
         }else{
           console.log('User has permissions...requesting service access and login in to FACTIGIS_DASHBOARD');
 
@@ -169,8 +145,10 @@ function factigisLogin(user,pass){
           //va a dashboard o factigis directamente dependiendo permisos del usuario para los modulos y widgets.
             if(!goesTo.length){
               const page = "REACT_FACTIGIS";
-              const module = "FACTIGIS_APP";
-              // saveGisredLogin(user,page,module,myToken);
+              const module = "FACTIGIS_CREAR_FACTIBILIDAD";
+              const date = getFormatedDate();
+
+              saveGisredLogin(user,date,page,module,myToken);
               notifications("Logging in...","Login_Success", ".notification-login");
                 getProfile(user, userProfile =>{
                     console.log("esto llega",userProfile);
@@ -187,7 +165,9 @@ function factigisLogin(user,pass){
               //Save that the user is in dashboard
               const page = "REACT_FACTIGIS";
               const module = "FACTIGIS_DASHBOARD";
-              // saveGisredLogin(user,page,module,myToken);
+              const date = getFormatedDate();
+
+              saveGisredLogin(user,date,page,module,myToken);
               notifications("Logging in...","Login_Success", ".notification-login");
               getProfile(user, userProfile =>{
                   console.log("esto llega",userProfile);

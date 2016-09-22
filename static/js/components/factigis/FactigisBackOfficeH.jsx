@@ -16,7 +16,7 @@ import LayerList from '../../components/LayerList.jsx';
 import {loadCurrentHistoryData, loadFactStates} from '../../services/factigis_services/factigis_loadBackOfficeStates.js';
 import _ from 'lodash';
 import BasemapToggle from "esri/dijit/BasemapToggle";
-import {getFormatedDate} from '../../services/login-service';
+import {saveGisredLogin, getFormatedDate} from '../../services/login-service';
 
 function createDataObject(){
   return {
@@ -327,6 +327,15 @@ class FactigisBackOfficeH extends React.Component {
         basemap: "hybrid"
       }, "BMToggle2");
       toggle.startup();
+
+      const page = "REACT_FACTIGIS";
+      const module = "FACTIGIS_REVISAR_HISTORIAL_FACTIBILIDAD";
+      const date = getFormatedDate();
+      const user = cookieHandler.get('usrprfl')
+      const myToken = cookieHandler.get('tkn');
+
+      //console.log(user['USUARIO']);
+      saveGisredLogin(user['USUARIO'],date,page,module,myToken);
 
 
   }
