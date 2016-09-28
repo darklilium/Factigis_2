@@ -335,7 +335,7 @@ class FactigisBackOfficeH extends React.Component {
       const myToken = cookieHandler.get('tkn');
 
       //console.log(user['USUARIO']);
-      saveGisredLogin(user['USUARIO'],date,page,module,myToken);
+    //  saveGisredLogin(user['USUARIO'],date,page,module,myToken);
 
 
   }

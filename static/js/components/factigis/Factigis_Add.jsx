@@ -1318,7 +1318,7 @@ class Factigis_Add extends React.Component {
                 <h8>Cantidad Empalmes:</h8>
                 <Select id="ddlCantidadEmpalmes" className="factigis_selectEmpalme factigis_selectInput factigisCantidadEmpalmes"
               disabled={this.state.factigis_cantEmpalmesEnabled}  name="ddlPotencia" options={this.state.factigis_cantidadEmpalmes} onChange={this.onChangeComboBox.bind(this,"ddlCantidadEmpalmes")}
-                  value={this.state.factigisCantidadEmpalmes} simpleValue clearable={true} searchable={false} placeholder="Seleccione potencia"/>
+                  value={this.state.factigisCantidadEmpalmes} simpleValue clearable={true} searchable={false} placeholder="Seleccione cantidad"/>
 
                   </div>
             </div>
