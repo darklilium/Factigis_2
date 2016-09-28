@@ -148,7 +148,7 @@ function factigisLogin(user,pass){
               const module = "FACTIGIS_CREAR_FACTIBILIDAD";
               const date = getFormatedDate();
 
-            //  saveGisredLogin(user,date,page,module,myToken);
+              saveGisredLogin(user,date,page,module,myToken);
               notifications("Logging in...","Login_Success", ".notification-login");
                 getProfile(user, userProfile =>{
                     console.log("esto llega",userProfile);
@@ -167,7 +167,7 @@ function factigisLogin(user,pass){
               const module = "FACTIGIS_DASHBOARD";
               const date = getFormatedDate();
 
-            //  saveGisredLogin(user,date,page,module,myToken);
+              saveGisredLogin(user,date,page,module,myToken);
               notifications("Logging in...","Login_Success", ".notification-login");
               getProfile(user, userProfile =>{
                   console.log("esto llega",userProfile);
