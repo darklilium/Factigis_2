@@ -131,12 +131,15 @@ class FactigisBackOffice extends React.Component {
       facB_restringida: '',
       facB_vialidad: '',
       facB_campamento: '',
-      facB_transmision: ''
+      facB_transmision: '',
+      factB_distanciaRM: '',
+      factB_distanciaDM: ''
     }
     this.clearFields = this.clearFields.bind(this);
   }
 
   onChildChanged(newState){
+    console.log(newState);
 
     this.setState({
       facB_rut: newState[0]['Rut'],
@@ -169,7 +172,9 @@ class FactigisBackOffice extends React.Component {
       facB_restringida: newState[0]['Zona Restringida'],
       facB_vialidad: newState[0]['Zona Vialidad'],
       facB_campamento: newState[0]['Zona Campamentos'],
-      facB_transmision: newState[0]['Zona Transmision']
+      facB_transmision: newState[0]['Zona Transmision'],
+      factB_distanciaDM: newState[0]['DistDireccionMedidor'],
+      factB_distanciaRM: newState[0]['DistRotuloMedidor']
     });
 
     this.setState({
@@ -484,7 +489,9 @@ class FactigisBackOffice extends React.Component {
     facB_restringida: '',
     facB_vialidad: '',
     facB_campamento: '',
-    facB_transmision: ''
+    facB_transmision: '',
+    factB_distanciaRM: '',
+    factB_distanciaDM: ''
     });
   }
 
@@ -577,7 +584,10 @@ class FactigisBackOffice extends React.Component {
                 <h8 className="">Potencia Disponible: {this.state.facB_potenciaDisponible}</h8>
                 <h8 className="">Potencia Calculada: {this.state.facB_potenciaCalculada}</h8>
                 <h8 className="">Zona: {this.state.facB_zona}</h8>
+                <h8 className="">Distancia Rotulo - Medidor (m): {this.state.factB_distanciaRM}</h8>
+                <h8 className="">Distancia Rotulo - Medidor (m): {this.state.factB_distanciaDM}</h8>
               </div>
+
             </div>
             <div className="wrapper_mid_splitbot">
               <div>
