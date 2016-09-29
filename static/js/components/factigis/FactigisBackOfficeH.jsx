@@ -458,7 +458,7 @@ class FactigisBackOfficeH extends React.Component {
                 <h8 className="">Potencia Calculada: {this.state.facB_potenciaCalculada}</h8>
                 <h8 className="">Zona: {this.state.facB_zona}</h8>
                 <h8 className="">Distancia Rotulo - Medidor (m): {this.state.factB_distanciaRM}</h8>
-                <h8 className="">Distancia Rotulo - Medidor (m): {this.state.factB_distanciaDM}</h8>
+                <h8 className="">Distancia Dirección - Medidor (m): {this.state.factB_distanciaDM}</h8>
               </div>
             </div>
             <div className="wrapper_mid_splitbot">
