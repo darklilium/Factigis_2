@@ -146,6 +146,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
 
                 if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD DIRECTA"){
                   factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
+                  factibilidad.factigisEstadoTramite = 'CERRADA';
                 }else{
                   factibilidad.factigisTipoMejora = "POR DEFINIR";
                 }
@@ -241,6 +242,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
         //Si luego de todos los cambios, la factibilidad sigue siendo DIRECTA, el tipo de mejora también es directa.
           if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD DIRECTA"){
             factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
+            factibilidad.factigisEstadoTramite = 'CERRADA';
         //si es factibilidad asistida, la mejora se debe definir
           }else{
             factibilidad.factigisTipoMejora = "POR DEFINIR";
