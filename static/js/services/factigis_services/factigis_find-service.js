@@ -15,7 +15,7 @@ function factigis_findDireccion(geometry,callback){
   var qInterruptions = new esri.tasks.Query();
 
   qInterruptions.returnGeometry = true;
-  qInterruptions.outFields=["id_direccion","nombre_calle","numero"];
+  qInterruptions.outFields=["id_direccion","nombre_calle","numero","comuna"];
   qInterruptions.geometry = myRectangulo;
   qInterruptions.spatialRelationship = esri.tasks.Query.SPATIAL_REL_INTERSECTS;
 

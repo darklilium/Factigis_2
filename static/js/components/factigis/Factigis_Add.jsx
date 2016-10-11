@@ -61,6 +61,7 @@ class Factigis_Add extends React.Component {
     this.onBlur = this.onBlur.bind(this);
 
     this.state = {
+      factCartaComuna: '',
       numeroFactibilidad: '',
       //visibility for tabs due permission restrictions
       showA: false,
@@ -412,14 +413,16 @@ class Factigis_Add extends React.Component {
         this.setState({factigis_geoCliente: g.mapPoint, factigis_geoClienteValidator:true});
 
         factigis_findComuna(g.mapPoint, (cb)=>{
-          ////console.log("comuna",cb[0].attributes.nombre);
+          console.log("comuna",cb[0].attributes.nombre);
+          let comunaa = cb[0].attributes.nombre;
           //getting zone due to user click on map.
           var zona = getZona(cb[0].attributes.nombre);
-          //////console.log("my zone",zona);
+          console.log("my zone",zona);
 
           //validar factibilidad.
           var zones = factigis_validator(g.mapPoint, (callbackMain)=>{
             this.setState({
+              factCartaComuna: comunaa,
               zonaConcesion: callbackMain.zonaConcesion,
               zonaCampamentos: callbackMain.zonaCampamentos,
               zonaRestringida: callbackMain.zonaRestringida,
@@ -961,7 +964,7 @@ class Factigis_Add extends React.Component {
                 $("#iframeloadingAdd").hide();
                 //GENERAR CARTA: guardar en cookie los parametros con que fue generada la factibilidad para crear la carta.
                 let usrprfl = cookieHandler.get('usrprfl');
-                cookieHandler.set('myLetter',[this.state.factigisDireccion,
+                cookieHandler.set('myLetter',[this.state.factigisDireccion + ", " + this.state.factCartaComuna ,
                       this.state.factigisNombre + " " + this.state.factigisApellido,
                       usrprfl.NOMBRE_COMPLETO,
                       cb[1],
@@ -1086,6 +1089,7 @@ class Factigis_Add extends React.Component {
     map.graphics.clear();
 
     this.setState({
+      factCartaComuna: '',
       problemsforAdding: '',
       zonaConcesion: false,
       zonaCampamentos: false,
