@@ -82,7 +82,7 @@ function getUserPermission(user, token, callback){
         return callback(permissions);
 
     },(errorQuery)=>{
-        console.log("Error performing query for ap_getDataMedidores", errorQuery);
+        console.log("Error performing query for getUserPermissions", errorQuery);
         return callback("NOPERMISSIONS")
     });
 }

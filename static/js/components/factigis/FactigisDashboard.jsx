@@ -85,12 +85,12 @@ class FactigisDashboard extends React.Component {
         let color = m.color;
 
         let divstyle = {
-          'backgroundColor': 'gray',
-          'fontcolor': 'white'
+          'backgroundColor': 'none',
+          'color': 'white'
         };
-         return  <div className="factigisDashboard_moduleContainer" style={divstyle} key={index}>
-                    <div className="factigisDashboard-divimg"><img className="factigisDashboard-img" src={imgSrc}></img></div>
-                    <h7 className="factigisDashboard-aLink" key={index} href={url}>{urlName}</h7><br/></div>;
+         return  <div className="factigisDashboard-icons" style={divstyle} key={index}>
+                    <div ><img className="factigisDashboard-img" src={imgSrc}></img></div>
+                    <h7 className="factigisDashboard-a" key={index} href={url}>{urlName}</h7><br/></div>;
     });
     var modules = this.state.factigisModuleList.map((m, index)=>{
 
@@ -107,12 +107,12 @@ class FactigisDashboard extends React.Component {
         }
         let divstyle = {
           'backgroundColor': color,
-          'fontcolor': 'white',
+          'color': 'white',
           'display': display
         };
-         return  <div className="factigisDashboard_moduleContainer" style={divstyle} key={index}>
-                    <div className="factigisDashboard-divimg"><img className="factigisDashboard-img" src={imgSrc}></img></div>
-                    <a className="factigisDashboard-aLink" key={index} href={url}>{urlName}</a><br/></div>;
+         return  <div className="factigisDashboard-icons" style={divstyle} key={index}>
+                    <div ><img className="factigisDashboard-img" src={imgSrc}></img></div>
+                    <a className="factigisDashboard-a" key={index} href={url}>{urlName}</a><br/></div>;
     });
 
     return (
@@ -137,7 +137,14 @@ class FactigisDashboard extends React.Component {
             </div>
          </Breadcrumb>
       </div>
+      <div className="factigisDashboard-title">
+      <h1 className="factigisDashboard-titleleft">Facti</h1><h1 className="factigisDashboard-titleright">GIS</h1>
+      </div>
+      <div className="factigisDashboard-title">
+      <h1 className="factigisDashboard-subtitle">Seleccione una opción</h1>
+      </div>
       <div className="wrapper_factigisDashboard">
+
           {modules}
           {excludeModules}
       </div>

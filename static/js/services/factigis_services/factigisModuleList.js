@@ -4,9 +4,9 @@
 function FactigisModuleList(){
 
   return [
-    {module: 'GENERAR_FACTIBILIDAD', alias: 'CREAR FACTIBILIDAD', widgets:["CREAR_FACTIBILIDAD","BUSCAR_FOLIO","CREAR_DIRECCION"] , Available: 'yes', Permission: 'no', Insert: 'no', Update: 'no', Delete: 'no', url:'factigis.html', color: '#ff4646', img:'dist/css/images/factigis_images/icono_planificacion.png' },
-    {module: 'REVISAR_FACTIBILIDAD', alias: 'REVISAR FACTIBILIDADES',  widgets:["BUSCAR_FACTIBILIDADES", "LISTAR_FACTIBILIDAD","MODIFICAR_ESTADO_FACTIBILIDAD"] , Available: 'yes', Permission: 'no', Insert: 'no', Update: 'no', Delete: 'no',url:'backoffice_factigis.html', color: '#29c8fd', img:'dist/css/images/factigis_images/icono_verificarcliente.png'},
-    {module: 'REVISAR_HISTORIAL_FACTIBILIDAD',alias: 'REVISAR HISTORIAL FACTIBILIDADES', widget:["BUSCAR_HISTORIA_FACTIBILIDAD","LISTAR_FACTIBILIDAD", "VER_FACTIBILIDAD"] , Available: 'yes', Permission: 'no', Insert: 'no', Update: 'no', Delete: 'no',url:'backoffice2_factigis.html', color: '#62de00', img:'dist/css/images/factigis_images/icono_factigis_revision.png'}
+    {module: 'GENERAR_FACTIBILIDAD', alias: 'CREAR', widgets:["CREAR_FACTIBILIDAD","BUSCAR_FOLIO","CREAR_DIRECCION"] , Available: 'yes', Permission: 'no', Insert: 'no', Update: 'no', Delete: 'no', url:'factigis.html', color: 'transparent', img:'dist/css/images/factigis_images/icono_planificacion.png' },
+    {module: 'REVISAR_FACTIBILIDAD', alias: 'REVISAR',  widgets:["BUSCAR_FACTIBILIDADES", "LISTAR_FACTIBILIDAD","MODIFICAR_ESTADO_FACTIBILIDAD"] , Available: 'yes', Permission: 'no', Insert: 'no', Update: 'no', Delete: 'no',url:'backoffice_factigis.html', color: 'transparent', img:'dist/css/images/factigis_images/icono_verificarcliente.png'},
+    {module: 'REVISAR_HISTORIAL_FACTIBILIDAD',alias: 'REVISAR HISTORIAL', widget:["BUSCAR_HISTORIA_FACTIBILIDAD","LISTAR_FACTIBILIDAD", "VER_FACTIBILIDAD"] , Available: 'yes', Permission: 'no', Insert: 'no', Update: 'no', Delete: 'no',url:'backoffice2_factigis.html', color: 'transparent', img:'dist/css/images/factigis_images/icono_factigis_revision.png'}
 
   ];
 

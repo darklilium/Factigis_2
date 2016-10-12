@@ -1,24 +1,27 @@
 $notification-box-bg: gainsboro;
-$gisred-img: "images/57x57.png";
-
-
-@font-face {
-    font-family: "big_noodle_titling";
-    src: url("fonts/big_noodle_titling.ttf") format("truetype");
-}
-
+//$gisred-img: "images/57x57.png";
+$gisred-img: "images/factigis_logo.png";
 
 body  {
     font-size: 16px;
     margin: 0;
 }
 
+//for loader icon.
+  .loader {
+		position: fixed;
+		left: 0px;
+		top: 0px;
+		width: 100%;
+		height: 100%;
+		z-index: 9999;
+		background: url('images/Preloader_3.gif') 50% 50% no-repeat rgb(249,249,249);
+	}
+
 .login_wrapper{
-  //width: inherit;
   height: 100vh;
   background-size: 100% 100%;
   background-attachment: fixed;
-  //background-image: url("/images/login_images/loginwall1.jpg");      background-color: gainsboro;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -35,55 +38,44 @@ body  {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-
+  background: rgba(15, 22, 32, 0.8);
   flex-grow: 1;
 }
 
 .login_article{
-  //flex basis es width o heigh (pero dinámico)
-  //flex-basis: 50%;
   width: 40%;
   height: 13em;
   display: flex;
   flex-flow: column wrap;
   align-items: flex-end;
   justify-content: center;
-
-  //border-style: solid;
-  //padding-right: 4em;
 }
 
 .login_aside{
   width: 50%;
 	height: 13em;
-	//background-color: ghostwhite;
-//  background-color:rgba(255, 255, 255, 0.25);
   flex-grow: 2;
   align-items:flex-start;
   display: flex;
   justify-content:center;
   flex-direction: column;
-//  border-style: solid;
 }
+
 .aside_div{
   display: flex;
   flex-direction: row;
-//  border-style: solid;
-
   height: 50%;
   align-items: center;
   font-size: 1.6em;
   color: #BD0000;
-  font-family: "big_noodle_titling";
-  margin-left: 0.5em;
+  font-family: "ARIAL";
+  margin-left: 2.5em;
 }
 .aside_div2{
   display: flex;
-  //border-style: solid;
   flex-direction: column;
   justify-content: flex-start;
   width: auto;
-
 }
 
 .login_aside__p{
@@ -99,16 +91,16 @@ body  {
 
 .login_footer{
   display: flex;
-position: fixed;
-bottom: 0px;
-flex-flow: column wrap;
-font-style: normal;
-color: white;
-align-content: center;
-justify-content: center;
-align-items: center;
-flex-grow: 3;
-width: 100%;
+  position: fixed;
+  bottom: 0px;
+  flex-flow: column wrap;
+  font-style: normal;
+  color: white;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 3;
+  width: 100%;
 }
 
 
@@ -179,18 +171,100 @@ width: 100%;
 	content: url($gisred-img);
 }
 
-//for loader icon.
-  .loader {
-		position: fixed;
-		left: 0px;
-		top: 0px;
-		width: 100%;
-		height: 100%;
-		z-index: 9999;
-		background: url('images/Preloader_3.gif') 50% 50% no-repeat rgb(249,249,249);
-	}
 
 //MEDIA QUERIES
+
+@media (min-width: 320px) and (max-width: 480px) and (orientation: portrait){
+  .myLogin{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .login_wrapper_content{
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+
+  .login_article{
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0;
+    height: 10em;
+    margin-bottom: 8em;
+    align-items: center;
+  }
+
+  .login_aside{
+    width: 100%;
+    height: 10em;
+    align-items: center;
+    flex-grow: 0;
+  }
+
+  .aside_div{
+    margin: 1em;
+    height: 5em;
+
+  }
+}
+
+
+@media (min-width: 481px) and (max-width: 650px) and (orientation: portrait){
+
+  .login_wrapper_content{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .login_article{
+    width: 100%;
+    align-items: center;
+  }
+
+  .login_aside{
+    width: 100%;
+    height: 8em;
+  }
+
+  .aside_div{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    flex-direction: inherit;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 600px) and (orientation: landscape){
+
+  .login_wrapper_content{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .login_article{
+    width: 100%;
+    align-items: center;
+  }
+
+  .login_aside{
+    width: 100%;
+    height: 6em;
+  }
+
+  .aside_div{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    flex-direction: inherit;
+  }
+}
+/*
+//MEDIA QUERIES
+
 @media screen and (min-width: 950px ){
 
   .login_aside__img{
@@ -202,7 +276,7 @@ width: 100%;
   .login_aside__h1{
     font-size: 1.3em;
     color: #BD0000;
-    font-family: "big_noodle_titling";
+
   }
 
   .login_aside__p{
@@ -233,7 +307,7 @@ width: 100%;
 
   .login_aside__img {
 
-    width: 60px;
+
     margin: 1em;
   }
 
@@ -274,8 +348,14 @@ width: 100%;
     padding: 0px;
     margin: 0px;
     font-size: 22px;
+    color: #808095;
   }
 
+  .login_aside__h1_2{
+    padding: 0px;
+    margin: 0px;
+    font-size: 22px;
+  }
   .login_footer__div{
     display: flex;
       justify-content: center;
@@ -331,8 +411,10 @@ width: 100%;
     margin-left: 1em;
 }
 .login_aside__img {
-  width: 3em;
+
   margin: 1em;
   height: auto;
 }
 }
+
+*/

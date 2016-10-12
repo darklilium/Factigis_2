@@ -68,12 +68,9 @@ class LoginApp extends React.Component {
               <aside className="login_aside">
                   <div className="aside_div">
                     <img className="login_aside__img" />
-                    <h1 className="login_aside__h1"> Bienvenidos a Factigis </h1>
+
                   </div>
-                  <div className="aside_div2">
-                    <p className="login_aside__p">Aplicación de factibilidad para solicitudes de empalmes<br />
-                    La información contenida en este sitio se obtiene del GISRED en conjunto con Smallworld y Catastro</p>
-                  </div>
+
               </aside>
             </div>
 
@@ -82,7 +79,7 @@ class LoginApp extends React.Component {
               <h4 className="notification-login backgroundColorNotification"></h4>
               <div className="login_footer__div">
                   <img className="login_footer__img" src="dist/css/images/chq_i.png" />
-                  <p className="footer__div__p">&copy; 2016 Planificación y Gestión de la Información Operacional</p>
+                  <p className="footer__div__p">&copy; 2016 Pérdidas y GIS</p>
               </div>
             </footer>
           </div>
