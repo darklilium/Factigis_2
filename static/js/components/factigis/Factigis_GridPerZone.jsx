@@ -46,7 +46,7 @@ class FG_GridPerZone extends React.Component {
     })
 
     this.props.callbackParent(y);
-  
+
 
   }
 
@@ -55,37 +55,37 @@ class FG_GridPerZone extends React.Component {
         {
         "columnName": "Folio",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Estado Tramite",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Nombre",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Apellido",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Tipo Mejora",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Zona",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Origen Factibilidad",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         }
     ];
     return (

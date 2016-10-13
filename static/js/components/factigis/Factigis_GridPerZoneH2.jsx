@@ -56,42 +56,42 @@ class FG_GridPerZoneH2 extends React.Component {
         {
         "columnName": "Folio",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Estado Tramite",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Nombre",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Apellido",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Tipo Mejora",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: '#008aff' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Zona",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: 'blue' }
+        "customHeaderComponentProps": { color: '#da291c' }
         },
         {
         "columnName": "Origen Factibilidad",
         "customHeaderComponent": HeaderComponent,
-        "customHeaderComponentProps": { color: 'blue' }
+        "customHeaderComponentProps": { color: '#da291c' }
         }
     ];
     return (
 
-      <Griddle onRowClick= {this.onRowClick.bind(this)} results={this.props.data} columnMetadata={columnMeta} resultsPerPage={5}
+      <Griddle onRowClick= {this.onRowClick.bind(this)} results={this.props.data} columnMetadata={columnMeta} resultsPerPage={3}
       columns={["Folio","Estado Tramite", "Nombre", "Apellido", "Tipo Mejora","Zona", "Origen Factibilidad"]}/>
 
     );

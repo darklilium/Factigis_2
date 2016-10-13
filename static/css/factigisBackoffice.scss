@@ -1,3 +1,6 @@
+$colorBackground: #2e353f;
+$colorCHQRED: #da291c;
+$colorGray: #808095;
 
 .breadcrumb {
   justify-content: flex-start;
@@ -41,9 +44,15 @@
 }
 
 .btnLogoff{
-  color: #4faeff;
+  color: $colorCHQRED;
   background-color: #ffffff;
-  border-color: #e0f1ff;
+  border-color: $colorGray;
+}
+
+.btn-info:hover {
+  color: #fff;
+  //background-color: #2e353f;
+  background-color: $colorBackground;
 }
 
 

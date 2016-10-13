@@ -1,4 +1,13 @@
 //CSS FOR FACTIGIS_BACKOFFICE 2 (3/3)
+
+$colorBackground: #2e353f;
+$colorCHQRED: #da291c;
+$colorGray: #808095;
+
+a {
+    color: $colorCHQRED;
+}
+
 #factigis_bo2_map_zoom_slider {
   top: 20px;
   right: 20px !important;
@@ -63,12 +72,12 @@ div strong{
 }
 
 .factigisBO2_h1{
-  background-color: #4faeff;
+  background-color: $colorBackground;
   color: ghostwhite;
   margin-top: 0px;
   padding-top: 0.5em;
   padding-left: 0.5em;
-  font-size: larger;
+  font-size:13px;
   font-weight: 100;
   padding-bottom: 0.3em;
   display: flex;
@@ -207,7 +216,27 @@ div strong{
 width: 40%;
 }
 
+[data-title='Estado Tramite'] {
+width: 10%;
+}
+
+[data-title='Folio'] {
+width: 10%;
+}
+
+[data-title='Zona'] {
+width: 20%;
+}
 
 .griddle-container{
   background-color: white;
+}
+
+
+.standard-row{
+  font-size: 11px;
+}
+
+h8{
+  font-size: 12px;
 }

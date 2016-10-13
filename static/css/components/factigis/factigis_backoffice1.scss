@@ -1,4 +1,11 @@
 //CSS FOR FACTIGIS_BACKOFFICE 2/3
+$colorBackground: #2e353f;
+$colorCHQRED: #da291c;
+$colorGray: #808095;
+
+a {
+    color: $colorCHQRED;
+}
 
 #myFactigis_BackOffice {
   background-color: #ffffff;
@@ -68,7 +75,7 @@ div strong{
 }
 
 .factigis_bo1-h1{
-  background-color: #4faeff;
+  background-color: $colorBackground;
   color: ghostwhite;
   margin-top: 0px;
   padding-top: 0.5em;
@@ -201,4 +208,8 @@ div strong{
 .ReactModalPortal{
   z-index: 5;
   position: absolute;
+}
+
+.standard-row{
+  font-size: smaller;
 }

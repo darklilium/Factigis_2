@@ -54,7 +54,8 @@ class Factigis_BusquedaFolio extends React.Component {
       bf_estadoTramite: '',
       bf_origenFactibilidad: '',
       problemsforAdding: '',
-      printDisabled: true
+      printDisabled: true,
+      bf_comunaCliente: ''
     }
 
   }
@@ -102,7 +103,8 @@ class Factigis_BusquedaFolio extends React.Component {
         bf_tipoMejora: reg.Tipo_mejora,
         bf_estadoTramite: reg.Estado_tramite,
         bf_origenFactibilidad: reg.Origen_factibilidad,
-        printDisabled: false
+        printDisabled: false,
+        bf_comunaCliente: reg.Comuna
       });
 
       let map = this.state.themap;
@@ -127,7 +129,7 @@ class Factigis_BusquedaFolio extends React.Component {
     let usrprfl = cookieHandler.get('usrprfl');
     cookieHandler.set('myLetter',
       [
-        this.state.bf_direccion,
+        this.state.bf_direccion + ", "+ this.state.bf_comunaCliente,
         this.state.bf_nombre + " " +this.state.bf_apellido,
         usrprfl.NOMBRE_COMPLETO,
         this.state.bf_folio,
@@ -166,9 +168,16 @@ class Factigis_BusquedaFolio extends React.Component {
         <div className="factigis_BigGroupbox2">
           <h6><b>Datos de Cliente</b></h6>
           <hr className="factigis_hr-subtitle factigis_hr"/>
-            <h8 className="factigisBusqueda_h8">Rut:</h8>
+
             <div className="factigis_groupbox">
-              <h5 className="factigisBusqueda_h5">{this.state.bf_rut}</h5>
+              <div className="factigis_group">
+                <h8 className="factigisBusqueda_h8">Rut:</h8>
+                <h5 className="factigisBusqueda_h5">{this.state.bf_rut}</h5>
+              </div>
+              <div className="factigis_group">
+              <h8 className="factigisBusqueda_h8">Comuna:</h8>
+              <h5 className="factigisBusqueda_h5">{this.state.bf_comunaCliente}</h5>
+              </div>
             </div>
 
             <div className="factigis_groupbox">

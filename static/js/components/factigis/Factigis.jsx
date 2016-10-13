@@ -113,7 +113,7 @@ class Factigis extends React.Component {
                     <div id="search"></div>
                   </Breadcrumb.Item>
                   <Breadcrumb.Item active className="factigis_whologged">
-                    Bienvenido: {whoLogged[0]}
+                    Bienvenido/a: {whoLogged[0]}
                   </Breadcrumb.Item>
                   <Breadcrumb.Item active >
                     <button onClick={this.onLoggOff.bind(this)} className="btnLogoff btn btn-info" title="Cerrar Sesión " type="button" >

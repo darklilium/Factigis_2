@@ -400,7 +400,7 @@ class FactigisBackOfficeH extends React.Component {
             </Breadcrumb.Item>
             <div className="factigis_top-right">
                <Breadcrumb.Item active className="factigis_whologged">
-                  Bienvenido: {prof[0]}
+                  Bienvenido/a: {prof[0]}
                </Breadcrumb.Item>
                <Breadcrumb.Item active >
                  <button onClick={this.onLoggOff.bind(this)}  className="btnLogoff btn btn-info" title="Cerrar Sesión " type="button" >

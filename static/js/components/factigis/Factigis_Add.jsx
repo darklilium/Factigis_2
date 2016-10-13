@@ -1363,12 +1363,12 @@ class Factigis_Add extends React.Component {
             <hr className="factigis_hr"/>
             <div className="factigis_buttons">
               <button onClick={this.onClickAgregarCliente.bind(this)}
-                className="factigis_submitButton btn btn-success" title="Agregar Factibilidad " type="button" >
+                className="factigis_submitButton btn btn-success factigisBtnAgregar" title="Agregar Factibilidad " type="button" >
                 <span><i className="fa fa-plus"></i> Agregar</span>
               </button>
 
               <button onClick={this.onClickLimpiarDatos.bind(this)}
-                className="factigis_submitButton btn btn-info" title="Limpiar campos " type="button" >
+                className="factigis_submitButton btn btn-info factigisBtnLimpiar" title="Limpiar campos " type="button" >
                 <span><i className="fa fa-eraser" aria-hidden="true"></i> Limpiar</span>
               </button>
             </div>

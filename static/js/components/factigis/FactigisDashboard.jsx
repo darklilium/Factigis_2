@@ -111,7 +111,7 @@ class FactigisDashboard extends React.Component {
           'display': display
         };
          return  <div className="factigisDashboard-icons" style={divstyle} key={index}>
-                    <div ><img className="factigisDashboard-img" src={imgSrc}></img></div>
+                    <div className="factigisDashboard-divImgCenter"><img className="factigisDashboard-img" src={imgSrc}></img></div>
                     <a className="factigisDashboard-a" key={index} href={url}>{urlName}</a><br/></div>;
     });
 
@@ -127,7 +127,7 @@ class FactigisDashboard extends React.Component {
            </Breadcrumb.Item>
            <div className="dashboard_top_right">
               <Breadcrumb.Item active className="dashboard_whoLogged">
-               Bienvenido: {whoLogged[0]}
+               Bienvenido/a: {whoLogged[0]}
               </Breadcrumb.Item>
               <Breadcrumb.Item active className="dashboard_whoLogged">
                 <button onClick={this.onLoggOff.bind(this)} className="btnLogoff btn btn-info" title="Cerrar Sesión " type="button" >
