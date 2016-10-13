@@ -48,32 +48,35 @@ class LoginApp extends React.Component {
     $('.login_wrapper').css("background-image", "url("+randomPicSrc+")");
   }
 
+  handleKeyPress(target){
+    if(target.charCode==13){
+        this.onClick();  
+    }
+  }
+
   render(){
 
       return (
 
           <div className="login_wrapper">
             <section id="myLogin" className="myLogin">
-            <div className="login_wrapper_content">
-              <article className="login_article">
-                <input className="login__input" ref="username" type="text" placeholder="miusuario"  />
-                <input className="login__input" ref="password" type="password" placeholder="password" />
+              <div className="login_wrapper_content">
+                <article className="login_article">
+                  <input className="login__input" ref="username" type="text" placeholder="miusuario"  />
+                  <input className="login__input" ref="password" type="password" placeholder="password" onKeyPress={this.handleKeyPress.bind(this)} />
 
-                <button onClick={this.onClick.bind(this)}
-                  className="login__submit" title="Entrar " type="button" >
-                  <span><i className="fa fa-plus"></i> Entrar</span>
-                </button>
+                  <button onClick={this.onClick.bind(this)}
+                    className="login__submit" title="Entrar " type="button" >
+                    <span><i className="fa fa-plus"></i> Entrar</span>
+                  </button>
 
-              </article>
-              <aside className="login_aside">
-                  <div className="aside_div">
-                    <img className="login_aside__img" />
-
-                  </div>
-
-              </aside>
-            </div>
-
+                </article>
+                <aside className="login_aside">
+                    <div className="aside_div">
+                      <img className="login_aside__img" />
+                    </div>
+                </aside>
+              </div>
             </section>
             <footer className="login_footer">
               <h4 className="notification-login backgroundColorNotification"></h4>
