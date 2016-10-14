@@ -70,6 +70,7 @@ class Factigis_Add extends React.Component {
       visibilityStyle : visibilityStyle,
 
       open: false,
+      btnModalCloseStatus: true,
       problemsforAdding: '',
       //selected tab in the beginning
       selectedTab: 0,
@@ -594,7 +595,8 @@ class Factigis_Add extends React.Component {
             this.setState({
               open: true,
               problemsforAdding: 'Seleccione un tipo de tramo',
-              numeroFactibilidad: ''
+              numeroFactibilidad: '',
+              btnModalCloseStatus: false,
             });
 
           }else{
@@ -854,6 +856,19 @@ class Factigis_Add extends React.Component {
 
   //Function that adds a new customer but has to validate the other fields yet.
   onClickAgregarCliente(){
+
+    /*<Modal isOpen={this.state.open} style={customStyles}>
+      <h2 className="factigis_h2">Factibilidad {this.state.numeroFactibilidad}</h2>
+      <p>{this.state.problemsforAdding}</p>
+      <br />
+      <button className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>
+    </Modal>
+*/
+    this.setState({
+      open: true,
+      problemsforAdding: 'Procesando factibilidad, espere un momento'
+    });
+
     $("#iframeloadingAdd").show();
     let tipoProvisorioDefinitivo = 'DEFINITIVO';
     if(this.state.radioEmpalmeProvisorio){
@@ -954,13 +969,16 @@ class Factigis_Add extends React.Component {
             }
             //se pasan los primeros campos para agregar
             factigis_addNuevaFactibilidad(myFact, (cb)=>{
+
               //si fue grabado se abre modal indicando el tipo de factibilidad y el objectid con el que fue grabado.
               if(cb[0]){
                 this.setState({
                   open: true,
                   problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'] ,
-                  numeroFactibilidad: 'N°' + cb[1]
+                  numeroFactibilidad: 'N°' + cb[1],
+                  btnModalCloseStatus: false
                 });
+
                 $("#iframeloadingAdd").hide();
                 //GENERAR CARTA: guardar en cookie los parametros con que fue generada la factibilidad para crear la carta.
                 let usrprfl = cookieHandler.get('usrprfl');
@@ -976,7 +994,11 @@ class Factigis_Add extends React.Component {
                     window.open("factigisCarta.html");
               //si no fue grabado mostrar que hubo problemas en modal
               }else{
-                this.setState({open: true, problemsforAdding: 'Hubo un problema al agregar la factibilidad',  numeroFactibilidad: ''});
+                this.setState({
+                  open: true,
+                  problemsforAdding: 'Hubo un problema al agregar la factibilidad',  numeroFactibilidad: '',
+                  btnModalCloseStatus: false
+                });
                 $("#iframeloadingAdd").hide();
               }
 
@@ -1038,7 +1060,8 @@ class Factigis_Add extends React.Component {
                   this.setState({
                     open: true,
                     problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'] ,
-                    numeroFactibilidad: cb[1]
+                    numeroFactibilidad: cb[1],
+                    btnModalCloseStatus: false
                   });
                   $("#iframeloadingAdd").hide();
                   //GENERAR CARTA
@@ -1052,25 +1075,30 @@ class Factigis_Add extends React.Component {
                     usrprfl.DEPARTAMENTO,
                     usrprfl.COMUNA]);
 
+
                     this.render(); //volver a renderizar el componente
                     window.open("factigisCarta.html");
 
                 //Si hubo un problema al agregar la factibilidad, se abre una ventana modal.
                 }else{
-                  this.setState({open: true, problemsforAdding: 'Hubo un problema al agregar la factibilidad', numeroFactibilidad: ''});
+                  this.setState({
+                    open: true,
+                    problemsforAdding: 'Hubo un problema al agregar la factibilidad', numeroFactibilidad: '',
+                    btnModalCloseStatus: false
+                  });
                   $("#iframeloadingAdd").hide();
                 }
               });
 
           //Si hay algún problema con zona concesión o transmisión indicar que no se puede agregar con una ventana modal.
           }else{
-            this.setState({open: true, problemsforAdding: 'La factibilidad que está intentando agregar presenta problemas en las siguientes zonas: '+ '\n' + fArr});
+            this.setState({open: true, problemsforAdding: 'La factibilidad que está intentando agregar presenta problemas en las siguientes zonas: '+ '\n' + fArr, btnModalCloseStatus: false});
           }
         }
 
       //si falta algun campo que rellenar se muestra una ventana modal.
       }else{
-        this.setState({open: true, problemsforAdding: 'Por favor ingrese los campos que faltan (en rojo)'});
+        this.setState({open: true, problemsforAdding: 'Por favor ingrese los campos que faltan (en rojo)', btnModalCloseStatus: false});
         if(this.state.visibilityStyle.selectPotencia.visibility=='hidden'){
           $(".factigisPotencia").css('border-style','initial').css('border-width','0px');
         }
@@ -1082,13 +1110,15 @@ class Factigis_Add extends React.Component {
 
   openModal () { this.setState({open: true}); }
 
-  closeModal () { this.setState({open: false}); }
+  closeModal () { this.setState({open: false});   this.onClickLimpiarDatos(); }
 
   onClickLimpiarDatos(){
     var map = this.props.themap;
     map.graphics.clear();
 
     this.setState({
+      btnModalCloseStatus: true,
+      numeroFactibilidad: '',
       factCartaComuna: '',
       problemsforAdding: '',
       zonaConcesion: false,
@@ -1127,6 +1157,7 @@ class Factigis_Add extends React.Component {
       factigis_selectedValueTipoEmpalmePotencia: '',
       factigis_selectedValueTipoEmpalmeBTMT: '',
       factigis_selectedValueTipoFase: '',
+      factigis_selectedValueTipoPotencia: '',
       factigisCantidadEmpalmes: '',
       factigisRutValidator: false,
       factigisNombreValidator: false,
@@ -1376,7 +1407,7 @@ class Factigis_Add extends React.Component {
                 <h2 className="factigis_h2">Factibilidad {this.state.numeroFactibilidad}</h2>
                 <p>{this.state.problemsforAdding}</p>
                 <br />
-                <button className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>
+                <button disabled={this.state.btnModalCloseStatus} className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>
               </Modal>
               </TabPanel>}
 
@@ -1390,8 +1421,6 @@ class Factigis_Add extends React.Component {
           <Factigis_AddDireccion themap={this.props.themap} />
         </TabPanel>}
         </Tabs>
-
-
 
       </div>
     );
