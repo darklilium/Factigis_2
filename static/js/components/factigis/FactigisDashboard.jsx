@@ -37,7 +37,7 @@ class FactigisDashboard extends React.Component {
 
     //and then save where the user is:
 
-    const page = "REACT_FACTIGIS";
+    const page = "REACT_FACTIGIS_DESA";
     const module = "DASHBOARD";
     //saveGisredLogin(userPermissions[0].username,page,module,localStorage.getItem('token'));
 
