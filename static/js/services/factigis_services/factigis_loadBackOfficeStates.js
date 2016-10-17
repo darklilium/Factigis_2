@@ -10,6 +10,7 @@ function loadFactStates(folio , callback){
   qEstados.returnGeometry = false;
   qEstados.where = "ID_Factibilidad="+ folio;
   qEstados.outFields=["*"];
+  qEstados.orderByFields=['Fecha_cambio'];
   qTasEstados.execute(qEstados, (featureSet)=>{
     if(!featureSet.features.length){
       console.log("no hay estados para esta factibilidad");

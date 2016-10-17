@@ -9,6 +9,8 @@ import {factigis_findFolio} from '../../services/factigis_services/factigis_find
 import makeSymbol from '../../../js/utils/makeSymbol';
 import $ from 'jquery';
 import cookieHandler from 'cookie-handler';
+import FG_GridObservation from './Factigis_GridObservation.jsx';
+import {loadFactStates} from '../../services/factigis_services/factigis_loadBackOfficeStates.js';
 
 const customStyles = {
   content : {
@@ -27,6 +29,8 @@ class Factigis_BusquedaFolio extends React.Component {
     this.state = {
       //passed as parameter from the parent component (factigisAdd), and saves the current map
       themap: this.props.themap,
+      myDataObs: [],
+      openComment: false,
       open: false,
       bf_folio: '',
       bf_rut: '',
@@ -60,7 +64,7 @@ class Factigis_BusquedaFolio extends React.Component {
 
   }
 
-  onClick(){
+  onSearchFolio(){
 
     $("#iframeloading").show();
     console.log(this.state.bf_folio, "valor del txt para factibildad");
@@ -113,6 +117,25 @@ class Factigis_BusquedaFolio extends React.Component {
       map.graphics.add(new esri.Graphic(ubi,myPointSymbol));
       map.centerAndZoom(ubi,20);
        $("#iframeloading").hide();
+
+      loadFactStates(this.state.bf_folio,(callback=>{
+        if(!callback.length){
+            this.setState({myDataObs: []});
+          return;
+        }else{
+          let loadDataEstados = callback.map(estado=>{
+            //console.log(estado.attributes);
+            let thestatus = {
+              'Estado Tramite':  estado.attributes["Estado_tramite"],
+              'Fecha Cambio':  estado.attributes["Fecha_cambio"],
+              'Usuario': estado.attributes["Usuario"],
+              'Observacion':  estado.attributes["Observacion"]
+            }
+            return thestatus;
+          });
+          this.setState({myDataObs: loadDataEstados});
+        }
+      }));
     });
   }
 
@@ -143,6 +166,12 @@ class Factigis_BusquedaFolio extends React.Component {
       window.open("factigisCarta.html");
   }
 
+  onObservation(){
+    this.setState({openComment:true});
+  }
+
+  closeModalObservation () { this.setState({openComment: false}); }
+
   render(){
     return (
       <div className="factigis_addDireccion-wrapper">
@@ -156,8 +185,10 @@ class Factigis_BusquedaFolio extends React.Component {
           <h8>*N° Folio:</h8>
           <div className="factigis_groupbox">
             <input id="factigis_txtFolio" onChange={this.onChange.bind(this)} value={this.state.bf_folio} className="factigis-input"  title="Indique el n° de folio de la factibilidad" type="text" placeholder="Indique el n° de folio de la factibilidad"  />
-            <button onClick={this.onClick.bind(this)} className="factigis-selectFromMapButton factigis_btnSelectCalle btn btn-default" title="Buscar Factibilidad " type="button" >
+            <button onClick={this.onSearchFolio.bind(this)} className="factigis-selectFromMapButton factigis_btnSelectCalle btn btn-default" title="Buscar Factibilidad " type="button" >
             <span><i className="fa fa-search"></i></span></button>
+            <button disabled={this.state.printDisabled} onClick={this.onObservation.bind(this)} className="factigis-selectFromMapButton factigis_btnSelectCalle btn btn-default" title="Buscar Factibilidad " type="button" >
+            <span><i className="fa fa-commenting-o"></i></span></button>
             <button disabled={this.state.printDisabled} onClick={this.onPrint.bind(this)} className="factigis-selectFromMapButton factigis_btnSelectCalle btn btn-default" title="Buscar Factibilidad " type="button" >
             <span><i className="fa fa-print"></i></span></button>
           </div>
@@ -323,6 +354,12 @@ class Factigis_BusquedaFolio extends React.Component {
             <p>{this.state.problemsforAdding}</p>
             <br />
             <button className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>
+          </Modal>
+          <Modal isOpen={this.state.openComment} style={customStyles}>
+            <h2 className="factigis_h2">Factibilidad N°{this.state.bf_folio} : Observaciones</h2>
+            <FG_GridObservation title={"Observaciones"} data={this.state.myDataObs}/>
+            <br />
+            <button className="factigis_submitButton btn btn-info" onClick={this.closeModalObservation.bind(this)}>Close</button>
           </Modal>
         </div>
     );
