@@ -316,7 +316,8 @@ class FactigisBackOfficeH extends React.Component {
             'Tipo Factibilidad': result.attributes['Tipo_factibilidad'],
             'Sed': result.attributes['Sed'],
             'PotenciaDispSed': result.attributes['PotenciaDispSed'],
-            'Zona': result.attributes['Zona']
+            'Zona': result.attributes['Zona'],
+            'Creador': result.attributes['created_user']
           }
 
           return theData;
