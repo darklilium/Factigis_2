@@ -21,7 +21,7 @@ function getFormatedDate(){
 function getFormatedDateExp(){
   var d = new Date();
 
-  var str = "day/month/year, hour:minute:second"
+  var str = "day/month/year hour:minute:second"
     .replace('day', d.getDate() <10? '0'+ d.getDate()+1 : d.getDate()+1)
     .replace('month', (d.getMonth() + 1) <10? '0' + (d.getMonth()+1) : (d.getMonth()+1))
     .replace('year', d.getFullYear())

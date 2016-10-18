@@ -19,7 +19,7 @@ import jQuery from 'jquery';
 function getFormatedDateNow(){
   var d = new Date();
 
-  var str = "day/month/year  hour:minute:second"
+  var str = "day/month/year hour:minute:second"
     .replace('day', d.getDate() <10? '0'+ d.getDate() : d.getDate())
     .replace('month', (d.getMonth() + 1) <10? '0' + (d.getMonth()+1) : (d.getMonth()+1))
     .replace('year', d.getFullYear())
@@ -32,7 +32,7 @@ function getFormatedDateNow(){
 
 function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
 
-  console.log(newAddress, newGeometry);
+
 
   let geox = newGeometry.geoUbicacionCasa.x;
   let geoy=  newGeometry.geoUbicacionCasa.y;
@@ -55,6 +55,7 @@ function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
       data: data
     })
     .done(d =>{
+      console.log(d);
       let json = JSON.parse(d);
       if( (_.has(json,'error')) ){
         return callback(false);

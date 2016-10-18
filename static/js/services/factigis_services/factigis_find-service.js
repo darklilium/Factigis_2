@@ -235,5 +235,24 @@ function factigis_findFolio(folio, callback){
   });
 }
 
+function factigis_findRotuloByNumber(numero, tipo, callback){
 
-export {factigis_findDireccion, factigis_findRotulo,factigis_findCalle, factigis_findNewDireccion,factigis_findTramo, factigis_findComuna, factigis_findFolio};
+  //tipo_nodo ='ele!camara' and rotulo='B8380'
+  var qTaskInterruptions = new esri.tasks.QueryTask(layers.read_rotulos2());
+  var qInterruptions = new esri.tasks.Query();
+
+  qInterruptions.returnGeometry = true;
+  qInterruptions.outFields=["*"];
+  qInterruptions.where = "tipo_nodo= '"+ tipo +"'AND rotulo ='"+ numero +"'";
+  qTaskInterruptions.execute(qInterruptions, (featureSet)=>{
+    if(!featureSet.features.length){
+      return callback([]);
+    }
+    return callback(featureSet.features);
+  }, (Errorq)=>{
+    console.log("Error doing query for rotulos by number");
+    return callback([]);
+  });
+}
+
+export {factigis_findDireccion, factigis_findRotulo,factigis_findCalle, factigis_findNewDireccion,factigis_findTramo, factigis_findComuna, factigis_findFolio, factigis_findRotuloByNumber};

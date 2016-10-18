@@ -89,5 +89,12 @@ var tipoEdificacion = [
 	{ value: 'STRIPCENTER', label: 'STRIPCENTER' }
 
 ];
+
+//FOR search
+var tipoElementoRotulo = [
+	{ value: 'POSTE', label: 'POSTE' },
+	{ value: 'CAMARA', label: 'CÁMARA' }
+];
+
 export {tipoCliente,tipoContribuyente,tipoEmpalme,tipoAereo,tipoSubterraneo, tipoMonoTri,
-		tipoEmpalmeBTMT, tipoPotencia, tipoEdificacion, tipoCantidadEmpalmes}
+		tipoEmpalmeBTMT, tipoPotencia, tipoEdificacion, tipoCantidadEmpalmes, tipoElementoRotulo}

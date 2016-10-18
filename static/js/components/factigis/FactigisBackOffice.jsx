@@ -133,7 +133,11 @@ class FactigisBackOffice extends React.Component {
       facB_campamento: '',
       facB_transmision: '',
       factB_distanciaRM: '',
-      factB_distanciaDM: ''
+      factB_distanciaDM: '',
+
+      //dynamic query
+      factB_NombreSED: '',
+      factB_PotenciaSED: ''
     }
     this.clearFields = this.clearFields.bind(this);
   }
@@ -174,13 +178,21 @@ class FactigisBackOffice extends React.Component {
       facB_campamento: newState[0]['Zona Campamentos'],
       facB_transmision: newState[0]['Zona Transmision'],
       factB_distanciaDM: newState[0]['DistDireccionMedidor'],
-      factB_distanciaRM: newState[0]['DistRotuloMedidor']
-    });
-
-    this.setState({
+      factB_distanciaRM: newState[0]['DistRotuloMedidor'],
       cbEstadoValue: newState[0]['Estado Tramite'],
       cbMejoraValue: newState[0]['Tipo Mejora'],
       facb_observaciones: ''
+    });
+
+    //query for getting the SED name and kva.
+     //if 0 = 'NO NAME AVAILABLE' and no kva available
+
+
+
+    //query for getting propiedad from POSTE
+
+    this.setState({
+
     });
     $("#iframeloadingBO").hide();
   }

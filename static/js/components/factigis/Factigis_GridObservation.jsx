@@ -58,7 +58,7 @@ class FG_GridObservation extends React.Component {
         "customHeaderComponentProps": { color: '#da291c' }
         },
         {
-        "columnName": "Estado Tramite",
+        "columnName": "Estado Trámite",
         "customHeaderComponent": HeaderComponent,
         "customHeaderComponentProps": { color: '#da291c' }
         },
@@ -68,7 +68,7 @@ class FG_GridObservation extends React.Component {
         "customHeaderComponentProps": { color: '#da291c' }
         },
         {
-        "columnName": "Observacion",
+        "columnName": "Observación",
         "customHeaderComponent": HeaderComponent,
         "customHeaderComponentProps": { color: '#da291c' }
         }
@@ -76,7 +76,7 @@ class FG_GridObservation extends React.Component {
     return (
 
       <Griddle results={this.props.data} columnMetadata={columnMeta} resultsPerPage={5}
-      columns={["Fecha Cambio","Estado Tramite", "Usuario", "Observacion"]}/>
+      columns={["Fecha Cambio","Estado Trámite", "Usuario", "Observación"]}/>
 
     );
   }

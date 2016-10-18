@@ -126,10 +126,10 @@ class Factigis_BusquedaFolio extends React.Component {
           let loadDataEstados = callback.map(estado=>{
             //console.log(estado.attributes);
             let thestatus = {
-              'Estado Tramite':  estado.attributes["Estado_tramite"],
+              'Estado Trámite':  estado.attributes["Estado_tramite"],
               'Fecha Cambio':  estado.attributes["Fecha_cambio"],
               'Usuario': estado.attributes["Usuario"],
-              'Observacion':  estado.attributes["Observacion"]
+              'Observación':  estado.attributes["Observacion"]
             }
             return thestatus;
           });
