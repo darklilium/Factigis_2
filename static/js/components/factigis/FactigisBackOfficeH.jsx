@@ -17,6 +17,8 @@ import {loadCurrentHistoryData, loadFactStates} from '../../services/factigis_se
 import _ from 'lodash';
 import BasemapToggle from "esri/dijit/BasemapToggle";
 import {saveGisredLogin, getFormatedDate} from '../../services/login-service';
+import {factigis_findSedProperties, factigis_findRotuloProperties } from  '../../services/factigis_services/factigis_dynamicElementQuery';
+
 
 function createDataObject(){
   return {
@@ -142,7 +144,11 @@ class FactigisBackOfficeH extends React.Component {
       facB_transmision: '',
       myDataEstados: [{}],
       factB_distanciaRM: '',
-      factB_distanciaDM: ''
+      factB_distanciaDM: '',
+      //dynamic query
+      facB_sedNombre: '',
+      facB_sedKVA: '',
+      facB_rotuloPropiedad: ''
     }
   }
 
@@ -209,8 +215,31 @@ class FactigisBackOfficeH extends React.Component {
           });
           this.setState({myDataEstados: loadDataEstados});
         }
-        $("#iframeloadingBO1").hide();
+
       });
+
+      //query for getting the SED name and kva.
+       //if 0 = 'NO NAME AVAILABLE' and no kva available
+       factigis_findSedProperties(newState[0]['Sed'],(sedprops)=>{
+
+         if(!sedprops.length){
+           this.setState({facB_sedNombre: "N/A", facB_sedKVA: 'N/A' });
+           return;
+         }
+          this.setState({facB_sedNombre: sedprops[0].attributes['nombre'] , facB_sedKVA:  sedprops[0].attributes['kva']});
+       });
+
+      //query for getting propiedad from POSTE
+       factigis_findRotuloProperties(newState[0]['Rotulo'], (rotuloprops)=>{
+         if(!rotuloprops.length){
+           this.setState({facB_rotuloPropiedad: "N/A"});
+           return;
+         }
+          this.setState({facB_rotuloPropiedad: rotuloprops[0].attributes['propiedad']});
+           $("#iframeloadingBO1").hide();
+       });
+
+
   }
 
   componentWillMount(){
@@ -432,6 +461,7 @@ class FactigisBackOfficeH extends React.Component {
                 <h8 className="">Rut: {this.state.facB_rut}</h8>
                 <h8 className="">Nombre Cliente: {this.state.facB_nombre}  </h8>
                 <h8 className="">Apellido: {this.state.facB_apellido}</h8>
+                <h8 className="">Dirección: {this.state.facB_direccion}</h8>
                 <h8 className="">Telefono: {this.state.facB_telefono}</h8>
                 <h8 className="">Email: {this.state.facB_email}</h8>
                 <h8 className="">Tipo Cliente: {this.state.facB_tipoCliente}</h8>
@@ -445,10 +475,12 @@ class FactigisBackOfficeH extends React.Component {
                 <div className="wrapper_mid-split-1">
                 <h6 className="factigis_bo2-h6"><b>Datos de Red</b></h6>
                 <h8 className="">Rótulo: {this.state.facB_rotulo}</h8>
-                <h8 className="">Dirección: {this.state.facB_direccion}</h8>
+                <h8 className="">Propiedad: {this.state.facB_rotuloPropiedad}</h8>
                 <h8 className="">Tipo: {this.state.facB_tipoBTMT}</h8>
                 <h8 className="">Tramo Conexion: {this.state.facB_tramo}</h8>
                 <h8 className="">SED: {this.state.facB_sed}</h8>
+                <h8 className="">SED Nombre: {this.state.facB_sedNombre}</h8>
+                <h8 className="">SED KVA (Potencia Nominal): {this.state.facB_sedKVA}</h8>
                 <h8 className="">Tipo (Empalme): {this.state.facB_tipoEmpalme}</h8>
                 <h8 className="">Fase: {this.state.facB_fase}</h8>
                 <h8 className="">Potencia:{this.state.facB_potencia}</h8>

@@ -94,6 +94,11 @@ class Factigis_BusquedaPoste extends React.Component {
 
   closeModal () { this.setState({open: false}); }
 
+  onClickLimpiarUbicacion(){
+    var mapp = this.state.themap;
+    mapp.graphics.clear();
+  }
+
   render(){
     return (
       <div className="factigis_addDireccion-wrapper">
@@ -112,15 +117,20 @@ class Factigis_BusquedaPoste extends React.Component {
           <div className="factigis_groupbox">
             <div className="factigis_group factigis_addressGroup">
               <h8>*Rótulo N°:</h8>
-              <input id="factigis_txtNumeroCalle" onChange={this.onChangeRotulo.bind(this)} value={this.state.factigisRotulo} className="factigis-input factigis_input-solo" title="Escriba el número de la calle" type="text" placeholder="Número de la calle"  />
+              <input id="factigis_txtNumeroCalle" onChange={this.onChangeRotulo.bind(this)} value={this.state.factigisRotulo} className="factigis-input factigis_input-solo" title="Escriba el n° de rotulo" type="text" placeholder="Número de la calle"  />
             </div>
           </div>
 
           <hr className="factigis_hr"/>
             <p className="factigis_p obligatorio">* Campos obligatorios</p>
-          <button className="factigis_submitButton btn btn-success" title="Buscar Rótulo " type="button" onClick={this.onClickBuscarRotulo.bind(this)} >
-                <span><i className="fa fa-search"></i> Buscar</span>
-          </button>
+          <div className="factigis_groupboxBtn">
+            <button className="factigis_submitButton btn btn-success" title="Limpiar Ubicación " type="button" onClick={this.onClickLimpiarUbicacion.bind(this)} >
+                    <span><i className="fa fa-eraser"></i> Limpiar Ubicación</span>
+            </button>
+            <button className="factigis_submitButton btn btn-success" title="Buscar Rótulo " type="button" onClick={this.onClickBuscarRotulo.bind(this)} >
+                  <span><i className="fa fa-search"></i> Buscar</span>
+            </button>
+          </div>
           <Modal isOpen={this.state.open} style={customStyles}>
             <h2 className="factigis_h2">Búsqueda de Rótulo</h2>
             <p>{this.state.problemsforAdding}</p>

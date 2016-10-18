@@ -1,7 +1,10 @@
 
-//extrae nombre y kva de sed
-function factigis_findSedKvaName(sed, callback){
+import layers from '../../services/layers-service';
+import token from '../../services/token-service';
 
+//extrae nombre y kva de sed
+function factigis_findSedProperties(sed, callback){
+  console.log("sed",sed);
   var qTaskInterruptions = new esri.tasks.QueryTask(layers.read_layer_infoSED());
   var qInterruptions = new esri.tasks.Query();
 
@@ -14,16 +17,16 @@ function factigis_findSedKvaName(sed, callback){
     if(!featureSet.features.length){
       return callback([]);
     }
-    console.log(featureSet.features);
+
     callback(featureSet.features);
   }, (Errorq)=>{
-    console.log(Errorq,"Error doing query for folio");
+    console.log(Errorq,"Error doing query for sed properties");
     callback([]);
   });
 }
 
 //saca propiedad de rotulo.
-function factigis_find(rotulo, callback){
+function factigis_findRotuloProperties(rotulo, callback){
 
   var qTaskInterruptions = new esri.tasks.QueryTask(layers.read_rotulos2());
   var qInterruptions = new esri.tasks.Query();
@@ -37,13 +40,13 @@ function factigis_find(rotulo, callback){
     if(!featureSet.features.length){
       return callback([]);
     }
-    console.log(featureSet.features);
+
     callback(featureSet.features);
   }, (Errorq)=>{
-    console.log(Errorq,"Error doing query for folio");
+    console.log(Errorq,"Error doing query for rotulo properties");
     callback([]);
   });
 }
 
 
-export {factigis_findSedKvaName, }
+export {factigis_findSedProperties, factigis_findRotuloProperties}
