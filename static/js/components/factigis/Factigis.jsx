@@ -71,7 +71,7 @@ class Factigis extends React.Component {
       }, "search");
     search.startup();
 
-    const page = "REACT_FACTIGIS_DESA";
+    const page = "REACT_FACTIGIS_PROD";
     const module = "FACTIGIS_CREAR_FACTIBILIDAD";
     const date = getFormatedDate();
     const user = cookieHandler.get('usrprfl')

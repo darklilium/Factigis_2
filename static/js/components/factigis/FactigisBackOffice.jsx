@@ -330,7 +330,7 @@ class FactigisBackOffice extends React.Component {
       }, "BMToggle");
       toggle.startup();
 
-      const page = "REACT_FACTIGIS_DESA";
+      const page = "REACT_FACTIGIS_PROD";
       const module = "FACTIGIS_REVISAR_FACTIBILIDAD";
       const date = getFormatedDate();
       const user = cookieHandler.get('usrprfl')

@@ -197,7 +197,6 @@ class FactigisBackOfficeH extends React.Component {
       //load states for the selected factibilidad.
       loadFactStates(newState[0]['Folio'], (callback)=>{
         if(!callback.length){
-
             this.setState({myDataEstados: []});
           return;
         }else{
@@ -253,13 +252,13 @@ class FactigisBackOfficeH extends React.Component {
   componentDidMount(){
     var d = cookieHandler.get('wllExp');
       if(d > getFormatedDate()){
-        console.log("dentro del rango");
+
         if(!cookieHandler.get('tkn')){
           console.log("no hay, redirect...");
           window.location.href = "index.html";
         }
       }else{
-        console.log("expiro");
+        console.log("Token Expired");
         window.location.href = "index.html";
       }
 
@@ -362,7 +361,7 @@ class FactigisBackOfficeH extends React.Component {
       }, "BMToggle2");
       toggle.startup();
 
-      const page = "REACT_FACTIGIS_DESA";
+      const page = "REACT_FACTIGIS_PROD";
       const module = "FACTIGIS_REVISAR_HISTORIAL_FACTIBILIDAD";
       const date = getFormatedDate();
       const user = cookieHandler.get('usrprfl')

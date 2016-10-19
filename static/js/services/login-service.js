@@ -14,7 +14,7 @@ function getFormatedDate(){
     .replace('hour', d.getHours() <10? '0'+ d.getHours() : d.getHours() )
     .replace('minute', d.getMinutes() <10? '0'+ d.getMinutes() : d.getMinutes())
     .replace('second', d.getSeconds() <10? '0'+ d.getSeconds() : d.getSeconds());
-    console.log(str);
+    console.log("Today",str);
   return str;
 }
 
@@ -48,10 +48,12 @@ function saveGisredLogin(user, fech, page, mod, tkn){
     data: data
   })
   .done(d =>{
-    console.log(d,"pase");
+    //console.log(d,"pase");
+    console.log("")
   })
   .fail(f=>{
-    console.log(f,"no pase")
+    console.log(f,"no pase");
+    console.log("Error adding logReg")
   });
 }
 
@@ -136,7 +138,7 @@ function factigisLogin(user,pass){
             return permission.module;
           });
 
-          console.log("permisos encontrados",profiles);
+
           let goesTo = profiles.filter(profile =>{
             return profile == "REVISAR_FACTIBILIDAD" || profile=="REVISAR_HISTORIAL_FACTIBILIDAD";
           });
@@ -144,7 +146,7 @@ function factigisLogin(user,pass){
 
           //va a dashboard o factigis directamente dependiendo permisos del usuario para los modulos y widgets.
             if(!goesTo.length){
-              const page = "REACT_FACTIGIS_DESA";
+              const page = "REACT_FACTIGIS_PROD";
               const module = "FACTIGIS_CREAR_FACTIBILIDAD";
               const date = getFormatedDate();
 
@@ -163,7 +165,7 @@ function factigisLogin(user,pass){
 
             }else{
               //Save that the user is in dashboard
-              const page = "REACT_FACTIGIS_DESA";
+              const page = "REACT_FACTIGIS_PROD";
               const module = "FACTIGIS_DASHBOARD";
               const date = getFormatedDate();
 

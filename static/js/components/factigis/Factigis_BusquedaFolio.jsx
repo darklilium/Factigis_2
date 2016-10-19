@@ -67,11 +67,11 @@ class Factigis_BusquedaFolio extends React.Component {
   onSearchFolio(){
 
     $("#iframeloading").show();
-    console.log(this.state.bf_folio, "valor del txt para factibildad");
+  
     var c = factigis_findFolio(this.state.bf_folio, cb=>{
 
       if(!cb.length){
-        console.log("no hay registros para ese id");
+        console.log("no hay registros para ese id de folio");
         this.setState({problemsforAdding: 'No hay registros para este n° de folio', open:true});
          $("#iframeloading").hide();
          this.setState({printDisabled: true});

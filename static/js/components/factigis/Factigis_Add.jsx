@@ -197,13 +197,13 @@ class Factigis_Add extends React.Component {
 
     var d = cookieHandler.get('wllExp');
       if(d > getFormatedDate()){
-        console.log("dentro del rango");
+      //  console.log("dentro del rango");
         if(!cookieHandler.get('tkn')){
           console.log("no hay, redirect...");
           window.location.href = "index.html";
         }
       }else{
-        console.log("expiro");
+        console.log("Token expired");
         window.location.href = "index.html";
       }
 
@@ -515,7 +515,7 @@ class Factigis_Add extends React.Component {
               this.setState({factigis_tipoEmpalme: tipoEmpalme});
             }
             //verificar si el rotulo es particular/otro u empresa: si es empresa, la factibilidad es normal, si es particular/otro, es asistida.
-            if((featureSetFeatures[0].attributes['propiedad']=="Particular") || (featureSetFeatures[0].attributes['propiedad']=="Empresa que no presta Servicio Distribucion")){
+            if((featureSetFeatures[0].attributes['propiedad']=="Particular") || (featureSetFeatures[0].attributes['propiedad']=="Empresa que no presta Servicio Distribucion") ){
               ////console.log("poste es ",featureSetFeatures[0].attributes['propiedad'], featureSetFeatures);
               this.setState({factiTipoFactibilidad: 'FACTIBILIDAD ASISTIDA'});
             }else{
