@@ -227,7 +227,7 @@ function factigis_findFolio(folio, callback){
     if(!featureSet.features.length){
       return callback([]);
     }
-    console.log(featureSet.features);
+  
     callback(featureSet.features);
   }, (Errorq)=>{
     console.log(Errorq,"Error doing query for folio");
