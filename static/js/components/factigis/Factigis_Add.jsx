@@ -17,6 +17,7 @@ import {getPotenciaEmpalme} from '../../services/factigis_services/factigis_pote
 import {factigis_addNuevaFactibilidad, agregarEstadoHistoria} from '../../services/factigis_services/factigis_add-service';
 import Modal from 'react-modal';
 import Factigis_BusquedaFolio from '../factigis/Factigis_BusquedaFolio.jsx';
+import Factigis_BusquedaPoste from '../factigis/Factigis_BusquedaPoste.jsx';
 import exportGraphicsToPDF from '../../services/factigis_services/factigis_exportToPdf';
 import {getZona} from '../../services/factigis_services/factigis_zonas';
 import token from '../../services/token-service';
@@ -67,6 +68,7 @@ class Factigis_Add extends React.Component {
       showA: false,
       showB: false,
       showC: false,
+      showD: true,
       visibilityStyle : visibilityStyle,
 
       open: false,
@@ -195,13 +197,13 @@ class Factigis_Add extends React.Component {
 
     var d = cookieHandler.get('wllExp');
       if(d > getFormatedDate()){
-        console.log("dentro del rango");
+      //  console.log("dentro del rango");
         if(!cookieHandler.get('tkn')){
           console.log("no hay, redirect...");
           window.location.href = "index.html";
         }
       }else{
-        console.log("expiro");
+        console.log("Token expired");
         window.location.href = "index.html";
       }
 
@@ -513,7 +515,7 @@ class Factigis_Add extends React.Component {
               this.setState({factigis_tipoEmpalme: tipoEmpalme});
             }
             //verificar si el rotulo es particular/otro u empresa: si es empresa, la factibilidad es normal, si es particular/otro, es asistida.
-            if((featureSetFeatures[0].attributes['propiedad']=="Particular") || (featureSetFeatures[0].attributes['propiedad']=="Empresa que no presta Servicio Distribucion")){
+            if((featureSetFeatures[0].attributes['propiedad']=="Particular") || (featureSetFeatures[0].attributes['propiedad']=="Empresa que no presta Servicio Distribucion") ){
               ////console.log("poste es ",featureSetFeatures[0].attributes['propiedad'], featureSetFeatures);
               this.setState({factiTipoFactibilidad: 'FACTIBILIDAD ASISTIDA'});
             }else{
@@ -1229,6 +1231,7 @@ class Factigis_Add extends React.Component {
           {this.state.showA && <Tab><i className="fa fa-plus"></i></Tab>}
           {this.state.showB && <Tab><i className="fa fa-search" aria-hidden="true"></i></Tab>}
           {this.state.showC && <Tab><i className="fa fa-plus"></i> <i className="fa fa-home" aria-hidden="true"></i></Tab>}
+          {this.state.showD && <Tab><i className="fa fa-map-signs" aria-hidden="true"></i></Tab>}
         </TabList>
         {/* Tab cliente */}
         {this.state.showA && <TabPanel>
@@ -1419,6 +1422,11 @@ class Factigis_Add extends React.Component {
         {/* Tab direcciones */}
         {this.state.showC && <TabPanel>
           <Factigis_AddDireccion themap={this.props.themap} />
+        </TabPanel>}
+
+        {/* Tab direcciones */}
+        {this.state.showD && <TabPanel>
+          <Factigis_BusquedaPoste themap={this.props.themap} />
         </TabPanel>}
         </Tabs>
 

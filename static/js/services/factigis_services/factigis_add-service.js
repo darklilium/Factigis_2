@@ -32,7 +32,7 @@ function getFormatedDateNow(){
 
 function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
 
-  console.log(newAddress, newGeometry);
+
 
   let geox = newGeometry.geoUbicacionCasa.x;
   let geoy=  newGeometry.geoUbicacionCasa.y;
@@ -55,6 +55,7 @@ function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
       data: data
     })
     .done(d =>{
+      console.log(d);
       let json = JSON.parse(d);
       if( (_.has(json,'error')) ){
         return callback(false);

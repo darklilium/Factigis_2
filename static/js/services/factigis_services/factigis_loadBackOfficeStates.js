@@ -3,13 +3,14 @@ import mymap from '../../services/map-service';
 import layers from '../../services/layers-service';
 
 function loadFactStates(folio , callback){
-  console.log('cargando estados.');
+  //console.log('cargando estados.');
 
   var qTasEstados = new esri.tasks.QueryTask(layers.read_historial_factibilidad());
   var qEstados = new esri.tasks.Query();
   qEstados.returnGeometry = false;
   qEstados.where = "ID_Factibilidad="+ folio;
   qEstados.outFields=["*"];
+  qEstados.orderByFields=['Fecha_cambio'];
   qTasEstados.execute(qEstados, (featureSet)=>{
     if(!featureSet.features.length){
       console.log("no hay estados para esta factibilidad");

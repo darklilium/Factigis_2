@@ -27,3 +27,27 @@ font-size: 11px;
   width: 1em;
   display: none;
 }
+
+
+.factigis_submitButton:hover{
+    color: #fff;
+    background-color: #8c0000  !important;
+    border-color: #750000  !important;
+}
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #8c0000 !important;
+    border-color: #750000  !important;
+}
+.btn-success{
+    border-color: #750000  !important;
+}
+
+.factigis_submitButton:active{
+    background-color: #8c0000  !important;
+}
+
+.factigis_groupboxBtn{
+  display: flex;
+}
