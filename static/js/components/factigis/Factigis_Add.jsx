@@ -1066,6 +1066,7 @@ class Factigis_Add extends React.Component {
 
           //Si no hay ningún problema con las zonas de validación concesión y transmisión se agrega como asistida. (si hay una zona que no corresponda a las nombradas, la fact es Asistida también).
 
+
           // Puede ser que exista algun problema con otra zona de validación que sea diferente a concesión y transmisión.
 
           if(!fArr.length){

@@ -135,6 +135,10 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
                 if(factibilidad.factigisEmpalme=="SUBTERRANEO"){
                   factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
                 }
+        //26/10/2016 REQ 5: si el tiempo empalme es provisorio y la fase es trifásico => FACTIBILIDAD ASISTIDA.
+                if( (factibilidad.factigisFase=="TRIFASICO") && (factibilidad.factigisTiempoEmpalme=="PROVISORIO") ){
+                  factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
+                }
 
         //26/10/2016 REQ 5: si el tiempo empalme es provisorio y la fase es trifásico => FACTIBILIDAD ASISTIDA.
                 if( (factibilidad.factigisFase=="TRIFASICO") && (factibilidad.factigisTiempoEmpalme=="PROVISORIO") ){
@@ -144,7 +148,9 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
         //si la fase es trifásica - > factibilidad ASISTIDA
           //  1.-   trifásicos (no importa si es bt o mt) y > a 18KW  -> Asistida.
 
+
                 if( (factibilidad.factigisPotencia > 4 ) && (factibilidad.factigisFase=='TRIFASICO')){
+
 
                   factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
                 }
@@ -152,6 +158,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
         //agregar a rest srv
 
                 console.log("Estoy con la siguiente factibilidad en bt",factibilidad.factigisTipoFactibilidad);
+
 
 
                 if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD DIRECTA"){
@@ -246,7 +253,9 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
         //si la fase es trifásica - > factibilidad ASISTIDA
         //  1.-   trifásicos (no importa si es bt o mt) y > a 18KW  -> Asistida.
 
+
          if( (factibilidad.factigisPotencia > 4 ) && (factibilidad.factigisFase=='TRIFASICO')){
+
            factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
          }
          //26/10/2016 REQ 5: si el tiempo empalme es provisorio y la fase es trifásica => FACTIBILIDAD ASISTIDA.
@@ -268,6 +277,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
 
 
           console.log("Estoy con la siguiente factibilidad en mt",factibilidad.factigisTipoFactibilidad);
+
 
           console.log("agregar lo siguiente a arcgis srv", factibilidad);
 
