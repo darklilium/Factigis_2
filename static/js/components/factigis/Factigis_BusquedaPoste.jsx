@@ -98,6 +98,8 @@ class Factigis_BusquedaPoste extends React.Component {
     var mapp = this.state.themap;
     this.setState({  factigisTipoRotulo: tipoElementoRotulo, factigisRotulo: '', factigis_selectedTipoRotulo: ''});
     mapp.graphics.clear();
+    this.setState({  factigisRotulo: '', factigis_selectedTipoRotulo: ''})
+
   }
 
   render(){
