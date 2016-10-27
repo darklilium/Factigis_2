@@ -373,7 +373,7 @@ class FactigisBackOfficeH extends React.Component {
       }, "BMToggle2");
       toggle.startup();
 
-      const page = "REACT_FACTIGIS_PROD";
+      const page = "REACT_FACTIGIS_DESA";
       const module = "FACTIGIS_REVISAR_HISTORIAL_FACTIBILIDAD";
       const date = getFormatedDate();
       const user = cookieHandler.get('usrprfl')

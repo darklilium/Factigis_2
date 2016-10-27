@@ -438,6 +438,7 @@ class Factigis_Add extends React.Component {
       $('.factigis_btnSelectCliente').css('color',"crimson").css('border-color','red');
 
       var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
+        console.log(g);
         $("#iframeloadingAdd").show();
         //saves geometry point for customer.
         this.setState({factigis_geoCliente: g.mapPoint, factigis_geoClienteValidator:true});
