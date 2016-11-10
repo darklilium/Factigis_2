@@ -146,7 +146,7 @@ function factigisLogin(user,pass){
 
           //va a dashboard o factigis directamente dependiendo permisos del usuario para los modulos y widgets.
             if(!goesTo.length){
-              const page = "REACT_FACTIGIS_PROD";
+              const page = "REACT_FACTIGIS_DESA";
               const module = "FACTIGIS_CREAR_FACTIBILIDAD";
               const date = getFormatedDate();
 
@@ -165,7 +165,7 @@ function factigisLogin(user,pass){
 
             }else{
               //Save that the user is in dashboard
-              const page = "REACT_FACTIGIS_PROD";
+              const page = "REACT_FACTIGIS_DESA";
               const module = "FACTIGIS_DASHBOARD";
               const date = getFormatedDate();
 
