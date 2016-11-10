@@ -21,7 +21,6 @@ import {factigis_findSedProperties, factigis_findRotuloProperties } from  '../..
 import {factigis_findRotulo} from '../../services/factigis_services/factigis_find-service';
 
 
-
 function createDataObject(){
   return {
     'Folio' : 0 ,
@@ -98,7 +97,6 @@ var tiposFase = [
 	{ value: 'C', label: 'C' },
   { value: 'ABC', label: 'ABC' }
 ];
-
 
 
 class FactigisBackOffice extends React.Component {
@@ -374,7 +372,7 @@ class FactigisBackOffice extends React.Component {
       }, "BMToggle");
       toggle.startup();
 
-      const page = "REACT_FACTIGIS_DESA";
+      const page = "REACT_FACTIGIS_PROD";
       const module = "FACTIGIS_REVISAR_FACTIBILIDAD";
       const date = getFormatedDate();
       const user = cookieHandler.get('usrprfl')
@@ -445,7 +443,6 @@ class FactigisBackOffice extends React.Component {
 
             $("#iframeloadingBO").show();
             //refresh the grid after update.
-
             this.loadDataa();
 
           }else{
@@ -608,7 +605,6 @@ class FactigisBackOffice extends React.Component {
 
   }
 
-
   render(){
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
       window.location.href = "index.html";
@@ -700,7 +696,6 @@ class FactigisBackOffice extends React.Component {
                 <h8 className="">Distancia Rotulo - Medidor (m): {this.state.factB_distanciaRM}</h8>
                 <h8 className="">Distancia Dirección - Medidor (m): {this.state.factB_distanciaDM}</h8>
 
-
               </div>
 
             </div>
@@ -768,9 +763,7 @@ class FactigisBackOffice extends React.Component {
             <Select id="ddlTipoMejoraFactibilidad" className="factigis_bo1_cbEstado marginRight05" onChange={this.onChange2.bind(this)} options={this.state.opcionesMejora}
             simpleValue clearable={true} searchable={false} value={this.state.cbMejoraValue} placeholder="Seleccione Tipo Mejora"/>
             <button className="factigis_submitButton btn btn-success" onClick={this.onClick.bind(this)} title="Modificar Estado Factibilidad " type="button" >
-
               <span><i className="fa fa-pencil"></i>  Modificar Factibilidad</span>
-
             </button>
           </div>
 

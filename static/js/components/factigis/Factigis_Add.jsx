@@ -131,6 +131,8 @@ class Factigis_Add extends React.Component {
       factigis_tipoPotencia: [],
       factigis_cantidadEmpalmes : [],
       factigis_tipoEmpalmeBTMT: [],
+      //27/10
+      factigis_todasLasClasificaciones : [],
 
       //27/10
       factigis_todasLasClasificaciones : [],
@@ -165,6 +167,8 @@ class Factigis_Add extends React.Component {
       factigisCantidadEmpalmesValidator: false,
       factigisPotenciaValidator: false,
       factigistxtPotenciaValidator: false,
+      //27.10
+      factigisClasificacionValidator: false,
 
       //27.10
       factigisClasificacionValidator: false,
@@ -207,7 +211,6 @@ class Factigis_Add extends React.Component {
       radioEmpalmeProvisorio: false,
       factigis_todasLasClasificaciones: tipoClasificacion,
       factigisClasificacion: 'NUEVO'
-
 
     });
   }
@@ -374,7 +377,6 @@ class Factigis_Add extends React.Component {
             this.setState({factigisEmailValidator: true,
             factigisEmail: this.state.factigisEmail.toUpperCase()});
 
-
           }else{
             //////console.log("email no valido, factigisEmail",this.state.factigisEmail.toUpperCase());
             this.setState({factigisEmailValidator: false});
@@ -438,7 +440,6 @@ class Factigis_Add extends React.Component {
       $('.factigis_btnSelectCliente').css('color',"crimson").css('border-color','red');
 
       var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
-        console.log(g);
         $("#iframeloadingAdd").show();
         //saves geometry point for customer.
         this.setState({factigis_geoCliente: g.mapPoint, factigis_geoClienteValidator:true});

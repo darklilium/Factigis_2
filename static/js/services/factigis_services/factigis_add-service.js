@@ -349,6 +349,7 @@ function agregarFact(f, callback){
 
   let posteFactibilizador;
 
+
   let opcionCampamento, opcionConcesion, opcionVialidad, opcionTransmision, opcionRestringida;
   console.log("llega de zonas:", "Camp:", f.factigisZonaCampamentos, "conce: ",f.factigisZonaConcesion,"vial:" ,f.factigisZonaVialidad, "trans:",f.factigisZonaTransmision, "rest",f.factigisZonaRestringida);
   if(f.factigisZonaCampamentos){
@@ -382,9 +383,11 @@ function agregarFact(f, callback){
   }
 
 
+
   if(f.factigisTipoFactibilidad=='FACTIBILIDAD DIRECTA'){
     posteFactibilizador = f.factigisRotulo;
   }
+
 
   var myAttributes = {
     Rut : f.factigisRut,

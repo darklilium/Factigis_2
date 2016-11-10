@@ -44,7 +44,7 @@ class FG_GridPerZone extends React.Component {
     var y = _.filter(this.props.data, (data)=>{
       return data['Folio'] == gridRow.props.data['Folio'];
     })
-
+    console.log("tengo..",y)
     this.props.callbackParent(y);
 
 
