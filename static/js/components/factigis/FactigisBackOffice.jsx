@@ -20,6 +20,8 @@ import {saveGisredLogin, getFormatedDate} from '../../services/login-service';
 import {factigis_findSedProperties, factigis_findRotuloProperties } from  '../../services/factigis_services/factigis_dynamicElementQuery';
 import {factigis_findRotulo} from '../../services/factigis_services/factigis_find-service';
 
+
+
 function createDataObject(){
   return {
     'Folio' : 0 ,
@@ -89,12 +91,15 @@ var tipoMejora = [
   { value: 'CONEXION DIRECTA', label: 'CONEXION DIRECTA' }
 ];
 
+
 var tiposFase = [
   { value: 'A', label: 'A' },
 	{ value: 'B', label: 'B' },
 	{ value: 'C', label: 'C' },
   { value: 'ABC', label: 'ABC' }
 ];
+
+
 
 class FactigisBackOffice extends React.Component {
 
@@ -144,6 +149,7 @@ class FactigisBackOffice extends React.Component {
       factB_distanciaRM: '',
       factB_distanciaDM: '',
       facB_clasificacion: '',
+
 
       //dynamic query
       facB_sedNombre: '',
@@ -227,7 +233,8 @@ class FactigisBackOffice extends React.Component {
 
   onChildChanged(newState){
       $("#iframeloadingBO").show();
-  
+
+
 
     this.setState({
       facB_rut: newState[0]['Rut'],
@@ -270,6 +277,7 @@ class FactigisBackOffice extends React.Component {
       facB_tiposFase:  newState[0]['TiposFase'],
       facB_puntoConexion:  newState[0]['PuntoConexion'],
       btnGuardarState: false
+
 
     });
 
@@ -358,6 +366,7 @@ class FactigisBackOffice extends React.Component {
       mapp.addLayer(layerRotulos);
 
       //LOAD FACTIBILIDAD FOR CURRENT USER : RULES: PER HIS/HER ZONE and <> of FACTIBILIDAD DIRECTA
+
       this.loadDataa();
       var toggle = new BasemapToggle({
         map: mapp,
@@ -375,9 +384,11 @@ class FactigisBackOffice extends React.Component {
     saveGisredLogin(user['USUARIO'],date,page,module,myToken);
   }
 
+
   onChange(e){console.log("h1",e); this.setState({cbEstadoValue: e});}
 
   onChange2(e){console.log("h2",e);this.setState({cbMejoraValue: e});}
+
 
   onClick(e){
     $("#iframeloadingBO").show();
@@ -434,6 +445,7 @@ class FactigisBackOffice extends React.Component {
 
             $("#iframeloadingBO").show();
             //refresh the grid after update.
+
             this.loadDataa();
 
           }else{
@@ -515,6 +527,7 @@ class FactigisBackOffice extends React.Component {
       facB_puntoConexion: this.state.rotuloFinal,
       faseSelected: '',
       rotuloFinal: ''
+
     });
   }
 
@@ -526,6 +539,7 @@ class FactigisBackOffice extends React.Component {
       localStorage.removeItem('token');
       window.location.href = "index.html";
   }
+
 
   onChangeFase(e){
     console.log(e);
@@ -593,6 +607,7 @@ class FactigisBackOffice extends React.Component {
     });
 
   }
+
 
   render(){
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
@@ -662,6 +677,7 @@ class FactigisBackOffice extends React.Component {
                 <h8 className="">Clasificación: {this.state.facB_clasificacion}</h8>
                 <h8 className="">Fases Conexión: {this.state.facB_tiposFase}</h8>
                 <h8 className="">Punto Conexión: {this.state.facB_puntoConexion}</h8>
+
               </div>
                 <div className="wrapper_mid-split-1">
                 <h6 className="factigis_bo1-h6"><b>Datos de Red</b></h6>
@@ -683,6 +699,7 @@ class FactigisBackOffice extends React.Component {
                 <h8 className="">Zona: {this.state.facB_zona}</h8>
                 <h8 className="">Distancia Rotulo - Medidor (m): {this.state.factB_distanciaRM}</h8>
                 <h8 className="">Distancia Dirección - Medidor (m): {this.state.factB_distanciaDM}</h8>
+
 
               </div>
 
@@ -708,6 +725,7 @@ class FactigisBackOffice extends React.Component {
             <div id="factigis_bo1_map" className="factigis_bo1_map">
               <div id="BMToggle"></div>
             </div>
+
             <div>
               <h1 className="factigis_bo1-h1 factigis_h1_edited">Cambiar Atributos > Folio: {this.state.facB_folio}</h1>
               <div className="factigis_rows">
@@ -743,13 +761,16 @@ class FactigisBackOffice extends React.Component {
           </div>
           <div className="wrapper_bot_content">
             <h8 className="factigis_bo1-h8">Observaciones:</h8>
+
             <input id="factigis_txtObservaciones" maxLength="100" className="marginRight05" value={this.state.facb_observaciones} onChange={this.onChangeObs.bind(this)} title="Observaciones" type="text" placeholder="Escriba su observación" />
             <Select id="ddlEstadoFactibilidad" className="factigis_bo1_cbEstado marginRight05" onChange={this.onChange.bind(this)} options={this.state.opcionesEstado}
             simpleValue clearable={true} searchable={false} value={this.state.cbEstadoValue} placeholder="Seleccione Estado Trámite"/>
             <Select id="ddlTipoMejoraFactibilidad" className="factigis_bo1_cbEstado marginRight05" onChange={this.onChange2.bind(this)} options={this.state.opcionesMejora}
             simpleValue clearable={true} searchable={false} value={this.state.cbMejoraValue} placeholder="Seleccione Tipo Mejora"/>
             <button className="factigis_submitButton btn btn-success" onClick={this.onClick.bind(this)} title="Modificar Estado Factibilidad " type="button" >
+
               <span><i className="fa fa-pencil"></i>  Modificar Factibilidad</span>
+
             </button>
           </div>
 

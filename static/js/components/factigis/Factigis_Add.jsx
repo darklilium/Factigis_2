@@ -79,6 +79,7 @@ class Factigis_Add extends React.Component {
       openModalValidator: false,
       problemsforAdding: '',
       problemsforAdding2: '',
+
       //selected tab in the beginning
       selectedTab: 0,
       //check states per validation zones
@@ -121,6 +122,7 @@ class Factigis_Add extends React.Component {
       factigisComuna: '',
       //27.10
       factigisClasificacion:  '',
+
       //data for comboboxes
       factigis_tipoCliente: [],
       factigis_tipoContribuyente: [] ,
@@ -129,8 +131,10 @@ class Factigis_Add extends React.Component {
       factigis_tipoPotencia: [],
       factigis_cantidadEmpalmes : [],
       factigis_tipoEmpalmeBTMT: [],
+
       //27/10
       factigis_todasLasClasificaciones : [],
+
 
       factigis_sed: '',
       factigis_cantEmpalmesEnabled: false,
@@ -161,6 +165,7 @@ class Factigis_Add extends React.Component {
       factigisCantidadEmpalmesValidator: false,
       factigisPotenciaValidator: false,
       factigistxtPotenciaValidator: false,
+
       //27.10
       factigisClasificacionValidator: false,
 
@@ -202,6 +207,7 @@ class Factigis_Add extends React.Component {
       radioEmpalmeProvisorio: false,
       factigis_todasLasClasificaciones: tipoClasificacion,
       factigisClasificacion: 'NUEVO'
+
 
     });
   }
@@ -359,6 +365,7 @@ class Factigis_Add extends React.Component {
         if(!this.state.factigisEmail==''){
           if(validator.isEmail(this.state.factigisEmail.toUpperCase())){
             //////console.log("email valido:",this.state.factigisEmail.toUpperCase());
+
             if(this.state.factigisEmail.includes("chilquinta")){
               this.setState({factigisEmailValidator: false});
               return;
@@ -366,6 +373,7 @@ class Factigis_Add extends React.Component {
             }
             this.setState({factigisEmailValidator: true,
             factigisEmail: this.state.factigisEmail.toUpperCase()});
+
 
           }else{
             //////console.log("email no valido, factigisEmail",this.state.factigisEmail.toUpperCase());
@@ -856,6 +864,7 @@ class Factigis_Add extends React.Component {
           return;
         }
         this.setState({factigisCantidadEmpalmes: val, factigisCantidadEmpalmesValidator: true});
+
         break;
 
       case 'ddlClasificacion':
@@ -867,6 +876,7 @@ class Factigis_Add extends React.Component {
         }
         this.setState({factigisClasificacion: val, factigisClasificacionValidator: true});
         break;
+
 
       default:
 
@@ -897,6 +907,7 @@ class Factigis_Add extends React.Component {
       <button className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>
     </Modal>
 */
+
 
 
     $("#iframeloadingAdd").show();
@@ -1003,6 +1014,7 @@ class Factigis_Add extends React.Component {
               open: true,
               problemsforAdding: 'Procesando factibilidad, espere un momento'
             });
+
             factigis_addNuevaFactibilidad(myFact, (cb)=>{
 
               //si fue grabado se abre modal indicando el tipo de factibilidad y el objectid con el que fue grabado.
@@ -1053,7 +1065,9 @@ class Factigis_Add extends React.Component {
           }
 
           //Si no hay ningún problema con las zonas de validación concesión y transmisión se agrega como asistida. (si hay una zona que no corresponda a las nombradas, la fact es Asistida también).
+
           // Puede ser que exista algun problema con otra zona de validación que sea diferente a concesión y transmisión.
+
           if(!fArr.length){
             this.setState({factiTipoFactibilidad: 'FACTIBILIDAD ASISTIDA'});
             var myFact = {
@@ -1094,6 +1108,7 @@ class Factigis_Add extends React.Component {
               open: true,
               problemsforAdding: 'Procesando factibilidad, espere un momento'
             });
+
               //Agregar la factibilidad asistida.
               factigis_addNuevaFactibilidad(myFact, (cb)=>{
                 //Si se agrega mostrar ventana modal con el objectid (folio)
@@ -1140,6 +1155,7 @@ class Factigis_Add extends React.Component {
       //si falta algun campo que rellenar se muestra una ventana modal.
       }else{
         this.setState({openModalValidator: true, problemsforAdding2: 'Por favor ingrese los campos que faltan (en rojo)'});
+
         if(this.state.visibilityStyle.selectPotencia.visibility=='hidden'){
           $(".factigisPotencia").css('border-style','initial').css('border-width','0px');
         }
@@ -1156,6 +1172,7 @@ class Factigis_Add extends React.Component {
   closeModalValidator(){
     this.setState({openModalValidator: false});
   }
+
 
   onClickLimpiarDatos(){
     var map = this.props.themap;
@@ -1276,6 +1293,7 @@ class Factigis_Add extends React.Component {
           {this.state.showC && <Tab><i className="fa fa-plus"></i> <i className="fa fa-home" aria-hidden="true"></i></Tab>}
           {this.state.showD && <Tab><i className="fa fa-map-signs" aria-hidden="true"></i></Tab>}
           {this.state.showE && <Tab><i className="fa fa-id-card-o" aria-hidden="true"></i></Tab>}
+
         </TabList>
         {/* Tab cliente */}
         {this.state.showA && <TabPanel>
@@ -1315,6 +1333,7 @@ class Factigis_Add extends React.Component {
               <div className="factigis_group">
                 <h8>Email:</h8>
                 <input id="factigis_txtEmail" className="factigis-input factigis_input-solo factigisEmail" onChange={this.onChange.bind(this)}  value={this.state.factigisEmail} onBlur={this.onBlur} title="Escriba el email de contacto" type="text" placeholder="ejemplo@email.com (No ingresar correo Chilquinta)"  />
+
               </div>
             </div>
             <div className="factigis_groupbox">
@@ -1331,6 +1350,7 @@ class Factigis_Add extends React.Component {
             </div>
           </div>
           <h7><b>Seleccione datos de red para el estudio:</b></h7>
+
           <hr className="factigis_hr-subtitle factigis_hr"/>
           <div className="factigis_BigGroupbox">
             <h8>Rótulo Conexión:</h8>
@@ -1344,6 +1364,7 @@ class Factigis_Add extends React.Component {
             <div className="factigis_groupbox">
             <div className="factigis_group">
             <h8>Nivel de Tensión:</h8>
+
               <div className="factigis_group " >
                 <Select id="dllTipoBTMT" className="factigis_selectEmpalme factigis_selectInput factigisTipo " name="dllTipoBTMT" options={this.state.factigis_tipoEmpalmeBTMT} onChange={this.onChangeComboBox.bind(this,"tipoEmpalmeBTMT")}
                 value={this.state.factigis_selectedValueTipoEmpalmeBTMT} simpleValue clearable={true} searchable={false} placeholder="Seleccione BT/MT"/>
@@ -1490,6 +1511,7 @@ class Factigis_Add extends React.Component {
         {this.state.showE && <TabPanel>
           <Factigis_BusquedaRut themap={this.props.themap} />
         </TabPanel>}
+
         </Tabs>
 
       </div>

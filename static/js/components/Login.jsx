@@ -50,7 +50,9 @@ class LoginApp extends React.Component {
 
   handleKeyPress(target){
     if(target.charCode==13){
+
         this.onClick();
+
     }
   }
 

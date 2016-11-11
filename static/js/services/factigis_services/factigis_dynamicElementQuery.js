@@ -4,7 +4,7 @@ import token from '../../services/token-service';
 
 //extrae nombre y kva de sed
 function factigis_findSedProperties(sed, callback){
-  
+
   var qTaskInterruptions = new esri.tasks.QueryTask(layers.read_layer_infoSED());
   var qInterruptions = new esri.tasks.Query();
 

@@ -3,6 +3,7 @@ import mymap from '../../services/map-service';
 import layers from '../../services/layers-service';
 import token from '../../services/token-service';
 
+
 function loadCurrentUserData(callback){
   let usrprfl = cookieHandler.get('usrprfl');
   //console.log(usrprfl);

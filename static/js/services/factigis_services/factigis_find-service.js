@@ -255,6 +255,7 @@ function factigis_findRotuloByNumber(numero, tipo, callback){
   });
 }
 
+
 function factigis_searchFolioByRut(rut, callback){
   var qTaskInterruptions = new esri.tasks.QueryTask(layers.read_agregarFactibilidad());
   var qInterruptions = new esri.tasks.Query();

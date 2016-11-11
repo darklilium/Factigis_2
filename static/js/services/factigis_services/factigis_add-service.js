@@ -135,6 +135,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
                 if(factibilidad.factigisEmpalme=="SUBTERRANEO"){
                   factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
                 }
+
         //26/10/2016 REQ 5: si el tiempo empalme es provisorio y la fase es trifásico => FACTIBILIDAD ASISTIDA.
                 if( (factibilidad.factigisFase=="TRIFASICO") && (factibilidad.factigisTiempoEmpalme=="PROVISORIO") ){
                   factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
@@ -144,11 +145,14 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
           //  1.-   trifásicos (no importa si es bt o mt) y > a 18KW  -> Asistida.
 
                 if( (factibilidad.factigisPotencia > 4 ) && (factibilidad.factigisFase=='TRIFASICO')){
+
                   factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
                 }
 
         //agregar a rest srv
+
                 console.log("Estoy con la siguiente factibilidad en bt",factibilidad.factigisTipoFactibilidad);
+
 
                 if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD DIRECTA"){
                   factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
@@ -241,6 +245,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
 
         //si la fase es trifásica - > factibilidad ASISTIDA
         //  1.-   trifásicos (no importa si es bt o mt) y > a 18KW  -> Asistida.
+
          if( (factibilidad.factigisPotencia > 4 ) && (factibilidad.factigisFase=='TRIFASICO')){
            factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
          }
@@ -248,6 +253,7 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
          if( (factibilidad.factigisFase=="TRIFASICO") && (factibilidad.factigisTiempoEmpalme=="PROVISORIO") ){
             factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
          }
+
         //Si luego de todos los cambios, la factibilidad sigue siendo DIRECTA, el tipo de mejora también es directa.
           if(factibilidad.factigisTipoFactibilidad=="FACTIBILIDAD DIRECTA"){
             factibilidad.factigisTipoMejora = "FACTIBILIDAD DIRECTA";
@@ -260,7 +266,9 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
         //Se agrega el origen de factibilidad:
           factibilidad.factigisOrigen = 'OFICINA COMERCIAL';
 
+
           console.log("Estoy con la siguiente factibilidad en mt",factibilidad.factigisTipoFactibilidad);
+
           console.log("agregar lo siguiente a arcgis srv", factibilidad);
 
             agregarFact(factibilidad,(isDone)=>{
@@ -328,7 +336,9 @@ function agregarEstadoHistoria(historial,callback){
 }
 
 function agregarFact(f, callback){
+
   let posteFactibilizador;
+
   let opcionCampamento, opcionConcesion, opcionVialidad, opcionTransmision, opcionRestringida;
   console.log("llega de zonas:", "Camp:", f.factigisZonaCampamentos, "conce: ",f.factigisZonaConcesion,"vial:" ,f.factigisZonaVialidad, "trans:",f.factigisZonaTransmision, "rest",f.factigisZonaRestringida);
   if(f.factigisZonaCampamentos){
@@ -361,9 +371,11 @@ function agregarFact(f, callback){
     opcionRestringida = 'SI';
   }
 
+
   if(f.factigisTipoFactibilidad=='FACTIBILIDAD DIRECTA'){
     posteFactibilizador = f.factigisRotulo;
   }
+
   var myAttributes = {
     Rut : f.factigisRut,
     Nombre : f.factigisNombre,
@@ -404,6 +416,7 @@ function agregarFact(f, callback){
     PotenciaDispSed :f.factigisPotenciaDisponibleSED,
     Clasificacion: f.factigisClasificacion,
     Poste_cnx_final : posteFactibilizador
+
   }
 
   console.log("agregando...",myAttributes);

@@ -152,6 +152,7 @@ class FactigisBackOfficeH extends React.Component {
       facB_sedKVA: '',
       facB_tiposFase: '',
       facB_clasificacion: ''
+
     }
   }
 
@@ -194,6 +195,7 @@ class FactigisBackOfficeH extends React.Component {
       facB_clasificacion: newState[0]['Clasificacion'],
       facB_tiposFase:  newState[0]['Tipos Fase'],
       facB_puntoConexion:  newState[0]['Punto Conexion']
+
     });
       this.setState({
         cbEstadoValue: newState[0]['Estado Tramite'],
@@ -355,6 +357,7 @@ class FactigisBackOfficeH extends React.Component {
             'Clasificacion': result.attributes['Clasificacion'],
             'Tipos Fase':  result.attributes['Tipo_fase'],
             'Punto Conexion':  result.attributes['Poste_cnx_final']
+
           }
 
           return theData;
@@ -483,6 +486,7 @@ class FactigisBackOfficeH extends React.Component {
                 <h8 className="">Clasificación: {this.state.facB_clasificacion}</h8>
                 <h8 className="">Fases Conexión: {this.state.facB_tiposFase}</h8>
                 <h8 className="">Punto Conexión: {this.state.facB_puntoConexion}</h8>
+
               </div>
                 <div className="wrapper_mid-split-1">
                 <h6 className="factigis_bo2-h6"><b>Datos de Red</b></h6>

@@ -63,6 +63,7 @@ class Factigis_BusquedaFolio extends React.Component {
       bf_clasificacion: '',
       bf_letraFase: '',
       bf_puntoConexion: ''
+
     }
 
   }
@@ -115,6 +116,7 @@ class Factigis_BusquedaFolio extends React.Component {
         bf_clasificacion: reg.Clasificacion,
         bf_letraFase: reg.Tipo_fase,
         bf_puntoConexion: reg.Poste_cnx_final
+
       });
 
       let map = this.state.themap;
@@ -296,6 +298,7 @@ class Factigis_BusquedaFolio extends React.Component {
                 <h8 className="factigisBusqueda_h8">Fases Conexión:</h8>
                 <h5 className="factigisBusqueda_h5">{this.state.bf_letraFase}</h5>
               </div>
+
             </div>
 
             <div className="factigis_groupbox">
@@ -311,6 +314,7 @@ class Factigis_BusquedaFolio extends React.Component {
                 <h8 className="factigisBusqueda_h8">Punto Conexión Final:</h8>
                 <h5 className="factigisBusqueda_h5">{this.state.bf_puntoConexion}</h5>
               </div>
+
             </div>
 
             <div className="factigis_groupbox">
@@ -323,10 +327,12 @@ class Factigis_BusquedaFolio extends React.Component {
                 <h8 className="factigisBusqueda_h8">Potencia Disponible:</h8>
                 <h5 className="factigisBusqueda_h5">{this.state.bf_potenciaDisponible}</h5>
               </div>
+
               <div className="factigis_group">
                 <h8 className="factigisBusqueda_h8">Clasificación:</h8>
                 <h5 className="factigisBusqueda_h5">{this.state.bf_clasificacion}</h5>
               </div>
+
             </div>
             <div className="factigis_groupbox">
               <div className="factigis_group">

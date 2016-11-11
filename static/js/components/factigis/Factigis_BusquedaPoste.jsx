@@ -96,7 +96,10 @@ class Factigis_BusquedaPoste extends React.Component {
 
   onClickLimpiarUbicacion(){
     var mapp = this.state.themap;
+<<<<<<< HEAD
     this.setState({  factigisTipoRotulo: tipoElementoRotulo, factigisRotulo: '', factigis_selectedTipoRotulo: ''});
+=======
+>>>>>>> 1716f36fa31f2e52da1bfdb8bd62e64cc4f35f61
     mapp.graphics.clear();
   }
 
