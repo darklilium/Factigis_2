@@ -96,7 +96,7 @@ var tipoElementoRotulo = [
 	{ value: 'CAMARA', label: 'CÁMARA' }
 ];
 
-<<<<<<< HEAD
+
 //for clasificacion
 var tipoClasificacion = [
 	{ value: 'NUEVO', label: 'NUEVO' },
