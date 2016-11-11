@@ -151,7 +151,6 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
 
                 if( (factibilidad.factigisPotencia > 4 ) && (factibilidad.factigisFase=='TRIFASICO')){
 
-
                   factibilidad.factigisTipoFactibilidad = "FACTIBILIDAD ASISTIDA";
                 }
 
@@ -252,7 +251,6 @@ function factigis_addNuevaFactibilidad(factibilidad, callbackadd){
 
         //si la fase es trifásica - > factibilidad ASISTIDA
         //  1.-   trifásicos (no importa si es bt o mt) y > a 18KW  -> Asistida.
-
 
          if( (factibilidad.factigisPotencia > 4 ) && (factibilidad.factigisFase=='TRIFASICO')){
 

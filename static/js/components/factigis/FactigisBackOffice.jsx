@@ -232,8 +232,6 @@ class FactigisBackOffice extends React.Component {
   onChildChanged(newState){
       $("#iframeloadingBO").show();
 
-
-
     this.setState({
       facB_rut: newState[0]['Rut'],
       facB_folio: newState[0]['Folio'],
@@ -372,7 +370,7 @@ class FactigisBackOffice extends React.Component {
       }, "BMToggle");
       toggle.startup();
 
-      const page = "REACT_FACTIGIS_DESA";
+      const page = "REACT_FACTIGIS_PROD";
       const module = "FACTIGIS_REVISAR_FACTIBILIDAD";
       const date = getFormatedDate();
       const user = cookieHandler.get('usrprfl')
