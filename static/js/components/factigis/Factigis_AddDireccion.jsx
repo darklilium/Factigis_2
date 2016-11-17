@@ -125,6 +125,7 @@ class Factigis_AddDireccion extends React.Component {
         $('.factigis_btnSelectCalle').css('color',"crimson");
 
         var map_click_handle = dojo.connect(mapp, 'onClick', (g)=>{
+          this.setState({btnCalle: map_click_handle});
           //saves geometry point for customer.
           factigis_findCalle(g.mapPoint, (featureSetFeatures)=>{
             this.setState({factigis_geoCalle: g.mapPoint});
@@ -136,10 +137,11 @@ class Factigis_AddDireccion extends React.Component {
               factigisCalle: featureSetFeatures[0].attributes['nombre'],
               factigis_objectidCalle: featureSetFeatures[0].attributes['OBJECTID']
             });
+            dojo.disconnect(this.state.btnCalle);
             $("#iframeloadingDir").hide();
           });
         });
-        this.setState({btnCalle: map_click_handle});
+
 
       }else{
         this.setState({toggleCalle: 'OFF'});
