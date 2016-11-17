@@ -44,7 +44,7 @@ function factigis_addNuevaDireccion(newAddress, newGeometry, callback){
       token: token.read()
     };
 
-    if ( (newAddress['ANEXO1']=="") || (newAddress['ANEXO2']=="") || (newAddress['CALLE']=="") || (newAddress['NUMERO']=="") || (newAddress['TIPO_EDIFICACION']=="")  ){
+    if ( (newAddress['ANEXO1']=="") || (newAddress['CALLE']=="") || (newAddress['NUMERO']=="") || (newAddress['TIPO_EDIFICACION']=="")  ){
       return callback(false);
     }
 

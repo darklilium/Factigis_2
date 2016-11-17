@@ -87,40 +87,4 @@ function updateAttributesPerFolio(d,callback){
 
 
 }
-
-  const data = {
-    f: 'json',
-    updates: JSON.stringify([{ attributes: d}]),
-    token: token.read()
-  };
-
-  jQuery.ajax({
-    method: 'POST',
-    url: layers.read_updateFactibilidad(),
-    dataType:'html',
-    data: data
-  })
-    .done(d =>{
-      let json = JSON.parse(d);
-      if( (_.has(json,'error')) ){
-        return callback(false);
-
-      }else{
-        if(json["updateResults"][0].objectId>0){
-          //add to status historial
-          return callback(true);
-
-
-        }else{
-          return callback(false);
-        }
-      }
-
-    }).fail(f=>{
-        return callback(false);
-  });
-
-
-}
-
 export {loadCurrentUserData, find_folioData, updateAttributesPerFolio};
