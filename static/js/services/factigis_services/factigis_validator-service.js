@@ -9,7 +9,7 @@ function factigis_validator(point, callbackMain){
       var transmisionResponse = transmisionZoneValidator(point, (callback3)=>{
         var vialidadResponse = vialidadZoneValidator(point, (callback4)=>{
           var restriccionResponse = restriccionZoneValidator(point, (callback5)=>{
-            console.log("my returned values",callback1,callback2,callback3,callback4,callback5);
+            console.log("my returned values: concesion:",callback1, "campamentos: " ,callback2, "transmi: ", callback3, "viali", callback4, "restric", callback5);
               //zona concesion, zona campamentos, zona restringida, zona vialidad
               return callbackMain({
                 zonaConcesion: callback1,

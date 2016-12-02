@@ -14,7 +14,7 @@ import toggleOff from '../../services/factigis_services/factigis_toggleBtnFx-ser
 import validator from 'validator';
 import {customerValidator} from '../../services/factigis_services/factigis_customerValidator';
 import {getPotenciaEmpalme} from '../../services/factigis_services/factigis_potenciaEmpalmes';
-import {factigis_addNuevaFactibilidad, agregarEstadoHistoria} from '../../services/factigis_services/factigis_add-service';
+import {factigis_addNuevaFactibilidad, agregarEstadoHistoria, factigis_addNuevaFactibilidad_especial} from '../../services/factigis_services/factigis_add-service';
 import Modal from 'react-modal';
 import Factigis_BusquedaFolio from '../factigis/Factigis_BusquedaFolio.jsx';
 import Factigis_BusquedaPoste from '../factigis/Factigis_BusquedaPoste.jsx';
@@ -122,7 +122,8 @@ class Factigis_Add extends React.Component {
       factigisComuna: '',
       //27.10
       factigisClasificacion:  '',
-
+      //30/11
+      factigisPropiedadPoste: '',
       //data for comboboxes
       factigis_tipoCliente: [],
       factigis_tipoContribuyente: [] ,
@@ -543,6 +544,9 @@ class Factigis_Add extends React.Component {
               //es poste
               this.setState({factigis_tipoEmpalme: tipoEmpalme});
             }
+            //30/11
+            this.setState({factigisPropiedadPoste: featureSetFeatures[0].attributes['propiedad']});
+            console.log("propiedad poste:", featureSetFeatures[0].attributes['propiedad']);
             //verificar si el rotulo es particular/otro u empresa: si es empresa, la factibilidad es normal, si es particular/otro, es asistida.
             if((featureSetFeatures[0].attributes['propiedad']=="Particular") || (featureSetFeatures[0].attributes['propiedad']=="Empresa que no presta Servicio Distribucion") ){
               ////console.log("poste es ",featureSetFeatures[0].attributes['propiedad'], featureSetFeatures);
@@ -902,21 +906,13 @@ class Factigis_Add extends React.Component {
   //Function that adds a new customer but has to validate the other fields yet.
   onClickAgregarCliente(){
 
-    /*<Modal isOpen={this.state.open} style={customStyles}>
-      <h2 className="factigis_h2">Factibilidad {this.state.numeroFactibilidad}</h2>
-      <p>{this.state.problemsforAdding}</p>
-      <br />
-      <button className="factigis_submitButton btn btn-info" onClick={this.closeModal.bind(this)}>Close</button>
-    </Modal>
-*/
-
-
-
     $("#iframeloadingAdd").show();
     let tipoProvisorioDefinitivo = 'DEFINITIVO';
     if(this.state.radioEmpalmeProvisorio){
       tipoProvisorioDefinitivo="PROVISORIO";
     }
+
+
 
     let txtValidators = {
       rut: this.state.factigisRutValidator,
@@ -947,31 +943,29 @@ class Factigis_Add extends React.Component {
     customerValidator(txtValidators,(callback, callback2)=>{
       //Si todos los campos estan llenos
       if(callback){
-        //recopilar los datos de los boxes de zonas
-        let fact = {
-          campamentos: this.state.zonaCampamentos,
-          concesion: this.state.zonaConcesion,
-          vialidad: this.state.zonaVialidad,
-          transmision: this.state.zonaTransmision,
-          restringida: this.state.zonaRestringida
-        };
+
         let factArr = [];
         //datos a mostrar en modal para indicar que existen problemas de factibilidad en ciertas zonas.
-        if(this.state.zonaCampamentos==false){
+      /*  if(this.state.zonaCampamentos==false){
           factArr.push("campamentos");
         }
+        */
         if(this.state.zonaConcesion==false){
           factArr.push("concesion");
         }
+        /*
         if(this.state.zonaRestringida==false){
           factArr.push("restringida");
         }
+        */
         if(this.state.zonaTransmision==false){
           factArr.push("transmision");
         }
+        /*
         if(this.state.zonaVialidad==false){
           factArr.push("vialidad");
         }
+        */
 
         //Si no hay problemas de zonas, pasa a factibilidad NORMAL (directa), transitoriamente ya que esto puede cambiar dentro de la función de guardado.
         //FACTIBILIDAD NORMAL
@@ -1053,107 +1047,133 @@ class Factigis_Add extends React.Component {
 
             });
 
-        //Si hay problemas con alguna de las zonas, es factibilidad ASISTIDA
-        //FACTIBILIDAD ASISTIDA
+
+        //FACTIBILIDAD ASISTIDA: cuando hay problemas con las zonas
         }else{
           let fArr = [];
-          //Si dentro del array de zonas hay problemas con la zona de concesión se agrega.
-          if($.inArray("concesion",factArr)>-1){
-              fArr.push("concesion");
-          }
-          //Si dentro del array de zonas hay problemas con la zona de transmision se agrega.
-          if ($.inArray("transmision",factArr)>-1) {
-              fArr.push("transmision");
-          }
-
-          //Si no hay ningún problema con las zonas de validación concesión y transmisión se agrega como asistida. (si hay una zona que no corresponda a las nombradas, la fact es Asistida también).
-
-
-          // Puede ser que exista algun problema con otra zona de validación que sea diferente a concesión y transmisión.
-
-          if(!fArr.length){
-            this.setState({factiTipoFactibilidad: 'FACTIBILIDAD ASISTIDA'});
-            var myFact = {
-              factigisRut: this.state.factigisRut,
-              factigisNombre: this.state.factigisNombre,
-              factigisApellido: this.state.factigisApellido,
-              factigisTelefono: this.state.factigisTelefono,
-              factigisEmail: this.state.factigisEmail,
-              factigisTipoCliente: this.state.factigis_selectedValueCliente,
-              factigisContribuyente: this.state.factigis_selectedValueTipoContribuyente,
-              factigisRotulo: this.state.factigisRotulo,
-              factigisTramo: this.state.factigisTramo,
-              factigisEmpalme: this.state.factigis_selectedValueTipoEmpalme,
-              factigisFase: this.state.factigis_selectedValueTipoFase,
-              factigisPotencia: this.state.factigis_selectedValueTipoPotencia,
-              factigisTiempoEmpalme: tipoProvisorioDefinitivo,
-              factigisTipoEmpalme: this.state.factigis_selectedValueTipoEmpalmeBTMT,
-              factigisCantidadEmpalmes: this.state.factigisCantidadEmpalmes,
-              factigisDireccion: this.state.factigisDireccion,
-              factigisIDDireccion: this.state.factigisIDDireccion,
-              factigisZonaConcesion: this.state.zonaConcesion,
-              factigisZonaTransmision: this.state.zonaTransmision,
-              factigisZonaRestringida: this.state.zonaRestringida,
-              factigisZonaVialidad: this.state.zonaVialidad,
-              factigisZonaCampamentos: this.state.zonaCampamentos,
-              factigisGeoCliente: this.state.factigis_geoCliente,
-              factigisGeoPoste: this.state.factigis_geoPoste,
-              factigisGeoDireccion: this.state.factigis_geoDireccion,
-              factigisSed: this.state.factigis_sed,
-              factigisTipoFactibilidad: 'FACTIBILIDAD ASISTIDA',
-              factigisAlimentador: this.state.factigis_alimentador,
-              factigisIDNodo: this.state.factigisIDNodo,
-              factigisZona: this.state.factigisZona,
-              factigisComuna: this.state.factigisComuna,
-              factigisClasificacion: this.state.factigisClasificacion
+          var myFact = {
+            factigisRut: this.state.factigisRut,
+            factigisNombre: this.state.factigisNombre,
+            factigisApellido: this.state.factigisApellido,
+            factigisTelefono: this.state.factigisTelefono,
+            factigisEmail: this.state.factigisEmail,
+            factigisTipoCliente: this.state.factigis_selectedValueCliente,
+            factigisContribuyente: this.state.factigis_selectedValueTipoContribuyente,
+            factigisRotulo: this.state.factigisRotulo,
+            factigisTramo: this.state.factigisTramo,
+            factigisEmpalme: this.state.factigis_selectedValueTipoEmpalme,
+            factigisFase: this.state.factigis_selectedValueTipoFase,
+            factigisPotencia: this.state.factigis_selectedValueTipoPotencia,
+            factigisTiempoEmpalme: tipoProvisorioDefinitivo,
+            factigisTipoEmpalme: this.state.factigis_selectedValueTipoEmpalmeBTMT,
+            factigisCantidadEmpalmes: this.state.factigisCantidadEmpalmes,
+            factigisDireccion: this.state.factigisDireccion,
+            factigisIDDireccion: this.state.factigisIDDireccion,
+            factigisZonaConcesion: this.state.zonaConcesion,
+            factigisZonaTransmision: this.state.zonaTransmision,
+            factigisZonaRestringida: this.state.zonaRestringida,
+            factigisZonaVialidad: this.state.zonaVialidad,
+            factigisZonaCampamentos: this.state.zonaCampamentos,
+            factigisGeoCliente: this.state.factigis_geoCliente,
+            factigisGeoPoste: this.state.factigis_geoPoste,
+            factigisGeoDireccion: this.state.factigis_geoDireccion,
+            factigisSed: this.state.factigis_sed,
+            factigisTipoFactibilidad: 'FACTIBILIDAD ASISTIDA',
+            factigisAlimentador: this.state.factigis_alimentador,
+            factigisIDNodo: this.state.factigisIDNodo,
+            factigisComuna: this.state.factigisComuna,
+            factigisZona: this.state.factigisZona,
+            factigisClasificacion: this.state.factigisClasificacion,
+            factigisPropiedadPoste: this.state.factigisPropiedadPoste
             }
-            this.setState({
-              open: true,
-              problemsforAdding: 'Procesando factibilidad, espere un momento'
-            });
+          //Si dentro del array de zonas hay problemas
+          //Si está fuera de la zona concesión
+          if($.inArray("concesion",factArr)>-1){
 
-              //Agregar la factibilidad asistida.
-              factigis_addNuevaFactibilidad(myFact, (cb)=>{
-                //Si se agrega mostrar ventana modal con el objectid (folio)
-                if(cb[0]){
-                  this.setState({
+            //Si esta dentro de la zona de transmisión
+              if($.inArray("transmision",factArr)>-1){
+
+                //no agregar
+                console.log("No agregar porque está dentro de zona transmisión y fuera de concesión");
+                this.setState({
+                  open: true,
+                  problemsforAdding: 'No se puede agregar porque está dentro de zona transmisión y fuera de concesión',
+                  btnModalCloseStatus: false
+                });
+                $("#iframeloadingAdd").hide();
+                return;
+            //Si está fuera de la zona de transmisión
+              }else{
+                //agregar fact especial = asistida
+                //console.log("agregar como fact asistida debido a q está fuera de zona de concesión y fuera de transmision");
+                /*this.setState({
+                  open: true,
+                  problemsforAdding: 'agregar como fact asistida debido a q está fuera de zona de concesión y fuera de transmision',
+                  btnModalCloseStatus: false
+                });
+                */
+                this.setState({
+                  open: true,
+                  problemsforAdding: 'Procesando factibilidad, espere un momento'
+                });
+
+                factigis_addNuevaFactibilidad_especial(myFact, (cb)=>{
+                  if(cb[0]){
+                    this.setState({
                     open: true,
                     problemsforAdding: 'La factibilidad  ha sido agregada. Tipo: ' + cb[2]['Tipo_factibilidad'] ,
-                    numeroFactibilidad: cb[1],
+                    numeroFactibilidad: 'N°' + cb[1],
                     btnModalCloseStatus: false
-                  });
-                  $("#iframeloadingAdd").hide();
-                  //GENERAR CARTA
-                  let usrprfl = cookieHandler.get('usrprfl');
-                  cookieHandler.set('myLetter',[this.state.factigisDireccion,
-                    this.state.factigisNombre + " " +this.state.factigisApellido,
-                    usrprfl.NOMBRE_COMPLETO,
-                    cb[1],
-                    usrprfl.CARGO,
-                    usrprfl.LUGAR_DE_TRABAJO,
-                    usrprfl.DEPARTAMENTO,
-                    usrprfl.COMUNA]);
+                    });
 
-
-                    this.render(); //volver a renderizar el componente
-                    window.open("factigisCarta.html");
-
-                //Si hubo un problema al agregar la factibilidad, se abre una ventana modal.
-                }else{
-                  this.setState({
-                    open: true,
-                    problemsforAdding: 'Hubo un problema al agregar la factibilidad', numeroFactibilidad: '',
-                    btnModalCloseStatus: false
-                  });
-                  $("#iframeloadingAdd").hide();
-                }
-              });
-
-          //Si hay algún problema con zona concesión o transmisión indicar que no se puede agregar con una ventana modal.
-          }else{
-            this.setState({open: true, problemsforAdding: 'La factibilidad que está intentando agregar presenta problemas en las siguientes zonas: '+ '\n' + fArr, btnModalCloseStatus: false});
+                    $("#iframeloadingAdd").hide();
+                    //GENERAR CARTA: guardar en cookie los parametros con que fue generada la factibilidad para crear la carta.
+                    let usrprfl = cookieHandler.get('usrprfl');
+                    cookieHandler.set('myLetter',[this.state.factigisDireccion + ", " + this.state.factCartaComuna ,
+                      this.state.factigisNombre + " " + this.state.factigisApellido,
+                      usrprfl.NOMBRE_COMPLETO,
+                      cb[1],
+                      usrprfl.CARGO,
+                      usrprfl.LUGAR_DE_TRABAJO,
+                      usrprfl.DEPARTAMENTO,
+                      usrprfl.COMUNA]);
+                      this.render(); //renderizar el componente
+                      window.open("factigisCarta.html");
+                      //si no fue grabado mostrar que hubo problemas en modal
+                  }else{
+                    this.setState({
+                      open: true,
+                      problemsforAdding: cb[1],  numeroFactibilidad: '',
+                      btnModalCloseStatus: false
+                    });
+                    $("#iframeloadingAdd").hide();
+                  }
+                });
+                return;
+              }
           }
+          //Si está dentro de concesión y también dentro de transmisión
+          if ($.inArray("transmision",factArr)>-1) {
+
+              //en zona transmisión
+              console.log("No se puede agregar debido a que está en zona de transmisión, pese a que está dentro de la concesión");
+              this.setState({
+                open: true,
+                problemsforAdding: 'No se puede agregar debido a que está en zona de transmisión, pese a que está dentro de la concesión',
+                btnModalCloseStatus: false
+              });
+              $("#iframeloadingAdd").hide();
+              return;
+          }
+          /*
+          if ($.inArray("restringida",factArr)>-1) {
+              fArr.push("restringida");
+                console.log("En zona restringida");
+          }
+          */
+          console.log("Problemas de zonas:", fArr);
         }
+
 
       //si falta algun campo que rellenar se muestra una ventana modal.
       }else{
