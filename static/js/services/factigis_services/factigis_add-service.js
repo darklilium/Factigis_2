@@ -477,7 +477,7 @@ function agregarFactEspecial(f, callback){
   }else{
     opcionConcesion = 'NO';
   }
-//ESTA EN VIALIDAD?
+  //ESTA EN VIALIDAD?
   if(f.factigisZonaVialidad){
     opcionVialidad = 'NO';
   }else{

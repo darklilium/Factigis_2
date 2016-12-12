@@ -1033,7 +1033,7 @@ class Factigis_Add extends React.Component {
                       usrprfl.LUGAR_DE_TRABAJO,
                       usrprfl.DEPARTAMENTO,
                       usrprfl.COMUNA]);
-                    this.render(); //renderizar el componente
+                    //this.render(); //renderizar el componente
                     window.open("factigisCarta.html");
               //si no fue grabado mostrar que hubo problemas en modal
               }else{
@@ -1137,7 +1137,7 @@ class Factigis_Add extends React.Component {
                       usrprfl.LUGAR_DE_TRABAJO,
                       usrprfl.DEPARTAMENTO,
                       usrprfl.COMUNA]);
-                      this.render(); //renderizar el componente
+
                       window.open("factigisCarta.html");
                       //si no fue grabado mostrar que hubo problemas en modal
                   }else{
@@ -1215,9 +1215,9 @@ class Factigis_Add extends React.Component {
       factigis_geoPoste: '',
       factigis_geoDireccion: '',
       toggleCliente: 'OFF',
-      togglePoste: 'ON',
-      toggleDireccion: 'ON',
-      toggleTramo: 'ON',
+      togglePoste: 'OFF',
+      toggleDireccion: 'OFF',
+      toggleTramo: 'OFF',
       btnCliente: '',
       btnPoste: '',
       btnDireccion: '',
