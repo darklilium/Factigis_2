@@ -137,8 +137,8 @@ function factigis_findTramo(geometry, tramo, callback){
       }else{
         console.log("esto encontre en mt", mt);
         let redMT = [];
-        redMT.descripcion = mt[0].attributes['ARCGIS.DBO.Tramos_MT_006.descripcion'];
-        redMT.tension = mt[0].attributes['ARCGIS.DBO.Cabeceras_006.tension'];
+        redMT.descripcion = mt[0].attributes['ARCGIS2.DBO.Tramos_MT_006.descripcion'];
+        redMT.tension = mt[0].attributes['ARCGIS2.DBO.Cabeceras_006.tension'];
         redMT.tipoFactibilidad = 'FACTIBILIDAD DIRECTA';
         return callback(redMT);
       }
