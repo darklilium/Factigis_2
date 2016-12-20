@@ -346,7 +346,7 @@ function agregarFact(f, callback){
   }else{
     opcionConcesion = 'NO';
   }
-//ESTA EN VIALIDAD?
+  //ESTA EN VIALIDAD?
   if(f.factigisZonaVialidad){
     opcionVialidad = 'NO';
   }else{
@@ -436,7 +436,7 @@ function agregarFact(f, callback){
     let json = JSON.parse(d);
 
     let arrObject = [];
-
+    console.log("respuesta server",json);
     if(json["addResults"][0].objectId>0){
       arrObject.push(true);
       arrObject.push(json["addResults"][0].objectId);
@@ -565,7 +565,7 @@ function agregarFactEspecial(f, callback){
   })
   .done(d =>{
     let json = JSON.parse(d);
-
+    console.log("respuesta server 2",json);
     let arrObject = [];
 
     if(json["addResults"][0].objectId>0){
