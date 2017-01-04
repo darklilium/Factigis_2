@@ -1,8 +1,10 @@
 import token from '../services/token-service';
 import myinfotemplate from '../utils/infoTemplates';
 import mymap from '../services/map-service';
-import {ap_infoWindow} from '../utils/makeInfowindow';
+import {ap_infoWindow, factigis_tramosInfo} from '../utils/makeInfowindow';
 import GraphicsLayer from 'esri/layers/GraphicsLayer';
+
+
 function myLayers(){
   const serviceMain = 'http://gisred.chilquinta/arcgis/';
   //change this for external connection:
@@ -217,6 +219,9 @@ function myLayers(){
     },
     read_logAccessFactigis(){
       return serviceURL + "Admin/LogAccesos/FeatureServer/1/applyedits";
+    },
+    read_luminarias(){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/1?f=json&token=" + token.read();
     }
 
 
@@ -423,18 +428,48 @@ function setLayers(){
       return fSSEELayer;
     },
     factigis_MT(){
-      var fSSEELayer = new esri.layers.ArcGISDynamicMapServiceLayer(myLayers().read_layerAlimentador(),{id:"factigis_MT",
-      minScale: 3000});
-      fSSEELayer.setImageFormat("png32");
-      fSSEELayer.setVisibleLayers([0]);
+      var fSSEELayer = new esri.layers.FeatureLayer(myLayers().read_chqTramosMT(),{id:"factigis_MT", mode: esri.layers.FeatureLayer.MODE_ONDEMAND,
+      minScale: 3000, outFields: ['ARCGIS.DBO.Tramos_MT_006.id','ARCGIS.DBO.Tramos_MT_006.alimentador','ARCGIS.DBO.Tramos_MT_006.comuna','ARCGIS.DBO.Tramos_MT_006.tipo','ARCGIS.DBO.Tramos_MT_006.propiedad',
+                                  'ARCGIS.DBO.Tramos_MT_006.catalogo','ARCGIS.DBO.Tramos_MT_006.descripcion','ARCGIS.DBO.Tramos_MT_006.tension','ARCGIS.DBO.Tramos_MT_006.fecha']});
+        fSSEELayer.on('click',(event)=>{
+          console.log(event);
+
+          factigis_tramosInfo("MT",event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.id'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.alimentador'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.comuna'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.tipo'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.propiedad'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.catalogo'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.descripcion'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.tension'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.fecha'],
+            event.graphic.attributes['ARCGIS.DBO.Tramos_MT_006.sed'],
+            event.mapPoint);
+        });
+
+
+
       return fSSEELayer;
 
     },
     factigis_BT(){
-      var fSSEELayer = new esri.layers.ArcGISDynamicMapServiceLayer(myLayers().read_layerAlimentador(),{id:"factigis_BT",
-      minScale: 3000});
-      fSSEELayer.setImageFormat("png32");
-      fSSEELayer.setVisibleLayers([1]);
+      var fSSEELayer = new esri.layers.FeatureLayer(myLayers().read_chqTramosBT(),{id:"factigis_BT", mode: esri.layers.FeatureLayer.MODE_ONDEMAND,
+      minScale: 3000, outFields: ["*"]});
+      fSSEELayer.on('click',(event)=>{
+        console.log(event);
+
+        factigis_tramosInfo("BT",event.graphic.attributes['id_tramo'],
+          event.graphic.attributes['alimentador'],
+          event.graphic.attributes['comuna'],
+          event.graphic.attributes['tipo'],
+          event.graphic.attributes['propiedad'],
+          event.graphic.attributes['catalogo'],
+          event.graphic.attributes['descripcion'],
+          event.graphic.attributes['tension'],
+          event.graphic.attributes['fecha'],
+          event.graphic.attributes['sed'],
+          event.mapPoint);
+      });
       return fSSEELayer;
 
     }

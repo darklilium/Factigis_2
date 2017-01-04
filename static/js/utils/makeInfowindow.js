@@ -1,4 +1,5 @@
 import mymap from '../services/map-service';
+import formatDate from '../utils/milliSecondsToDate';
 
 function makeInfowindow(nis,order,incident_id,sed, point, time, address, etr){
   var map = mymap.getMap();
@@ -180,10 +181,48 @@ function ap_infoWindow_rotulo(poleNumber){
   map.infoWindow.show(geometry, map.getInfoWindowAnchor(geometry));
 */
 }
+
+function factigis_tramosInfo(tipoRed, idtramo, alimentador, comuna, tipo, propiedad,catalogo, descripcion, tension, fecha, sed, geometry){
+  var fechaa = formatDate(fecha);
+  var map = mymap.getMap();
+
+  if(tipoRed=='MT'){
+    map.infoWindow.setTitle("ID Tramo : " + idtramo);
+    var content = `<div style=padding-top: 10px;>Alimentador: ${alimentador}<br /></div>
+    <div style=padding-top: 10px;>Comuna: ${comuna}<br /></div>
+    <div style=padding-top: 10px;>Tipo: ${tipo}<br /></div>
+    <div style=padding-top: 10px;>Propiedad: ${propiedad}<br /></div>
+    <div style=padding-top: 10px;>Catálogo: ${catalogo}<br /></div>
+    <div style=padding-top: 10px;>Descripción: ${descripcion}<br /></div>
+    <div style=padding-top: 10px;>Tensión: ${tension}<br /></div>
+    <div style=padding-top: 10px;>Fecha: ${fechaa}<br /></div>`;
+    map.infoWindow.resize(250, 350);
+
+    map.infoWindow.setContent(esri.substitute(esri.geometry.webMercatorToGeographic(geometry), content));
+    map.infoWindow.show(geometry, map.getInfoWindowAnchor(geometry));
+  }else{
+    map.infoWindow.setTitle("ID Tramo : " + idtramo);
+    var content = `<div style=padding-top: 10px;>Alimentador: ${alimentador}<br /></div>
+    <div style=padding-top: 10px;>Comuna: ${comuna}<br /></div>
+    <div style=padding-top: 10px;>Tipo: ${tipo}<br /></div>
+    <div style=padding-top: 10px;>Propiedad: ${propiedad}<br /></div>
+    <div style=padding-top: 10px;>Catálogo: ${catalogo}<br /></div>
+    <div style=padding-top: 10px;>Descripción: ${descripcion}<br /></div>
+    <div style=padding-top: 10px;>SED: ${sed}<br /></div>
+    <div style=padding-top: 10px;>Fecha: ${fechaa}<br /></div>`;
+    map.infoWindow.resize(250, 350);
+
+    map.infoWindow.setContent(esri.substitute(esri.geometry.webMercatorToGeographic(geometry), content));
+    map.infoWindow.show(geometry, map.getInfoWindowAnchor(geometry));
+  }
+
+}
+
 export {makeInfowindow,
         makeInfowindowPerSED,
         makeInfowindowPerSEDInterrupted,
         makeInfowindowPerNisInfo,
         makeInfowindowPerGridInfo,
         ap_infoWindow,
-        ap_infoWindow_rotulo};
+        ap_infoWindow_rotulo,
+        factigis_tramosInfo};

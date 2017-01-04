@@ -348,6 +348,7 @@ class FactigisBackOfficeH extends React.Component {
     saveGisredLogin(user['USUARIO'],date,page,module,myToken);
 
 
+
   }
 
   loadDataa(){
@@ -702,7 +703,7 @@ class FactigisBackOfficeH extends React.Component {
                     simpleValue clearable={true} searchable={false} placeholder="Seleccione las fases de conexión"/>
                   </div>
                 </div>
-                <div className="factigis_row3">
+                <div className="factigis_row3_2">
                   <button  disabled={this.state.btnGuardarState3} className="factigis_bo_btnModified btn btn-info" title="Selección de Rótulo " type="button" onClick={this.onClickGuardarAtributos.bind(this)} >
                     <span><i className="fa fa-floppy-o"></i> Guardar</span>
                   </button>

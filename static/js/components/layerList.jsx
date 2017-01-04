@@ -1,8 +1,9 @@
 import React from 'react';
 import mymap from '../services/map-service';
+import {factigis_tramosInfo, ap_infoWindow} from '../utils/makeInfowindow';
 
-
-import {setLayers} from '../services/layers-service';
+import { setLayers} from '../services/layers-service';
+import myLayers from '../services/layers-service';
 
 class LayerList extends React.Component {
   constructor(props){
@@ -157,6 +158,8 @@ class LayerList extends React.Component {
         var addDistribucionLayer = setLayers().factigis_MT();
         if (this.refs.check_MT.checked){
           mapp.addLayer(addDistribucionLayer,3);
+
+          
           return;
         }
 
