@@ -30,6 +30,9 @@ var HeaderComponent = React.createClass({
 class FG_GridPerZoneH2 extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      selectedRowId: ''
+    }
 
 
   }
@@ -46,7 +49,7 @@ class FG_GridPerZoneH2 extends React.Component {
 
       return data['Folio'] == gridRow.props.data['Folio'];
     })
-
+    this.setState({selectedRowId: gridRow.props.data['Folio']});
     this.props.callbackParent(y);
 
   }
@@ -94,9 +97,14 @@ class FG_GridPerZoneH2 extends React.Component {
         "customHeaderComponentProps": { color: '#da291c' }
         }
     ];
+
+    const rowMetadata = {
+      bodyCssClassName: rowData => (rowData['Folio'] === this.state.selectedRowId ? 'selected' : '')
+    };
+
     return (
 
-      <Griddle onRowClick= {this.onRowClick.bind(this)} results={this.props.data} columnMetadata={columnMeta} resultsPerPage={3}
+      <Griddle rowMetadata={rowMetadata} onRowClick= {this.onRowClick.bind(this)} results={this.props.data} columnMetadata={columnMeta} resultsPerPage={3}
       columns={["Folio","Estado Tramite", "Nombre", "Apellido", "Tipo Mejora","Zona", "Origen Factibilidad", "Creador"]}/>
 
     );

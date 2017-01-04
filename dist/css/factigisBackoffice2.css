@@ -48,7 +48,7 @@ div strong { font-size: 12px; }
 
 .factigisBO2_wrapper_mid-right { display: flex; flex-direction: column; width: 50%; background-color: ghostwhite; }
 
-.factigis_bo2_map { height: 100%; display: flex; flex-wrap: wrap; min-height: 404px; }
+.factigis_bo2_map { height: 100%; display: flex; flex-wrap: wrap; min-height: 330px; }
 
 .wrapper_bot { width: 100%; display: flex; flex-direction: column; background-color: #282d2d; bottom: 0px; position: relative; padding-top: 0em; }
 
@@ -84,15 +84,25 @@ div strong { font-size: 12px; }
 
 h8 { font-size: 12px; }
 
-.factigis_rows { display: flex; flex-direction: row; justify-content: center; }
+.factigis_rows { display: flex; flex-direction: row; justify-content: center; margin-bottom: 1em; }
 
-.factigis_row1 { display: flex; flex-direction: column; margin-left: 1em; width: 50%; }
+.factigis_row1 { display: flex; flex-direction: column; }
 
 .factigis_row2 { display: flex; flex-direction: column; width: 30%; margin-left: 1em; }
 
 .factigis_row3 { display: flex; flex-direction: column; justify-content: flex-end; margin-left: 1em; width: 30%; }
 
+.factigisBO2_wrapper_bot { width: 100%; display: flex; flex-direction: column; background-color: #314658; bottom: 0px; position: relative; padding-bottom: 1em; padding-top: 0em; }
+
 #factigis_txtObservacion { width: 100%; }
+
+.factigis_bo1-h1 { background-color: #2e353f; color: ghostwhite; margin-top: 0px; padding-top: 0.5em; padding-left: 0.5em; font-size: larger; font-weight: 100; padding-bottom: 0.3em; display: flex; width: 100%; box-shadow: 0px 1px 5px #79848e; border-bottom: 1px solid #ddd; }
+
+.factigis_bo2-h8 { color: ghostwhite; display: flex; align-items: center; margin-right: 1em; font-weight: 600; }
+
+.griddle td.selected { background-color: #d0f3eb; color: #333; font-size: smaller; }
+
+.selected td { background-color: #91b6dc !important; font-size: smaller; }
 
 .griddle-container { border: 1px solid #DDD; }
 

@@ -18,6 +18,8 @@ import _ from 'lodash';
 import BasemapToggle from "esri/dijit/BasemapToggle";
 import {saveGisredLogin, getFormatedDate} from '../../services/login-service';
 import {factigis_findSedProperties, factigis_findRotuloProperties } from  '../../services/factigis_services/factigis_dynamicElementQuery';
+import {factigis_findRotulo} from '../../services/factigis_services/factigis_find-service';
+import { updateAttributesPerFolio} from '../../services/factigis_services/factigis_loadBackofficeData';
 
 
 function createDataObject(){
@@ -98,6 +100,13 @@ var tipoMejora = [
 	{ value: 'MEJORA POST', label: 'MEJORA POST' }
 ];
 
+var tiposFase = [
+  { value: 'A', label: 'A' },
+	{ value: 'B', label: 'B' },
+	{ value: 'C', label: 'C' },
+  { value: 'ABC', label: 'ABC' }
+];
+
 class FactigisBackOfficeH extends React.Component {
 
   constructor(props){
@@ -153,9 +162,17 @@ class FactigisBackOfficeH extends React.Component {
       facB_tiposFase: '',
       facB_clasificacion: '',
       obsDisable: true,
-      btnGuardarState: true
-
+      btnGuardarState: true,
+      faseSelected: '',
+      togglePoste: 'OFF',
+      rotuloFinal: '',
+      btnGuardarState2: true,
+      btnGuardarState3: true,
+      fases: [],
+      selectedRowId: ''
     }
+    this.loadDataa = this.loadDataa.bind(this);
+    this.clearFieldsAttr = this.clearFieldsAttr.bind(this);
   }
 
   onChildChanged(newState){
@@ -196,7 +213,8 @@ class FactigisBackOfficeH extends React.Component {
       factB_distanciaRM: newState[0]['DistRotuloMedidor'],
       facB_clasificacion: newState[0]['Clasificacion'],
       facB_tiposFase:  newState[0]['Tipos Fase'],
-      facB_puntoConexion:  newState[0]['Punto Conexion']
+      facB_puntoConexion:  newState[0]['Punto Conexion'],
+      selectedRowId: newState[0]['Folio']
 
     });
       this.setState({
@@ -222,7 +240,7 @@ class FactigisBackOfficeH extends React.Component {
             }
             return thestatus;
           });
-          this.setState({myDataEstados: loadDataEstados, obsDisable: false});
+          this.setState({myDataEstados: loadDataEstados, obsDisable: false, btnGuardarState: false, btnGuardarState2: false, btnGuardarState3: false});
         }
 
       });
@@ -254,7 +272,8 @@ class FactigisBackOfficeH extends React.Component {
   componentWillMount(){
     this.setState({
         myData: [createDataObject()],
-        myDataEstados: [createDataObject2()]
+        myDataEstados: [createDataObject2()],
+        fases: tiposFase
     });
 
 
@@ -311,64 +330,7 @@ class FactigisBackOfficeH extends React.Component {
       mapp.addLayer(layerRotulos);
 
       //LOAD FACTIBILIDAD FOR CURRENT USER : RULES: PER HIS/HER ZONE and <> of FACTIBILIDAD DIRECTA
-      loadCurrentHistoryData(data=>{
-        let loadData = data.map(result=>{
-
-          let theData = {
-            'Folio' : result.attributes['OBJECTID'],
-            'Estado Tramite': result.attributes['Estado_tramite'],
-            'Nombre': result.attributes['Nombre'],
-            'Apellido':result.attributes['Apellido'],
-            'Tipo Mejora': result.attributes['Tipo_mejora'] ,
-            'Zona': result.attributes['Zona'],
-            'Origen Factibilidad': result.attributes['Origen_factibilidad'],
-            'Geometry': result.geometry,
-            'Alimentador' : result.attributes['Alimentador'],
-            'Rut' : result.attributes['Rut'],
-            'Telefono': result.attributes['Telefono'],
-            'Email': result.attributes['Email'],
-            'Tipo Cliente': result.attributes['Tipo_cliente'],
-            'Tipo Contribuyente': result.attributes['Tipo_contribuyente'],
-            'Rotulo': result.attributes['Rotulo'],
-            'Tramo': result.attributes['Tramo'],
-            'Empalme': result.attributes['Empalme'],
-            'Fase': result.attributes['Fase'],
-            'Potencia': result.attributes['Potencia'],
-            'Capacidad Empalme': result.attributes['Capacidad_empalme'],
-            'Capacidad Interruptor': result.attributes['Capacidad_interruptor'],
-            'Tiempo Empalme': result.attributes['Tiempo_empalme'],
-            'Tipo Empalme': result.attributes['Tipo_empalme'],
-            'Cantidad Empalme': result.attributes['Cantidad_empalme'],
-            'IDDireccion': result.attributes['ID_Direccion'],
-            'Direccion': result.attributes['Direccion'],
-            'Zona Campamentos': result.attributes['Zona_campamentos'],
-            'Zona Concesion': result.attributes['Zona_concesion'],
-            'Zona Restringida': result.attributes['Zona_restringida'],
-            'Zona Transmision': result.attributes['Zona_transmision'],
-            'Zona Vialidad': result.attributes['Zona_vialidad'],
-            'Potencia Calculada': result.attributes['Potencia_calculada'],
-            'DistRotuloMedidor': result.attributes['DistRotuloMedidor'],
-            'DistDireccionMedidor': result.attributes['DistDireccionMedidor'],
-            'Comuna': result.attributes['Comuna'],
-            'Idnodo': result.attributes['Idnodo'],
-            'Estado Tramite': result.attributes['Estado_tramite'],
-            'Tipo Factibilidad': result.attributes['Tipo_factibilidad'],
-            'Sed': result.attributes['Sed'],
-            'PotenciaDispSed': result.attributes['PotenciaDispSed'],
-            'Zona': result.attributes['Zona'],
-            'Creador': result.attributes['created_user'],
-            'Clasificacion': result.attributes['Clasificacion'],
-            'Tipos Fase':  result.attributes['Tipo_fase'],
-            'Punto Conexion':  result.attributes['Poste_cnx_final']
-
-          }
-
-          return theData;
-        });
-          this.setState({myData: loadData});
-          var prof = cookieHandler.get('usrprfl');
-          $("#iframeloadingBO1").hide();
-      });
+      this.loadDataa();
 
       var toggle = new BasemapToggle({
         map: mapp,
@@ -386,6 +348,67 @@ class FactigisBackOfficeH extends React.Component {
     saveGisredLogin(user['USUARIO'],date,page,module,myToken);
 
 
+  }
+
+  loadDataa(){
+    loadCurrentHistoryData(data=>{
+      let loadData = data.map(result=>{
+
+        let theData = {
+          'Folio' : result.attributes['OBJECTID'],
+          'Estado Tramite': result.attributes['Estado_tramite'],
+          'Nombre': result.attributes['Nombre'],
+          'Apellido':result.attributes['Apellido'],
+          'Tipo Mejora': result.attributes['Tipo_mejora'] ,
+          'Zona': result.attributes['Zona'],
+          'Origen Factibilidad': result.attributes['Origen_factibilidad'],
+          'Geometry': result.geometry,
+          'Alimentador' : result.attributes['Alimentador'],
+          'Rut' : result.attributes['Rut'],
+          'Telefono': result.attributes['Telefono'],
+          'Email': result.attributes['Email'],
+          'Tipo Cliente': result.attributes['Tipo_cliente'],
+          'Tipo Contribuyente': result.attributes['Tipo_contribuyente'],
+          'Rotulo': result.attributes['Rotulo'],
+          'Tramo': result.attributes['Tramo'],
+          'Empalme': result.attributes['Empalme'],
+          'Fase': result.attributes['Fase'],
+          'Potencia': result.attributes['Potencia'],
+          'Capacidad Empalme': result.attributes['Capacidad_empalme'],
+          'Capacidad Interruptor': result.attributes['Capacidad_interruptor'],
+          'Tiempo Empalme': result.attributes['Tiempo_empalme'],
+          'Tipo Empalme': result.attributes['Tipo_empalme'],
+          'Cantidad Empalme': result.attributes['Cantidad_empalme'],
+          'IDDireccion': result.attributes['ID_Direccion'],
+          'Direccion': result.attributes['Direccion'],
+          'Zona Campamentos': result.attributes['Zona_campamentos'],
+          'Zona Concesion': result.attributes['Zona_concesion'],
+          'Zona Restringida': result.attributes['Zona_restringida'],
+          'Zona Transmision': result.attributes['Zona_transmision'],
+          'Zona Vialidad': result.attributes['Zona_vialidad'],
+          'Potencia Calculada': result.attributes['Potencia_calculada'],
+          'DistRotuloMedidor': result.attributes['DistRotuloMedidor'],
+          'DistDireccionMedidor': result.attributes['DistDireccionMedidor'],
+          'Comuna': result.attributes['Comuna'],
+          'Idnodo': result.attributes['Idnodo'],
+          'Estado Tramite': result.attributes['Estado_tramite'],
+          'Tipo Factibilidad': result.attributes['Tipo_factibilidad'],
+          'Sed': result.attributes['Sed'],
+          'PotenciaDispSed': result.attributes['PotenciaDispSed'],
+          'Zona': result.attributes['Zona'],
+          'Creador': result.attributes['created_user'],
+          'Clasificacion': result.attributes['Clasificacion'],
+          'Tipos Fase':  result.attributes['Tipo_fase'],
+          'Punto Conexion':  result.attributes['Poste_cnx_final']
+
+        }
+
+        return theData;
+      });
+        this.setState({myData: loadData});
+        var prof = cookieHandler.get('usrprfl');
+        $("#iframeloadingBO1").hide();
+    });
   }
 
   onChange(e){this.setState({cbEstadoValue: e});}
@@ -444,11 +467,96 @@ class FactigisBackOfficeH extends React.Component {
           });
           this.setState({myDataEstados: loadDataEstados, obsDisable: false});
         }
-        console.log("Observacion agregada");
+          this.setState({
+            open: true,
+            modalStatus: 'Observación agregada para folio ' + this.state.facB_folio,
+            facb_observaciones: ''
+          });
+          $('.fact_bo_poste').css('color',"black").css('border-color','black');
         });
+
 
     });
   }
+
+  onChangeFase(e){
+    console.log(e);
+    this.setState({faseSelected: e});
+  }
+
+  onClickPuntoConexion(){
+    var map = mymap.getMap();
+    console.log("toggleposte", this.state.togglePoste)
+    if (this.state.togglePoste =='OFF'){
+      this.setState({togglePoste: 'ON'});
+        $('.fact_bo_poste').css('color',"crimson").css('border-color','red');
+
+        var map_click_handle = dojo.connect(map, 'onClick', (g)=>{
+          console.log(g);
+        $("#iframeloadingBO1").show();
+          factigis_findRotulo(g.mapPoint, (featureSetFeatures)=>{
+
+            //extrae datos de rotulo
+            let rotulo = featureSetFeatures[0].attributes['rotulo'];
+            this.setState({
+              rotuloFinal: rotulo
+            });
+            $("#iframeloadingBO1").hide();
+          });
+
+        });
+        this.setState({btnPoste: map_click_handle});
+    }else{
+      this.setState({togglePoste: 'OFF'});
+        $('.fact_bo_poste').css('color',"black").css('border-color','black');
+        dojo.disconnect(this.state.btnPoste);
+
+    }
+  }
+
+  onClickGuardarAtributos(){
+    if( (this.state.facB_folio=='') || (this.state.faseSelected=='') || (this.state.rotuloFinal=='') ){
+      this.setState({open: true, modalStatus: 'Por favor seleccione el punto de conexión y/o tipo de fase de conexión antes de modificar.'});
+      return;
+    }
+
+    let myDataUpdate = {
+      "OBJECTID": this.state.facB_folio,
+      "Poste_cnx_final": this.state.rotuloFinal,
+      "Tipo_fase": this.state.faseSelected
+    }
+    updateAttributesPerFolio(myDataUpdate, (cb)=>{
+      if(!cb){
+        this.setState({
+          open: true,
+          modalStatus: 'No se pudo guardar los cambios, intente nuevamente.'
+
+        });
+        return;
+      }
+      this.setState({
+        open: true,
+        modalStatus: 'Cambios en Folio ' + this.state.facB_folio +  ' han sido guardados'
+      });
+      $('.fact_bo_poste').css('color',"black").css('border-color','black');
+      this.clearFieldsAttr();
+      //LOAD FACTIBILIDAD FOR CURRENT USER : RULES: PER HIS/HER ZONE and <> of FACTIBILIDAD DIRECTA
+      this.loadDataa();
+
+    });
+
+  }
+
+  clearFieldsAttr(){
+    this.setState({
+      facB_tiposFase: this.state.faseSelected,
+      facB_puntoConexion: this.state.rotuloFinal,
+      faseSelected: '',
+      rotuloFinal: ''
+
+    });
+  }
+
   render(){
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
       window.location.href = "index.html";
@@ -577,29 +685,51 @@ class FactigisBackOfficeH extends React.Component {
               <div id="BMToggle2"></div>
             </div>
             <div>
-              <h1 className="factigisBO2_h1 factigis_h1_edited">Agregar Observación > Folio: {this.state.facB_folio}</h1>
+              <h1 className="factigisBO2_h1 factigis_h1_edited">Cambiar Atributos > Folio: {this.state.facB_folio}</h1>
               <div className="factigis_rows">
                 <div className="factigis_row1">
-                  <div><h8 className="factigis_bo1-h6">Observación: <b></b></h8></div>
+                  <div><h8 className="factigis_bo1-h6">Punto Conexión: <b></b></h8></div>
                   <div>
-                    <input onChange={this.onChangeObs.bind(this)} id="factigis_txtObservacion" disabled={this.state.obsDisable} className="factigis_bo_txt" type="text" placeholder="Escriba observacion" value={this.state.facb_observaciones}  />
+                    <input id="factigis_txtRotulo" disabled={true} className="factigis_bo_txt" type="text" placeholder="Seleccione rótulo" value={this.state.rotuloFinal}  />
+                    <button disabled={this.state.btnGuardarState2} onClick={this.onClickPuntoConexion.bind(this)} className="fact_bo_poste btn btn-default" title="Selección de Rótulo " type="button">
+                      <span><i className="fa fa-map-signs"></i></span>
+                    </button>
+                  </div>
+                </div>
+                <div className="factigis_row2">
+                  <div><h8>Fases de Conexión:</h8></div>
+                  <div><Select className="ddlTipoCliente factigis_tipoCliente" name="form-field-name" options={this.state.fases} value={this.state.faseSelected} onChange={this.onChangeFase.bind(this)}
+                    simpleValue clearable={true} searchable={false} placeholder="Seleccione las fases de conexión"/>
                   </div>
                 </div>
                 <div className="factigis_row3">
-                  <button onClick={this.onClickGuardarObservacion.bind(this)} disabled={this.state.btnGuardarState} className="factigis_bo_btnModified btn btn-info" title="Selección de Rótulo " type="button" >
+                  <button  disabled={this.state.btnGuardarState3} className="factigis_bo_btnModified btn btn-info" title="Selección de Rótulo " type="button" onClick={this.onClickGuardarAtributos.bind(this)} >
                     <span><i className="fa fa-floppy-o"></i> Guardar</span>
                   </button>
                 </div>
+
+
               </div>
             </div>
           </div>
         </div>
-        <div className="wrapper_bot">
-          <div className="wrapper_bot_title">
 
+        <div className="factigisBO2_wrapper_bot">
+          <div className="wrapper_bot_title">
+            <h1 className="factigis_bo1-h1 factigis_h1_edited">Agregar Observación > Folio: {this.state.facB_folio}</h1>
           </div>
+          <div className="wrapper_bot_content">
+            <h8 className="factigis_bo2-h8">Observaciones:</h8>
+
+            <input onChange={this.onChangeObs.bind(this)} id="factigis_txtObservacion" disabled={this.state.obsDisable} className="factigis_bo_txt" type="text" placeholder="Escriba observacion" value={this.state.facb_observaciones}  />
+            <button onClick={this.onClickGuardarObservacion.bind(this)} disabled={this.state.btnGuardarState} className="factigis_bo_btnModified btn btn-info" title="Guardar observación " type="button" >
+              <span><i className="fa fa-floppy-o"></i> Guardar Observación</span>
+            </button>
+            </div>
 
         </div>
+
+
         <Modal isOpen={this.state.open} style={customStyles}>
           <h2 className="factigis_h2">Revisión Factibilidades</h2>
           <p>{this.state.modalStatus}</p>

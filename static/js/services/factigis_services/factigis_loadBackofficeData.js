@@ -52,8 +52,7 @@ function find_folioData(folio, callback){
 }
 
 function updateAttributesPerFolio(d,callback){
-  console.log(data, "actualizando esto");
-
+  
   const data = {
     f: 'json',
     updates: JSON.stringify([{ attributes: d}]),

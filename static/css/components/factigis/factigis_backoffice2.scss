@@ -150,7 +150,7 @@ div strong{
   height: 100%;
   display: flex;
   flex-wrap: wrap;
-  min-height: 404px;
+  min-height: 330px;
 }
 
 
@@ -247,13 +247,13 @@ h8{
   display: flex;
 flex-direction: row;
 justify-content: center;
+margin-bottom: 1em;
 }
 
 .factigis_row1{
   display: flex;
 flex-direction: column;
-margin-left: 1em;
-    width: 50%;
+
 }
 
 
@@ -272,6 +272,52 @@ margin-left: 1em;
 width: 30%;
 }
 
+.factigisBO2_wrapper_bot{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #314658;
+  bottom: 0px;
+  position: relative;
+  padding-bottom: 1em;
+  padding-top: 0em;
+}
+
 #factigis_txtObservacion {
       width: 100%;
+}
+
+.factigis_bo1-h1{
+  background-color: $colorBackground;
+  color: ghostwhite;
+  margin-top: 0px;
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+  font-size: larger;
+  font-weight: 100;
+  padding-bottom: 0.3em;
+  display: flex;
+  width: 100%;
+  box-shadow: 0px 1px 5px rgb(121, 132, 142);
+  border-bottom: 1px solid #ddd;
+
+}
+
+.factigis_bo2-h8{
+  color: ghostwhite;
+  display: flex;
+  align-items: center;
+  margin-right: 1em;
+  font-weight: 600;
+}
+
+.griddle td.selected {
+background-color:#d0f3eb;
+color:#333;
+font-size: smaller;
+}
+
+.selected td{
+  background-color:#91b6dc !important;
+font-size: smaller;
 }

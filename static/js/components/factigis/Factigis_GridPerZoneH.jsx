@@ -30,8 +30,11 @@ var HeaderComponent = React.createClass({
 class FG_GridPerZoneH extends React.Component {
   constructor(props){
     super(props);
+
   }
   render(){
+
+
     var columnMeta = [
         {
         "columnName": "ID Factibilidad",
@@ -62,7 +65,7 @@ class FG_GridPerZoneH extends React.Component {
     ];
     return (
 
-      <Griddle results={this.props.data} columnMetadata={columnMeta} resultsPerPage={2}
+      <Griddle results={this.props.data} columnMetadata={columnMeta} resultsPerPage={2} 
       columns={["ID Factibilidad","Estado Tramite", "Fecha Cambio", "Usuario", "Observacion"]}/>
 
     );
