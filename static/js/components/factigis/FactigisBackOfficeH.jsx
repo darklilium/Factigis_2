@@ -11,7 +11,7 @@ import mymap from '../../services/map-service';
 import layers from '../../services/layers-service';
 import {Navbar, Nav, NavItem, NavDropdown, DropdownButton,FormGroup,FormControl,Button, MenuItem,Breadcrumb, CollapsibleNav} from 'react-bootstrap';
 import Modal from 'react-modal';
-import {agregarEstadoHistoria} from '../../services/factigis_services/factigis_add-service';
+import {agregarEstadoHistoria, agregarObservacionHistorial} from '../../services/factigis_services/factigis_add-service';
 import LayerList from '../../components/LayerList.jsx';
 import {loadCurrentHistoryData, loadFactStates} from '../../services/factigis_services/factigis_loadBackOfficeStates.js';
 import _ from 'lodash';
@@ -151,7 +151,9 @@ class FactigisBackOfficeH extends React.Component {
       facB_sedNombre: '',
       facB_sedKVA: '',
       facB_tiposFase: '',
-      facB_clasificacion: ''
+      facB_clasificacion: '',
+      obsDisable: true,
+      btnGuardarState: true
 
     }
   }
@@ -220,7 +222,7 @@ class FactigisBackOfficeH extends React.Component {
             }
             return thestatus;
           });
-          this.setState({myDataEstados: loadDataEstados});
+          this.setState({myDataEstados: loadDataEstados, obsDisable: false});
         }
 
       });
@@ -257,6 +259,7 @@ class FactigisBackOfficeH extends React.Component {
 
 
   }
+
   componentDidMount(){
     var d = cookieHandler.get('wllExp');
       if(d > getFormatedDate()){
@@ -373,7 +376,7 @@ class FactigisBackOfficeH extends React.Component {
       }, "BMToggle2");
       toggle.startup();
 
-      const page = "REACT_FACTIGIS_PROD";
+      const page = "REACT_FACTIGIS_DESA";
       const module = "FACTIGIS_REVISAR_HISTORIAL_FACTIBILIDAD";
       const date = getFormatedDate();
       const user = cookieHandler.get('usrprfl')
@@ -389,7 +392,15 @@ class FactigisBackOfficeH extends React.Component {
 
   onChange2(e){this.setState({cbMejoraValue: e});}
 
-  onChangeObs(e){ this.setState({facb_observaciones: e.currentTarget.value });}
+  onChangeObs(e){
+    this.setState({facb_observaciones: e.currentTarget.value });
+
+    if(e.currentTarget.value==""){
+      this.setState({btnGuardarState: true});
+    }else{
+        this.setState({btnGuardarState: false});
+    }
+  }
 
   openModal () { this.setState({open: true}); }
 
@@ -403,7 +414,41 @@ class FactigisBackOfficeH extends React.Component {
       localStorage.removeItem('token');
       window.location.href = "index.html";
   }
+  //04/01/2017
+  onClickGuardarObservacion(){
+    console.log(this.state.facB_folio);
 
+    agregarObservacionHistorial(this.state.facB_folio, this.state.facb_observaciones, (callback)=>{
+      if(!callback){
+        console.log("Problemas agregando observacion");
+
+        return;
+      }
+      //load states for the selected factibilidad.
+      loadFactStates(this.state.facB_folio, (callback)=>{
+        if(!callback.length){
+            this.setState({myDataEstados: []});
+          return;
+        }else{
+
+          let loadDataEstados = callback.map(estado=>{
+            //console.log(estado.attributes);
+            let thestatus = {
+              'ID Factibilidad' : estado.attributes["ID_Factibilidad"],
+              'Estado Tramite':  estado.attributes["Estado_tramite"],
+              'Fecha Cambio':  estado.attributes["Fecha_cambio"],
+              'Usuario': estado.attributes["Usuario"],
+              'Observacion':  estado.attributes["Observacion"]
+            }
+            return thestatus;
+          });
+          this.setState({myDataEstados: loadDataEstados, obsDisable: false});
+        }
+        console.log("Observacion agregada");
+        });
+
+    });
+  }
   render(){
     if(!cookieHandler.get('usrprmssns') || (!cookieHandler.get('usrprfl'))){
       window.location.href = "index.html";
@@ -525,23 +570,35 @@ class FactigisBackOfficeH extends React.Component {
             </div>
           </div>
           <div className="factigisBO2_wrapper_mid-right">
-            <div>
-              <h1 className="factigisBO2_h1">Mapa - Ubicación</h1>
-            </div>
-
+            <div><h1 className="factigisBO2_h1">Mapa - Ubicación</h1></div>
             <LayerList show={["check_factigis_transmision", "check_factigis_distribucion", "check_factigis_vialidad", "check_campamentos", "check_chqbasemap",
             "check_subestaciones","check_MT","check_BT"]} />
             <div id="factigis_bo2_map" className="factigis_bo2_map">
               <div id="BMToggle2"></div>
+            </div>
+            <div>
+              <h1 className="factigisBO2_h1 factigis_h1_edited">Agregar Observación > Folio: {this.state.facB_folio}</h1>
+              <div className="factigis_rows">
+                <div className="factigis_row1">
+                  <div><h8 className="factigis_bo1-h6">Observación: <b></b></h8></div>
+                  <div>
+                    <input onChange={this.onChangeObs.bind(this)} id="factigis_txtObservacion" disabled={this.state.obsDisable} className="factigis_bo_txt" type="text" placeholder="Escriba observacion" value={this.state.facb_observaciones}  />
+                  </div>
+                </div>
+                <div className="factigis_row3">
+                  <button onClick={this.onClickGuardarObservacion.bind(this)} disabled={this.state.btnGuardarState} className="factigis_bo_btnModified btn btn-info" title="Selección de Rótulo " type="button" >
+                    <span><i className="fa fa-floppy-o"></i> Guardar</span>
+                  </button>
+                </div>
               </div>
-
+            </div>
           </div>
         </div>
         <div className="wrapper_bot">
           <div className="wrapper_bot_title">
-            {/*<h1 className="factigisBO2_h1 factigis_h1_edited">Historial de Estados</h1>*/}
+
           </div>
-          <div className="wrapper_bot_content"></div>
+
         </div>
         <Modal isOpen={this.state.open} style={customStyles}>
           <h2 className="factigis_h2">Revisión Factibilidades</h2>

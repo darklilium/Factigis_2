@@ -245,6 +245,7 @@ function factigis_findRotuloByNumber(numero, tipo, callback){
   qInterruptions.outFields=["*"];
   qInterruptions.where = "tipo_nodo= '"+ tipo +"'AND rotulo ='"+ numero +"'";
   qTaskInterruptions.execute(qInterruptions, (featureSet)=>{
+    console.log(featureSet);
     if(!featureSet.features.length){
       return callback([]);
     }

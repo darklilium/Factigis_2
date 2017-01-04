@@ -18,8 +18,7 @@ function myLayers(){
     },
 
     read_logAccess(){  /*using*/
-        console.log(token.read());
-        return serviceURL + "Admin/LogAccesos/FeatureServer/2?f=json&token=" + token.read();
+      return serviceURL + "Admin/LogAccesos/FeatureServer/2?f=json&token=" + token.read();
     },
     read_logAccess2(){
     //chq mapabase(){
@@ -189,31 +188,31 @@ function myLayers(){
         return serviceURL + "MapaBase/MapServer/4?f=json&token=" + token.read();
     },
     read_agregarFactibilidad(){
-        return serviceURL + "FACTIBILIDAD/FACTIGIS_PROD/FeatureServer/0?f=json&token=" + token.read();
+        return serviceURL + "FACTIBILIDAD/FACTIGIS_DESA/FeatureServer/0?f=json&token=" + token.read();
     },
     read_factigisUserProfile(){
-      return serviceURL + "FACTIBILIDAD/FACTIGIS_PROD/FeatureServer/2?f=json&token=" + token.read();
+      return serviceURL + "FACTIBILIDAD/FACTIGIS_DESA/FeatureServer/2?f=json&token=" + token.read();
     },
     read_factibilidad(){
-        return serviceURL + "FACTIBILIDAD/FACTIGIS_PROD/MapServer?f=json&token=" + token.read();
+        return serviceURL + "FACTIBILIDAD/FACTIGIS_DESA/MapServer?f=json&token=" + token.read();
     },
     read_updateFactibilidad(){
-      return serviceURL + "FACTIBILIDAD/FACTIGIS_PROD/FeatureServer/0/applyedits";
+      return serviceURL + "FACTIBILIDAD/FACTIGIS_DESA/FeatureServer/0/applyedits";
     },
     read_direccionesDyn(){
       return serviceURL + "Cartografia/DMPS/MapServer?f=json&token=" + token.read();
     },
     read_historial_factibilidad(){
-      return serviceURL + "FACTIBILIDAD/FACTIGIS_PROD/FeatureServer/1?f=json&token=" + token.read();
+      return serviceURL + "FACTIBILIDAD/FACTIGIS_DESA/FeatureServer/1?f=json&token=" + token.read();
     },
     read_factigis_addDireccion(){
       return serviceURL + "Mobile/Ingreso_externo_nuevo/FeatureServer/2/applyedits";
     },
     read_factigis_addEstadoHistoria(){
-      return serviceURL + "FACTIBILIDAD/FACTIGIS_PROD/FeatureServer/1/applyedits";
+      return serviceURL + "FACTIBILIDAD/FACTIGIS_DESA/FeatureServer/1/applyedits";
     },
     read_factigis_addFactibilidad(){
-      return serviceURL + "FACTIBILIDAD/FACTIGIS_PROD/FeatureServer/0/applyedits";
+      return serviceURL + "FACTIBILIDAD/FACTIGIS_DESA/FeatureServer/0/applyedits";
 
     },
     read_logAccessFactigis(){

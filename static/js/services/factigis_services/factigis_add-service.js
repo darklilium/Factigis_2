@@ -867,4 +867,51 @@ function factigis_addNuevaFactibilidad_especial(factibilidad, callbackadd){
 
 
 }
-export {factigis_addNuevaDireccion,factigis_addNuevaFactibilidad, agregarEstadoHistoria, factigis_addNuevaFactibilidad_especial};
+
+function agregarObservacionHistorial(folio, observacion, callback){
+
+  let prof = cookieHandler.get('usrprfl');
+
+
+  let historial = {
+    Estado_tramite:  'CERRADA',
+    ID_Factibilidad: folio,
+    Fecha_cambio: getFormatedDateNow(),
+    Observacion: observacion,
+    Usuario:  prof.USUARIO
+    }
+
+    const data = {
+      f: 'json',
+      adds: JSON.stringify([{ attributes: historial, geometry: {}}]),
+      token: token.read()
+    };
+
+    jQuery.ajax({
+      method: 'POST',
+      url: layers.read_factigis_addEstadoHistoria(),
+      dataType:'html',
+      data: data
+    })
+
+    .done(d =>{
+      let json = JSON.parse(d);
+
+      let arrObject = [];
+      if(json["addResults"][0].objectId>0){
+        return callback(true);
+
+      }else{
+        return callback(false);
+
+      }
+
+    })
+    .fail(f=>{
+      console.log(f,"no pase")
+      callback(false)
+    });
+
+
+}
+export {factigis_addNuevaDireccion,factigis_addNuevaFactibilidad, agregarEstadoHistoria, factigis_addNuevaFactibilidad_especial, agregarObservacionHistorial};
