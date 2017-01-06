@@ -95,6 +95,11 @@ class FG_GridPerZoneH2 extends React.Component {
         "columnName": "Creador",
         "customHeaderComponent": HeaderComponent,
         "customHeaderComponentProps": { color: '#da291c' }
+        },
+        {
+        "columnName": "Punto Conexion",
+        "customHeaderComponent": HeaderComponent,
+        "customHeaderComponentProps": { color: '#da291c' }
         }
     ];
 
@@ -105,7 +110,7 @@ class FG_GridPerZoneH2 extends React.Component {
     return (
 
       <Griddle rowMetadata={rowMetadata} onRowClick= {this.onRowClick.bind(this)} results={this.props.data} columnMetadata={columnMeta} resultsPerPage={3}
-      columns={["Folio","Estado Tramite", "Nombre", "Apellido", "Tipo Mejora","Zona", "Origen Factibilidad", "Creador"]}/>
+      columns={["Folio","Estado Tramite", "Nombre", "Apellido", "Tipo Mejora","Zona", "Origen Factibilidad", "Creador", "Punto Conexion"]}/>
 
     );
   }

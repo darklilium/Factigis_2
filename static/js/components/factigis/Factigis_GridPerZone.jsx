@@ -44,7 +44,7 @@ class FG_GridPerZone extends React.Component {
     var y = _.filter(this.props.data, (data)=>{
       return data['Folio'] == gridRow.props.data['Folio'];
     })
-  
+
     this.props.callbackParent(y);
 
 
@@ -91,12 +91,17 @@ class FG_GridPerZone extends React.Component {
         "columnName": "Creador",
         "customHeaderComponent": HeaderComponent,
         "customHeaderComponentProps": { color: '#da291c' }
+        },
+        {
+        "columnName": "PuntoConexion",
+        "customHeaderComponent": HeaderComponent,
+        "customHeaderComponentProps": { color: '#da291c' }
         }
     ];
     return (
 
       <Griddle onRowClick= {this.onRowClick.bind(this)} results={this.props.data} columnMetadata={columnMeta} resultsPerPage={5}
-      columns={["Folio","Estado Tramite", "Nombre", "Apellido", "Tipo Mejora","Origen Factibilidad","Creador"]}/>
+      columns={["Folio","Estado Tramite", "Nombre", "Apellido", "Tipo Mejora","Origen Factibilidad","Creador", "PuntoConexion"]}/>
 
     );
   }
