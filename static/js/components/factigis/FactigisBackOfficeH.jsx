@@ -213,7 +213,7 @@ class FactigisBackOfficeH extends React.Component {
       factB_distanciaRM: newState[0]['DistRotuloMedidor'],
       facB_clasificacion: newState[0]['Clasificacion'],
       facB_tiposFase:  newState[0]['Tipos Fase'],
-      facB_puntoConexion:  newState[0]['Punto Conexion'],
+      facB_puntoConexion:  String(newState[0]['Punto Conexion']),
       selectedRowId: newState[0]['Folio']
 
     });
@@ -338,7 +338,7 @@ class FactigisBackOfficeH extends React.Component {
       }, "BMToggle2");
       toggle.startup();
 
-      const page = "REACT_FACTIGIS_PROD";
+      const page = "REACT_FACTIGIS_DESA";
       const module = "FACTIGIS_REVISAR_HISTORIAL_FACTIBILIDAD";
       const date = getFormatedDate();
       const user = cookieHandler.get('usrprfl')
@@ -400,7 +400,7 @@ class FactigisBackOfficeH extends React.Component {
           'Creador': result.attributes['created_user'],
           'Clasificacion': result.attributes['Clasificacion'],
           'Tipos Fase':  result.attributes['Tipo_fase'],
-          'Punto Conexion':  result.attributes['Poste_cnx_final']
+          'Punto Conexion':  String(result.attributes['Poste_cnx_final'])
 
         }
 

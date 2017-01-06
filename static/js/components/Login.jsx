@@ -19,12 +19,12 @@ class LoginApp extends React.Component {
     }
     //For domain users
     if (userValue.includes('vialactea\\')){
-      console.log("Trying to access REACT_FACTIGIS_PROD_DASHBOARD");
+      console.log("Trying to access REACT_FACTIGIS_DESA_DASHBOARD");
       factigisLogin(userValue, passValue);
       return;
 
     }else {
-      console.log("Trying to access REACT_FACTIGIS_PROD_DASHBOARD");
+      console.log("Trying to access REACT_FACTIGIS_DESA_DASHBOARD");
       userValue =  'vialactea\\'+this.refs.username.value;
       factigisLogin(userValue, passValue);
     }

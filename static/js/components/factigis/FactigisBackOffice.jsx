@@ -62,7 +62,8 @@ function createDataObject(){
     'Estado_tramite ':0,
     'Tipo_factibilidad ':0,
     'Sed ':0,
-    'PotenciaDispSed ':0
+    'PotenciaDispSed ':0,
+    'Punto Conexion': 0
   };
 }
 
@@ -217,7 +218,7 @@ class FactigisBackOffice extends React.Component {
           'Creador': result.attributes['created_user'],
           'Clasificacion': result.attributes['Clasificacion'],
           'TiposFase':  result.attributes['Tipo_fase'],
-          'PuntoConexion':  result.attributes['Poste_cnx_final'],
+          'Punto Conexion': String(result.attributes['Poste_cnx_final'])
         }
         return theData;
       });
@@ -271,7 +272,7 @@ class FactigisBackOffice extends React.Component {
       facb_observaciones: '',
       facB_clasificacion: newState[0]['Clasificacion'],
       facB_tiposFase:  newState[0]['TiposFase'],
-      facB_puntoConexion:  newState[0]['PuntoConexion'],
+      facB_puntoConexion:  newState[0]['Punto Conexion'],
       btnGuardarState: false
 
 
@@ -370,7 +371,7 @@ class FactigisBackOffice extends React.Component {
       }, "BMToggle");
       toggle.startup();
 
-      const page = "REACT_FACTIGIS_PROD";
+      const page = "REACT_FACTIGIS_DESA";
       const module = "FACTIGIS_REVISAR_FACTIBILIDAD";
       const date = getFormatedDate();
       const user = cookieHandler.get('usrprfl')

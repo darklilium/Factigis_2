@@ -13,6 +13,7 @@ var HeaderComponent = React.createClass({
   },
 
   filterText: function(e) {
+
     this.props.filterByColumn(e.target.value, this.props.columnName)
   },
 
@@ -40,7 +41,7 @@ class FG_GridPerZone extends React.Component {
     map.graphics.add(new esri.Graphic(gridRow.props.data['Geometry'],pointSymbol));
 
     map.centerAndZoom(gridRow.props.data['Geometry'],20);
-
+    console.log(this.props.data);
     var y = _.filter(this.props.data, (data)=>{
       return data['Folio'] == gridRow.props.data['Folio'];
     })
@@ -93,7 +94,7 @@ class FG_GridPerZone extends React.Component {
         "customHeaderComponentProps": { color: '#da291c' }
         },
         {
-        "columnName": "PuntoConexion",
+        "columnName": "Punto Conexion",
         "customHeaderComponent": HeaderComponent,
         "customHeaderComponentProps": { color: '#da291c' }
         }
@@ -101,7 +102,7 @@ class FG_GridPerZone extends React.Component {
     return (
 
       <Griddle onRowClick= {this.onRowClick.bind(this)} results={this.props.data} columnMetadata={columnMeta} resultsPerPage={5}
-      columns={["Folio","Estado Tramite", "Nombre", "Apellido", "Tipo Mejora","Origen Factibilidad","Creador", "PuntoConexion"]}/>
+      columns={["Folio","Estado Tramite", "Nombre", "Apellido", "Tipo Mejora","Origen Factibilidad", "Punto Conexion","Creador"]}/>
 
     );
   }
