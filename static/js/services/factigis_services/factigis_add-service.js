@@ -433,6 +433,7 @@ function agregarFact(f, callback){
     data: data
   })
   .done(d =>{
+    console.log(d);
     let json = JSON.parse(d);
 
     let arrObject = [];

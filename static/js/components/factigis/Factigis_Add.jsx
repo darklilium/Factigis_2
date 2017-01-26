@@ -1011,6 +1011,18 @@ class Factigis_Add extends React.Component {
               problemsforAdding: 'Procesando factibilidad, espere un momento'
             });
 
+            //26/1/2017: BUG: problemas con las direcciones largas.
+            if(this.state.factigisDireccion.length>=75){
+              console.log("problemas de dirección en largo.", this.state.factigisDireccion.length);
+              this.setState({
+                open: true,
+                problemsforAdding: 'La dirección para la factibilidad excede el largo (75) permitido. No se puede agregar.',  numeroFactibilidad: '',
+                btnModalCloseStatus: false
+              });
+              $("#iframeloadingAdd").hide();
+              return;
+            }
+
             factigis_addNuevaFactibilidad(myFact, (cb)=>{
 
               //si fue grabado se abre modal indicando el tipo de factibilidad y el objectid con el que fue grabado.
@@ -1051,6 +1063,18 @@ class Factigis_Add extends React.Component {
         //FACTIBILIDAD ASISTIDA: cuando hay problemas con las zonas
         }else{
           let fArr = [];
+          //26/1/2017: BUG: problemas con las direcciones largas.
+          if(this.state.factigisDireccion.length>=75){
+            console.log("problemas de dirección en largo.", this.state.factigisDireccion.length);
+            this.setState({
+              open: true,
+              problemsforAdding: 'La dirección para la factibilidad excede el largo (75) permitido. No se puede agregar.',  numeroFactibilidad: '',
+              btnModalCloseStatus: false
+            });
+            $("#iframeloadingAdd").hide();
+            return;
+          }
+
           var myFact = {
             factigisRut: this.state.factigisRut,
             factigisNombre: this.state.factigisNombre,
